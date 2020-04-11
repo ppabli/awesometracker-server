@@ -18,7 +18,7 @@ class App {
 
 	}
 
-	static getAppBy (params, filter = 'apps.code,apps.userCode,apps.token,apps.categoryCode,apps.name,apps.registrationDate,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.birthDate,users.recoverURLCode,users.recoverCode,appCategories.code,appCategories.name,appCategories.description,appCategories.price,appCategories.maximumCalls', orderBy = null, order = 'asc') {
+	static getAppBy (params, filter = 'apps.code,apps.userCode,apps.token,apps.categoryCode,apps.name,apps.registrationDate,apps.lastUpdate,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.recoverURLCode,users.recoverCode,appCategories.code,appCategories.name,appCategories.description,appCategories.price,appCategories.maximumCalls', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -53,9 +53,17 @@ class App {
 
 			query.push('where');
 
-			for (let param in params) {
+			let finalParams = params.split(',')
 
-				query.push(param, '=', `'${params[param]}'`, 'and');
+			for (let param in finalParams) {
+
+				if (finalParams[param] == 'undefined') {
+
+					continue;
+
+				}
+
+				query.push(finalParams[param], 'and');
 
 			}
 

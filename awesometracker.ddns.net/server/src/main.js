@@ -14,9 +14,6 @@ CONFIG = process.env;
 REQUEST = require('request-promise')
 EXPRESS = require('express');
 NODEMAILER = require('nodemailer');
-ADMZIP = require('adm-zip');
-FS = require('fs');
-PATH = require('path');
 
 PASSWORD = require('./lib/password');
 FUNCTIONS = require('./lib/functions');
@@ -25,6 +22,8 @@ USER = require('./models/user.model');
 APP = require('./models/app.model');
 APPLICATION = require('./models/application.model');
 TRACKERLOG = require('./models/trackerLog.model');
+POST = require('./models/post.model');
+USERCATEGORY = require('./models/userCategory.model');
 RECORDER = require('./models/recorder.model');
 
 DB = require('./db/database')

@@ -105,11 +105,33 @@ filter = (req, res, next) => {
 
 		} else {
 
+			let wheres = req.query.where ? req.query.where.split(',') : [];
+
+			if (/users/.test(req.route.path)) {
+
+				wheres.push('users.code!=1', "users.user!='admin'");
+
+			} else if (/apps/.test(req.route.path)) {
+
+				wheres.push('apps.code!=1');
+
+			} else if (/userCategories/.test(req.route.path)) {
+
+				wheres.push('userCategories.name!="ADMIN"', 'userCategories.code!=1');
+
+			} else if (/postCategories/.test(req.route.path)) {
+
+				wheres.push('postCategories.name!="ADMIN"', 'postCategories.code!=1');
+
+			}
+
+			req.query.where = wheres.join(',');
+
 			let filters = req.query.filter ? req.query.filter.split(',') : null;
 
 			for (filter in filters) {
 
-				if (/password/.test(filters[filter].toLowerCase()) || /recover/.test(filters[filter].toLowerCase()) || /description/.test(filters[filter].toLowerCase()) || /price/.test(filters[filter].toLowerCase()) || /token/.test(filters[filter].toLowerCase()) || /maximumCalls/.test(filters[filter].toLowerCase())) {
+				if (/password/.test(filters[filter].toLowerCase()) || /recover/.test(filters[filter].toLowerCase()) || /token/.test(filters[filter].toLowerCase())) {
 
 					filters.splice(filter, 1);
 
@@ -129,15 +151,19 @@ filter = (req, res, next) => {
 
 				} else if (/applications/.test(req.route.path)) {
 
-					req.query.filter = 'applications.code,applications.userCode,applications.category,applications.app';
+					req.query.filter = 'applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate';
 
 				} else if (/users/.test(req.route.path)) {
 
-					req.query.filter = 'users.code,users.appCode,users.diff,users.user,users.email,users.categoryCode,users.name,users.surname';
+					req.query.filter = 'users.code,users.appCode,users.diff,users.user,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate';
 
 				} else if (/apps/.test(req.route.path)) {
 
-					req.query.filter = 'apps.code,apps.userCode,apps.categoryCode,apps.name';
+					req.query.filter = 'apps.code,apps.userCode,apps.categoryCode,apps.name,apps.registrationDate,apps.lastUpdate';
+
+				} else if (/posts/.test(req.route.path)) {
+
+					req.query.filter = 'posts.code,posts.userCode,posts.title,posts.body,posts.registrationDate,posts.categoryCode';
 
 				}
 
@@ -165,15 +191,15 @@ checkPermits = async (req, res, next) => {
 
 			if (!isNaN(req.params.userCode)) {
 
-				result = await QUERY(USER.getUserBy({'users.code': req.params.userCode}));
+				result = await QUERY(USER.getUserBy(`users.code=${req.params.userCode}`));
 
 			} else if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(req.params.userCode)) {
 
-				result = await QUERY(USER.getUserBy({'users.email': req.params.userCode}));
+				result = await QUERY(USER.getUserBy(`users.email='${req.params.userCode}'`));
 
 			} else {
 
-				result = await QUERY(USER.getUserBy({'users.user': req.params.userCode}));
+				result = await QUERY(USER.getUserBy(`users.user='${req.params.userCode}'`));
 
 			}
 
@@ -181,9 +207,9 @@ checkPermits = async (req, res, next) => {
 
 				let user = result[0];
 
-				if (user['users.appCode'] == res.locals.application.code || res.locals.application.token == CONFIG.API_TOKEN) {
+				if (res.locals.application.token == CONFIG.API_TOKEN) {
 
-					if ((req.session.user && req.session.user.categoryCode == CONFIG.ADMIN_CATEGORY)) {
+					if ((!req.session.user || (req.session.user && req.session.user.categoryCode == CONFIG.ADMIN_CATEGORY))) {
 
 						next();
 
@@ -194,10 +220,14 @@ checkPermits = async (req, res, next) => {
 
 					} else {
 
-						// TODO Limpiar body
-						next();
+						res.status(200).json({status: 'error', data: 'Error checking permissions | You do not have permissions to do that'});
 
 					}
+
+				} else if (user['users.appCode'] == res.locals.application.code) {
+
+						// TODO Limpiar body
+						next();
 
 				} else {
 

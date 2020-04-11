@@ -40,7 +40,7 @@ class User {
 
 	}
 
-	static getUserBy (params, filter = 'users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.birthDate,users.recoverURLCode,users.recoverCode,apps.code,apps.userCode,apps.token,apps.categoryCode,apps.name,apps.registrationDate,userCategories.code,userCategories.name,userCategories.description,userCategories.price,userCategories.maximumApps', orderBy = null, order = 'asc') {
+	static getUserBy (params, filter = 'users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.recoverURLCode,users.recoverCode,apps.code,apps.userCode,apps.token,apps.categoryCode,apps.name,apps.registrationDate,apps.lastUpdate,userCategories.code,userCategories.name,userCategories.description,userCategories.price,userCategories.maximumApps', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -75,9 +75,17 @@ class User {
 
 			query.push('where');
 
-			for (let param in params) {
+			let finalParams = params.split(',')
 
-				query.push(param, '=', `'${params[param]}'`, 'and');
+			for (let param in finalParams) {
+
+				if (finalParams[param] == 'undefined') {
+
+					continue;
+
+				}
+
+				query.push(finalParams[param], 'and');
 
 			}
 
@@ -111,9 +119,17 @@ class User {
 
 			query.push('where');
 
-			for (let param in params) {
+			let finalParams = params.split(',')
 
-				query.push(param, '=', `'${params[param]}'`, 'and');
+			for (let param in finalParams) {
+
+				if (finalParams[param] == 'undefined') {
+
+					continue;
+
+				}
+
+				query.push(finalParams[param], 'and');
 
 			}
 
@@ -141,11 +157,15 @@ class User {
 
 			for (let field in fields) {
 
-				if (field == 'password') {
+				if (/password/.test(field)) {
 
 					query.push(field, '=', `'${PASSWORD.encryptPassword(fields[field])}'`, ',');
 
-				} else {
+				} else if (/lastUpdate/.test(field)) {
+
+					query.push(field, '=', fields[field], ',');
+
+				}else {
 
 					query.push(field, '=', `'${fields[field]}'`, ',');
 
@@ -168,9 +188,17 @@ class User {
 
 			query.push('where');
 
-			for (let param in params) {
+			let finalParams = params.split(',')
 
-				query.push(param, '=', `'${params[param]}'`, 'and');
+			for (let param in finalParams) {
+
+				if (finalParams[param] == 'undefined') {
+
+					continue;
+
+				}
+
+				query.push(finalParams[param], 'and');
 
 			}
 

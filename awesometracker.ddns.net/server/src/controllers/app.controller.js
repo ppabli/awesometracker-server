@@ -75,8 +75,6 @@ logout = async (req, res) => {
 
 			if (!error) {
 
-				QUERY(USER.insertSessionLog(userCopy.code, 'session stop', req.headers['user-agent'].split(0, 250)));
-
 				res.status(200).json({status: 'ok', data: 'Session closed successfully'});
 
 			} else {
@@ -177,12 +175,11 @@ recoverAccount = async (req, res) => {
 
 	try {
 
-		/* TODO Retocar el borrado de codigos de acceso */
 		let result = await REQUEST.patch({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: req.body});
 
 		if (result.status == 'ok') {
 
-			result = await REQUEST.patch({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {recoverURLCode: '', recoverCode: ''}});
+			result = await REQUEST.patch({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.recoverURLCode': '', 'users.recoverCode': ''}});
 
 			result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}})
 
@@ -235,25 +232,11 @@ recoverAccount = async (req, res) => {
 
 }
 
-download = async (req, res) => {
-
-	try {
-
-		res.status(200);
-
-	} catch (e) {
-
-		res.status(200).json({status: 'error', data: e, msg: 'General error'});
-
-	}
-
-}
-
 addLog = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.post({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode}/trackerLogs`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {app: req.body.app, start: req.body.start, stop: req.body.stop}});
+		let result = await REQUEST.post({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode}/trackerLogs`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'trackerLogs.app': req.body['trackerLogs.app'], 'trackerLogs.start': req.body['trackerLogs.start'], 'trackerLogs.stop': req.body['trackerLogs.stop']}});
 		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
 
 	} catch (e) {
@@ -283,7 +266,7 @@ addApplication = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.post({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user.code}/applications`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {category: req.body.category, app: req.body.app}});
+		let result = await REQUEST.post({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user.code}/applications`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'applications.category': req.body.category, 'applications.app': req.body.app}});
 		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
 
 	} catch (e) {
@@ -298,7 +281,7 @@ updateApplication = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.patch({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user.code}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {category: req.body.category, app: req.body.application}});
+		let result = await REQUEST.patch({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user.code}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'applications.category': req.body['applications.category'], 'applications.app': req.body['applications.app']}});
 		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
 
 	} catch (e) {
@@ -324,6 +307,38 @@ deleteApplication = async (req, res) => {
 
 }
 
+updateAccount = async (req, res) => {
+
+	try {
+
+		let result = await REQUEST.patch({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user.code}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: req.body.data});
+		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+
+	} catch (e) {
+
+		res.status(200).json({status: 'error', data: e, msg: 'General error'});
+
+	}
+
+}
+
+deleteAccount = async (req, res) => {
+
+	try {
+
+		console.log('Entro');
+
+		let result = await REQUEST.delete({url: `http://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user.code}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+
+	} catch (e) {
+
+		res.status(200).json({status: 'error', data: e, msg: 'General error'});
+
+	}
+
+}
+
 data = async (req, res) => {
 
 	try {
@@ -331,6 +346,20 @@ data = async (req, res) => {
 		if (req.params.operationCode) {
 
 			let result = null;
+			let query = [];
+			let url = '';
+
+			for (param in req.query) {
+
+				if (Number(req.params.operationCode) == 1 && req.query.userCode && req.query.userCode == 1) {
+
+					req.query.userCode = user.code;
+
+				}
+
+				query.push(`${param}=${req.query[param]}`);
+
+			}
 
 			switch(Number(req.params.operationCode)) {
 
@@ -343,64 +372,69 @@ data = async (req, res) => {
 				/* Obtiene el perfil del usuario */
 				case 1:
 
-					result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/users/${req.query.userCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
-
+					url = `http://awesometracker.ddns.net/api/v1/users/${req.query.userCode}`;
 					break
 
 				/* Obtiene los logs del usuario */
 				case 2:
 
-					result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/users/${user.code}/trackerLogs?orderBy=${req.query.orderBy}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
-
+					url = `http://awesometracker.ddns.net/api/v1/users/${user.code}/trackerLogs`;
 					break;
 
 				/* Obtiene las aplicaciones del usuario */
 				case 3:
 
-					result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/users/${user.code}/applications?orderBy=${req.query.orderBy}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
-
+					url = `http://awesometracker.ddns.net/api/v1/users/${user.code}/applications`;
 					break;
 
 					/* Obtiene todos los usuarios del sistema */
 				case 4:
 
-					result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/users?orderBy=${req.query.orderBy}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
-
+					url = `http://awesometracker.ddns.net/api/v1/users`;
 					break;
 
 				/* Obtiene todos los trackerLogs del sistema */
 				case 5:
 
-					result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/trackerLogs?orderBy${req.query.orderBy}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
-
+					url = `http://awesometracker.ddns.net/api/v1/trackerLogs`;
 					break;
 
 				/* Obtiene todos las apps del sistema */
 				case 6:
 
-					result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/apps?orderBy=${req.query.orderBy}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
-
+					url = 'http://awesometracker.ddns.net/api/v1/apps';
 					break;
 
 				/* Obtiene todos las applications del sistema */
 				case 7:
 
-					result = await REQUEST.get({url: `http://awesometracker.ddns.net/api/v1/applications?orderBy=${req.query.orderBy}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
-
+					url = 'http://awesometracker.ddns.net/api/v1/applications';
 					break;
+
+				/* Obtiene los todos los posts */
+				case 8:
+
+					url = 'http://awesometracker.ddns.net/api/v1/posts';
+					break;
+
+				/* Obtiene todas las categorias de usuario del sistema */
+				case 9:
+
+					url = `http://awesometracker.ddns.net/api/v1/userCategories`;
+					break;
+
+			}
+
+			if (Number(req.params.operationCode) != 0) {
+
+				if (query.length != 0) {
+
+					url = `${url}?${query.join('&')}`;
+
+				}
+
+				result = await REQUEST.get({url: url, json: true, headers: {token: CONFIG.API_TOKEN}});
+				res.status(200).json({status: result.status, data: result.data, msg: result.msg});
 
 			}
 
@@ -418,4 +452,4 @@ data = async (req, res) => {
 
 };
 
-module.exports = {index, access, logout, createAccount, forgotPassword, recoverAccount, data, addLog, deleteLog, addApplication, updateApplication, deleteApplication, download};
+module.exports = {index, access, logout, createAccount, forgotPassword, recoverAccount, data, addLog, deleteLog, addApplication, updateApplication, deleteApplication, updateAccount, deleteAccount};

@@ -22,10 +22,6 @@ ROUTER.post('/recoverAccount', APP_CONTROLLER.recoverAccount);
 
 ROUTER.use([APP_MIDDLEWARES.checkCalls, APP_MIDDLEWARES.userConect, APP_MIDDLEWARES.privateRoutes]);
 
-/* Ruta descarga */
-
-ROUTER.get('/dashboard/download/:downloadCode', APP_CONTROLLER.download);
-
 /* Rutas para direccionar */
 ROUTER.get('/dashboard', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/metrics', APP_CONTROLLER.index);
@@ -34,6 +30,7 @@ ROUTER.get('/dashboard/downloads', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/logs', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/applications', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/profile/:userCcode?', APP_CONTROLLER.index);
+ROUTER.get('/dashboard/profile/:userCcode?/editProfile', APP_CONTROLLER.index);
 
 ROUTER.get('/dashboard/admin/users', [APP_MIDDLEWARES.adminRoutes], APP_CONTROLLER.index);
 ROUTER.get('/dashboard/admin/logs', [APP_MIDDLEWARES.adminRoutes], APP_CONTROLLER.index);
@@ -50,5 +47,7 @@ ROUTER.post('/dashboard/deleteLog', APP_CONTROLLER.deleteLog);
 ROUTER.post('/dashboard/addApplication', APP_CONTROLLER.addApplication);
 ROUTER.post('/dashboard/updateApplication', APP_CONTROLLER.updateApplication);
 ROUTER.post('/dashboard/deleteApplication', APP_CONTROLLER.deleteApplication);
+ROUTER.post('/dashboard/updateAccount', APP_CONTROLLER.updateAccount);
+ROUTER.post('/dashboard/deleteAccount', APP_CONTROLLER.deleteAccount);
 
 module.exports = ROUTER;

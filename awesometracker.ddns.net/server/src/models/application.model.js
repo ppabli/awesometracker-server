@@ -7,12 +7,13 @@ class Application {
 		this.category = category,
 		this.app = app
 		this.registrationDate = "current_timestamp()";
+		this.lastUpdate = "current_timestamp()";
 
 	}
 
 	insert() {
 
-		return `insert into applications values (${this.code}, ${this.userCode}, '${this.category}', '${this.app}', ${this.registrationDate})`
+		return `insert into applications values (${this.code}, ${this.userCode}, '${this.category}', '${this.app}', ${this.registrationDate}, ${this.lastUpdate})`
 
 	}
 
@@ -22,7 +23,7 @@ class Application {
 
 	}
 
-	static getApplicationBy (params, filter = 'applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.birthDate,users.recoverURLCode,users.recoverCode', orderBy = null, order = 'asc') {
+	static getApplicationBy (params, filter = 'applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.recoverURLCode,users.recoverCode', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -57,9 +58,17 @@ class Application {
 
 			query.push('where');
 
-			for (let param in params) {
+			let finalParams = params.split(',')
 
-				query.push(param, '=', `'${params[param]}'`, 'and');
+			for (let param in finalParams) {
+
+				if (finalParams[param] == 'undefined') {
+
+					continue;
+
+				}
+
+				query.push(finalParams[param], 'and');
 
 			}
 
@@ -93,7 +102,15 @@ class Application {
 
 			for (let field in fields) {
 
-				query.push(field, '=', `'${fields[field]}'`, ',');
+				if (/lastUpdate/.test(field)) {
+
+					query.push(field, '=', fields[field], ',');
+
+				} else {
+
+					query.push(field, '=', `'${fields[field]}'`, ',');
+
+				}
 
 			}
 
@@ -108,13 +125,21 @@ class Application {
 
 		if (params) {
 
-			enter = !enter
+			enter = !enter;
 
 			query.push('where');
 
-			for (let param in params) {
+			let finalParams = params.split(',')
 
-				query.push(param, '=', `'${params[param]}'`, 'and');
+			for (let param in finalParams) {
+
+				if (finalParams[param] == 'undefined') {
+
+					continue;
+
+				}
+
+				query.push(finalParams[param], 'and');
 
 			}
 
@@ -139,13 +164,21 @@ class Application {
 
 		if (params) {
 
-			enter = !enter
+			enter = !enter;
 
 			query.push('where');
 
-			for (let param in params) {
+			let finalParams = params.split(',')
 
-				query.push(param, '=', `'${params[param]}'`, 'and');
+			for (let param in finalParams) {
+
+				if (finalParams[param] == 'undefined') {
+
+					continue;
+
+				}
+
+				query.push(finalParams[param], 'and');
 
 			}
 
