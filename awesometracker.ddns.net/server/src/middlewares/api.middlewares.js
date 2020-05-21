@@ -1,4 +1,17 @@
-/* ------------------------------------------ General ------------------------------------------ */
+redirect = (req, res, next) => {
+
+	if(!req.secure) {
+
+		res.redirect('https://' + req.headers.host + req.url);
+
+	} else {
+
+		next();
+
+	}
+
+}
+
 escapeHTML = async (req, res, next) => {
 
 	for (header in req.headers) {
@@ -29,7 +42,7 @@ checkToken = async (req, res, next) => {
 
 		if (req.headers.token) {
 
-			let result = await QUERY(APP.checkToken(req.headers.token));
+			let result = await QUERY(APP.getAppBy(`apps.token='${req.headers.token}'`));
 
 			if (result.length != 0) {
 
@@ -38,19 +51,19 @@ checkToken = async (req, res, next) => {
 
 			} else {
 
-				res.status(200).json({status: 'error', data: 'The provided token is not correct'});
+				res.status(200).json({status: 'error', data: [], msg: 'The provided token is not correct'});
 
 			}
 
 		} else {
 
-		res.status(200).json({'status': 'error', 'data': 'No token has been provided'});
+		res.status(200).json({status: 'error', data: [], msg: 'No token has been provided'});
 
 		}
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: e});
+		res.status(200).json({status: 'error', data: [], msg: e});
 
 	}
 
@@ -60,13 +73,13 @@ checkCalls = async (req, res, next) => {
 
 	try {
 
-		let result = await QUERY(APP.countCalls(res.locals.application.code));
+		let result = await QUERY(APP.countCalls(res.locals.application['apps.code']));
 
 		if (result.length != 0) {
 
 			let calls = result[0]['count(*)'];
 
-			result = await QUERY(APP.getMaximumCallsBy('code', res.locals.application.categoryCode));
+			result = await QUERY(APP.getMaximumCallsBy('code', res.locals.application['apps.categoryCode']));
 
 			if (result.length != 0) {
 
@@ -74,12 +87,12 @@ checkCalls = async (req, res, next) => {
 
 				if (maximumCalls == 0 || calls < maximumCalls) {
 
-					QUERY(RECORDER.insertApiCall(res.locals.application.code, req.url, req.method));
+					QUERY(CALL.insertApiCall(res.locals.application['apps.code'], /([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/.exec(req.ip)[0], req.url, req.method));
 					next();
 
 				} else {
 
-					res.status(200).json({status : 'error', data : 'The maximum number of requests has been exceeded'})
+					res.status(200).json({status: 'error', data: [], msg: 'The maximum number of requests has been exceeded'})
 
 				}
 
@@ -89,49 +102,142 @@ checkCalls = async (req, res, next) => {
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data : e});
+		res.status(200).json({status: 'error', data: [], msg: e});
 
 	}
 
 };
 
+checkApp = async (req, res, next) => {
+
+	try {
+
+		let result = await QUERY(USER.getUserBy(`users.code=${req.params.userCode}`));
+
+		if (result.length == 1) {
+
+			let user = result[0];
+
+			result = await QUERY(APP.getAppBy(`apps.userCode=${req.params.userCode}`));
+
+			let apps = result;
+
+			if (user['userCategories.maximumApps'] == 0) {
+
+				next();
+
+			} else {
+
+				if (user['userCategories.maximumApps'] > apps.length) {
+
+					next();
+
+				} else {
+
+					res.status(200).json({status: 'error', data: [], msg: 'Maximum apps reached'});
+
+				}
+
+			}
+
+		} else {
+
+			res.status(200).json({status: 'error', data: [], msg: 'Invalid user provided'});
+
+		}
+
+	} catch (e) {
+
+		res.status(200).json({status: 'error', data: [], msg: e});
+
+	}
+
+}
+
+checkStatus = async (req, res, next) => {
+
+	try {
+
+		if (res.locals.application['apps.statusCode'] == 1) {
+
+			if (req.params.userCode) {
+
+				let result = await QUERY(USER.getUserBy(`users.code=${req.params.userCode}`));
+
+				user = result[0];
+
+				if (user['users.statusCode'] == 1) {
+
+					next()
+
+				} else {
+
+					res.status(200).json({status: 'error', data: [], msg: `Invalid app status | App status: ${user['status.name']} | Status description: ${user['status.description']}`})
+
+				}
+
+			} else {
+
+				next();
+
+			}
+
+		} else {
+
+			res.status(200).json({status: 'error', data: [], msg: `Invalid app status | App status: ${res.locals.application['status.name']} | Status description: ${res.locals.application['status.description']}`})
+
+		}
+
+	} catch (e) {
+
+		res.status(200).json({status: 'error', data: [], msg: e});
+
+	}
+
+}
+
 filter = (req, res, next) => {
 
 	try {
 
-		if (res.locals.application.token == CONFIG.API_TOKEN) {
+		if (res.locals.application['apps.token'] == CONFIG.API_TOKEN) {
 
 			next();
 
 		} else {
 
+			let routeParts = req.route.path.split('/');
+			let route = `${routeParts[routeParts.length - 2]}/${routeParts[routeParts.length - 1]}`;
+
 			let wheres = req.query.where ? req.query.where.split(',') : [];
 
-			if (/users/.test(req.route.path)) {
+			delete wheres['users.password'];
+			delete wheres['users.recoverURLCode'];
+			delete wheres['users.recoverLCode'];
+			delete wheres['apps.token'];
+			delete wheres['apiCalls.ipv4'];
 
-				wheres.push('users.code!=1', "users.user!='admin'");
+			if (/posts/.test(route)) {
 
-			} else if (/apps/.test(req.route.path)) {
-
-				wheres.push('apps.code!=1');
-
-			} else if (/userCategories/.test(req.route.path)) {
-
-				wheres.push('userCategories.name!="ADMIN"', 'userCategories.code!=1');
-
-			} else if (/postCategories/.test(req.route.path)) {
-
-				wheres.push('postCategories.name!="ADMIN"', 'postCategories.code!=1');
+				wheres.push('posts.categoryCode!=1');
 
 			}
 
-			req.query.where = wheres.join(',');
+			if (wheres.length == 0) {
+
+				delete req.query.where;
+
+			} else {
+
+				req.query.where = wheres.join(',');
+
+			}
 
 			let filters = req.query.filter ? req.query.filter.split(',') : null;
 
 			for (filter in filters) {
 
-				if (/password/.test(filters[filter].toLowerCase()) || /recover/.test(filters[filter].toLowerCase()) || /token/.test(filters[filter].toLowerCase())) {
+				if (/password/.test(filters[filter].toLowerCase()) || /recover/.test(filters[filter].toLowerCase()) || /token/.test(filters[filter].toLowerCase()) || /ipv4/.test(filters[filter].toLowerCase())) {
 
 					filters.splice(filter, 1);
 
@@ -145,25 +251,25 @@ filter = (req, res, next) => {
 
 			} else {
 
-				if (/trackerLogs/.test(req.route.path)) {
+				if (/trackerLogs/.test(route)) {
 
-					req.query.filter = 'trackerLogs.code,trackerLogs.userCode,trackerLogs.applicationCode,trackerLogs.start,trackerLogs.stop,trackerLogs.duration';
+					req.query.filter = 'trackerLogs.code,trackerLogs.userCode,trackerLogs.applicationCode,trackerLogs.start,trackerLogs.stop,trackerLogs.duration,users.code,users.appCode,users.statusCode,users.diff,users.user,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.imageURL,applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate';
 
-				} else if (/applications/.test(req.route.path)) {
+				} else if (/applications/.test(route)) {
 
-					req.query.filter = 'applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate';
+					req.query.filter = 'applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate,users.code,users.appCode,users.statusCode,users.diff,users.user,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.imageURL';
 
-				} else if (/users/.test(req.route.path)) {
+				} else if (/users/.test(route)) {
 
-					req.query.filter = 'users.code,users.appCode,users.diff,users.user,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate';
+					req.query.filter = 'users.code,users.appCode,users.statusCode,users.diff,users.user,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.imageURL,apps.code,apps.userCode,apps.statusCode,apps.categoryCode,apps.name,apps.description,apps.imageURL,apps.registrationDate,apps.lastUpdate,userCategories.code,userCategories.name,userCategories.description,userCategories.price,userCategories.maximumApps,status.code,status.name,status.description';
 
-				} else if (/apps/.test(req.route.path)) {
+				} else if (/apps/.test(route)) {
 
-					req.query.filter = 'apps.code,apps.userCode,apps.categoryCode,apps.name,apps.registrationDate,apps.lastUpdate';
+					req.query.filter = 'apps.code,apps.userCode,apps.statusCode,apps.categoryCode,apps.name,apps.description,apps.imageURL,apps.registrationDate,apps.lastUpdate,users.code,users.appCode,users.statusCode,users.diff,users.user,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.imageURL,appCategories.code,appCategories.name,appCategories.description,appCategories.price,appCategories.maximumCalls,status.code,status.name,status.description';
 
-				} else if (/posts/.test(req.route.path)) {
+				} else if (/apiCalls/.test(route)) {
 
-					req.query.filter = 'posts.code,posts.userCode,posts.title,posts.body,posts.registrationDate,posts.categoryCode';
+					req.query.filter = 'apiCalls.code,apiCalls.appCode,apiCalls.url,apiCalls.method,apiCalls.registrationDate,apps.code,apps.userCode,apps.statusCode,apps.categoryCode,apps.name,apps.description,apps.imageURL,apps.registrationDate,apps.lastUpdate';
 
 				}
 
@@ -175,7 +281,7 @@ filter = (req, res, next) => {
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: e, msg: 'General error'});
+		res.status(200).json({status: 'error', data: [], msg: 'General error'});
 
 	}
 
@@ -203,58 +309,105 @@ checkPermits = async (req, res, next) => {
 
 			}
 
-			if (result.length != 0) {
+			if (result.length == 1) {
 
 				let user = result[0];
 
-				if (res.locals.application.token == CONFIG.API_TOKEN) {
+				if (res.locals.application['apps.token'] == CONFIG.API_TOKEN) {
 
-					if ((!req.session.user || (req.session.user && req.session.user.categoryCode == CONFIG.ADMIN_CATEGORY))) {
+					next();
 
-						next();
+				} else if (user['users.appCode'] == res.locals.application['apps.code']) {
 
-					} else if (req.session.user && req.session.user.code == user.code) {
+					let valid = true
 
-						// TODO Limpiar body parcial
-						next();
+					delete req.body['apps.code'];
+					delete req.body['users.code'];
+					delete req.body['users.registrationDate'];
+					delete req.body['users.lastUpdate'];
+					delete req.body['apps.registrationDate'];
+					delete req.body['apps.lastUpdate'];
+					delete req.body['applications.registrationDate'];
+					delete req.body['applications.lastUpdate'];
+					delete req.body['users.categoryCode'];
+					delete req.body['apps.categoryCode'];
+					delete req.body['apps.userCode'];
+					delete req.body['apps.token'];
 
-					} else {
+					if (req.body['users.appCode']) {
 
-						res.status(200).json({status: 'error', data: 'Error checking permissions | You do not have permissions to do that'});
+						valid = false;
+
+						result = await QUERY(APP.getAppBy(`apps.code='${req.body['users.appCode']}'`));
+
+						if (result.length == 1) {
+
+							let app = result[0];
+
+							if (app['apps.userCode'] == res.locals.application['apps.userCode']) {
+
+								valid = true
+
+							}
+
+						}
 
 					}
 
-				} else if (user['users.appCode'] == res.locals.application.code) {
+					if (req.body['applications.userCode']) {
 
-						// TODO Limpiar body
-						next();
+						valid = false;
+
+						result = await QUERY(APP.getAppBy(`apps.userCode='${res.locals.application['apps.useCode']}'`));
+
+						let apps = result.map(app => app['apps.code']);
+
+						for (let app = 0; app < apps.length && !valid; app++) {
+
+							result = await QUERY(USER.getUserBy(`users.appCode='${apps[app]}'`));
+
+							let users = result.map(user => user['users.code']);
+
+							for (let user = 0; user < users.length && !valid; user++) {
+
+								if (users[user] == req.body['applications.userCode']) {
+
+									valid = true
+
+								}
+
+							}
+
+						}
+
+					}
+
+					valid ? next() : res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that'});
 
 				} else {
 
-					res.status(200).json({status: 'error', data: 'Error checking permissions | You do not have permissions to do that'});
+					res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that'});
 
 				}
 
 			} else {
 
-				res.status(200).json({status: 'error', data: 'Error checking permissions | User does not exist'});
+				res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | User does not exist'});
 
 			}
 
 		} else {
 
-			res.status(200).json({status : 'error', data : 'Usercode missing'});
+			res.status(200).json({status : 'error', data: [], msg: 'Usercode missing'});
 
 		}
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: e});
+		res.status(200).json({status: 'error', data: [], msg: e});
 
 	}
 
 }
 
-/* ------------------------------------------ x ------------------------------------------ */
-
-module.exports = {escapeHTML, checkToken, checkCalls, checkPermits, filter};
+module.exports = {redirect, escapeHTML, checkToken, checkCalls, checkPermits, checkApp, checkStatus, filter};

@@ -17,7 +17,7 @@ class TrackerLog {
 
 	}
 
-	static getTrackerLogBy (params, filter = 'trackerLogs.code,trackerLogs.userCode,trackerLogs.applicationCode,trackerLogs.start,trackerLogs.stop,trackerLogs.duration,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.recoverURLCode,users.recoverCode,applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate', orderBy = null, order = 'asc') {
+	static getTrackerLogBy (params, filter = 'trackerLogs.code,trackerLogs.userCode,trackerLogs.applicationCode,trackerLogs.start,trackerLogs.stop,trackerLogs.duration,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.imageURL,users.recoverURLCode,users.recoverCode,applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -56,7 +56,7 @@ class TrackerLog {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 
@@ -100,7 +100,7 @@ class TrackerLog {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 

@@ -1,6 +1,6 @@
-class UserCategory {
+class Status {
 
-	static getUserCategoryBy (params, filter = 'userCategories.code,userCategories.name,userCategories.description,userCategories.price,userCategories.maximumApps', orderBy = null, order = 'asc') {
+	static getStatusBy (params, filter = 'status.code,status.name,status.description', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -27,7 +27,7 @@ class UserCategory {
 
 		}
 
-		query.push('from', 'userCategories');
+		query.push('from', 'status');
 
 		if (params) {
 
@@ -69,4 +69,4 @@ class UserCategory {
 
 }
 
-module.exports = UserCategory; 
+module.exports = Status; 

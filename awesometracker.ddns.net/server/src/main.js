@@ -11,22 +11,31 @@ const UTIL = require('util');
 DOTENV.config();
 CONFIG = process.env;
 
-REQUEST = require('request-promise')
+REQUEST = require('request-promise');
+REQUEST2 = require('request');
 EXPRESS = require('express');
 NODEMAILER = require('nodemailer');
+FORMIDABLE = require('formidable');
+FS = require('fs');
+CRYPTO = require('crypto');
+PAYPAL = require('@paypal/checkout-server-sdk');
 
-PASSWORD = require('./lib/password');
 FUNCTIONS = require('./lib/functions');
+PASSWORD = require('./lib/password');
+PAYPAL_CLIENT = require('./lib/paypal');
+DB = require('./lib/database')
 
 USER = require('./models/user.model');
 APP = require('./models/app.model');
 APPLICATION = require('./models/application.model');
 TRACKERLOG = require('./models/trackerLog.model');
 POST = require('./models/post.model');
-USERCATEGORY = require('./models/userCategory.model');
-RECORDER = require('./models/recorder.model');
+USER_CATEGORY = require('./models/userCategory.model');
+APP_CATEGORY = require('./models/appCategory.model');
+POST_CATEGORY = require('./models/postCategory.model');
+CALL = require('./models/call.model');
+STATUS = require('./models/status.model');
 
-DB = require('./db/database')
 
 QUERY = UTIL.promisify(DB.query).bind(DB);
 
@@ -35,9 +44,9 @@ APP_MIDDLEWARES = require('./middlewares/app.middlewares')
 API_CONTROLLER = require('./controllers/api.controller');
 APP_CONTROLLER = require('./controllers/app.controller');
 
-/* const privateKey = FS.readFileSync(`${config.PRIVATE_KEY}`, 'utf8');
-const certificate = FS.readFileSync(`${config.CERT}`, 'utf8');
-const ca = FS.readFileSync(`${config.CA}`, 'utf8');
+const privateKey = FS.readFileSync(`${CONFIG.KEY}`, 'utf8');
+const certificate = FS.readFileSync(`${CONFIG.CERT}`, 'utf8');
+const ca = FS.readFileSync(`${CONFIG.CA}`, 'utf8');
 
 const CREDENTIALS = {
 
@@ -45,14 +54,22 @@ const CREDENTIALS = {
 	cert: certificate,
 	ca: ca
 
-}; */
+};
 
 const APIROUTES = require('./routes/api.route');
 const APPROUTES = require('./routes/app.route');
 
 const SERVER = EXPRESS();
 
-SERVER.use(EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist'));
+SERVER.set('trust proxy', true)
+
+SERVER.use('/js', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/js'));
+SERVER.use('/css', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/css'));
+SERVER.use('/img', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/img'));
+SERVER.use('/favicon.ico', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/favicon.ico'));
+
+SERVER.use('/userImg', EXPRESS.static('/var/www/awesometracker.ddns.net/userImg'));
+SERVER.use('/appImg', EXPRESS.static('/var/www/awesometracker.ddns.net/appImg'));
 
 SERVER.use(BODYPARSER.json());
 SERVER.use(BODYPARSER.urlencoded({extended: true}));
@@ -60,14 +77,15 @@ SERVER.use(COOKIEPARSER());
 SERVER.use(SESSION({
 
 	secret: CONFIG.COOKIE_SECRET,
-	resave: true,
+	resave: false,
 	saveUninitialized: true,
 	cookie: {
 
 		path: '/',
 		httpOnly: true,
-		maxAge: 1000 * 60 * 30,
-		sameSite: true
+		maxAge: 1000 * 60 * 60,
+		sameSite: true,
+		secure: true
 
 	},
 
@@ -76,7 +94,7 @@ SERVER.use(SESSION({
 }));
 
 SERVER.use('/api/v1/', APIROUTES);
-SERVER.use('/', APPROUTES);
+SERVER.use('', APPROUTES);
 
 const HTTPSERVER = HTTP.createServer(SERVER);
 HTTPSERVER.listen(CONFIG.SERVER_HTTP_PORT, () => {
@@ -85,10 +103,9 @@ HTTPSERVER.listen(CONFIG.SERVER_HTTP_PORT, () => {
 
 });
 
-//TODO faltan agregar las credenciales
-/* const HTTPSSERVER = HTTPS.createServer(CREDENTIALS, SERVER);
-HTTPSSERVER.listen(config.SERVER_HTTPS_PORT, () => {
+const HTTPSSERVER = HTTPS.createServer(CREDENTIALS, SERVER);
+HTTPSSERVER.listen(CONFIG.SERVER_HTTPS_PORT, () => {
 
-	console.log(`Servidor https funcionando en puerto ${config.PUERTO_WEB_HTTPS}`);
+	console.log(`Servidor https funcionando en puerto ${CONFIG.SERVER_HTTPS_PORT}`);
 
-}); */
+});

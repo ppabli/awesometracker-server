@@ -23,7 +23,7 @@ class Application {
 
 	}
 
-	static getApplicationBy (params, filter = 'applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.recoverURLCode,users.recoverCode', orderBy = null, order = 'asc') {
+	static getApplicationBy (params, filter = 'applications.code,applications.userCode,applications.category,applications.app,applications.registrationDate,applications.lastUpdate,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.imageURL,users.recoverURLCode,users.recoverCode', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -62,7 +62,7 @@ class Application {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 
@@ -133,7 +133,7 @@ class Application {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 
@@ -172,7 +172,7 @@ class Application {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 

@@ -1,24 +1,28 @@
 class User {
 
-	constructor (appCode, user, password, email, name, surname, birthDate) {
+	constructor (appCode, user, password, email, name, surname, birthDate, diff = 1, imageURL = 'https://awesometracker.ddns.net/userImg/default.png', statusCode = 1, categoryCode = 7, visibility = 'public') {
 
 		this.code = 0;
 		this.appCode = appCode;
-		this.diff = 1
+		this.statusCode = statusCode;
+		this.visibility = visibility;
+		this.diff = diff;
 		this.user = user;
 		this.password = PASSWORD.encryptPassword(password);
 		this.email = email;
-		this.categoryCode = 3
+		this.categoryCode = categoryCode;
 		this.name = name;
 		this.surname = surname;
 		this.registrationDate = "current_timestamp()";
+		this.lastUpdate = "current_timestamp()";
 		this.birthDate = birthDate;
+		this.imageURL = imageURL;
 
 	}
 
 	insert () {
 
-		return `insert into users values (${this.code}, '${this.appCode}', ${this.diff}, '${this.user}', '${this.password}', '${this.email}', ${this.categoryCode}, '${this.name}', '${this.surname}', ${this.registrationDate}, '${this.birthDate}', '', '')`;
+		return `insert into users values (${this.code}, ${this.appCode}, ${this.statusCode}, '${this.visibility}', ${this.diff}, '${this.user}', '${this.password}', '${this.email}', ${this.categoryCode}, '${this.name}', '${this.surname}', ${this.registrationDate}, ${this.lastUpdate}, '${this.birthDate}', '${this.imageURL}', '', '')`;
 
 	}
 
@@ -40,7 +44,7 @@ class User {
 
 	}
 
-	static getUserBy (params, filter = 'users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.recoverURLCode,users.recoverCode,apps.code,apps.userCode,apps.token,apps.categoryCode,apps.name,apps.registrationDate,apps.lastUpdate,userCategories.code,userCategories.name,userCategories.description,userCategories.price,userCategories.maximumApps', orderBy = null, order = 'asc') {
+	static getUserBy (params, filter = 'users.code,users.appCode,users.statusCode,users.visibility,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.lastUpdate,users.birthDate,users.imageURL,users.recoverURLCode,users.recoverCode,apps.code,apps.userCode,apps.statusCode,apps.token,apps.categoryCode,apps.name,apps.description,apps.imageURL,apps.registrationDate,apps.lastUpdate,userCategories.code,userCategories.name,userCategories.description,userCategories.price,userCategories.maximumApps,status.code,status.name,status.description', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -67,7 +71,7 @@ class User {
 
 		}
 
-		query.push('from', 'users', 'inner', 'join', 'userCategories', 'on', 'users.categoryCode', '=', 'userCategories.code', 'inner', 'join', 'apps', 'on', 'users.appCode', '=', 'apps.code');
+		query.push('from', 'users', 'inner', 'join', 'userCategories', 'on', 'users.categoryCode', '=', 'userCategories.code', 'inner', 'join', 'apps', 'on', 'users.appCode', '=', 'apps.code', 'inner', 'join', 'status', 'on', 'users.statusCode', '=', 'status.code');
 
 		if (params) {
 
@@ -75,11 +79,11 @@ class User {
 
 			query.push('where');
 
-			let finalParams = params.split(',')
+			let finalParams = params.split(',');
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 
@@ -123,7 +127,7 @@ class User {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 
@@ -192,7 +196,7 @@ class User {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 

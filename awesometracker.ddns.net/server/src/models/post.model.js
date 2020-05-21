@@ -1,22 +1,6 @@
 class Post {
 
-	constructor (userCode, title, body) {
-
-		this.code = 0;
-		this.userCode = userCode;
-		this.title = title;
-		this.body = body;
-		this.registrationDate = "current_timestamp()";
-
-	}
-
-	insert() {
-
-		return `insert into posts values (${this.code}, ${this.userCode}, '${this.category}', '${this.app}', ${this.registrationDate})`
-
-	}
-
-	static getPostBy (params, filter = 'posts.code,posts.userCode,posts.title,posts.body,posts.registrationDate,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.birthDate,users.recoverURLCode,users.recoverCode,postCategories.code,postCategories.name,postCategories.description', orderBy = null, order = 'asc') {
+	static getPostBy (params, filter = 'posts.code,posts.userCode,posts.title,posts.body,posts.registrationDate,posts.categoryCode,users.code,users.appCode,users.diff,users.user,users.password,users.email,users.categoryCode,users.name,users.surname,users.registrationDate,users.birthDate,users.imageURL,users.recoverURLCode,users.recoverCode,postCategories.code,postCategories.name,postCategories.description', orderBy = null, order = 'asc') {
 
 		let query = ['select'];
 
@@ -55,7 +39,7 @@ class Post {
 
 			for (let param in finalParams) {
 
-				if (finalParams[param] == 'undefined') {
+				if (finalParams[param] == 'undefined' || param == '') {
 
 					continue;
 
