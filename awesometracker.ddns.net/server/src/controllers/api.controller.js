@@ -77,6 +77,12 @@ addUser = async (req, res) => {
 
 			}
 
+			if (/password|user|email|name|surname/.test(param)) {
+
+				req.body[param] = req.body[param].substring(0, 250);
+
+			}
+
 			if (/password/.test(param)) {
 
 				if (!(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$/.test(req.body[param]))) {
@@ -103,7 +109,7 @@ addUser = async (req, res) => {
 
 			if (/diff/.test(param)) {
 
-				if (isNaN(req.body[param])) {
+				if (isNaN(req.body[param]) || req.body[param] <= 0 || req.body[param] > 99999999999) {
 
 					ok = false;
 					message = 'Invalid diff';
@@ -127,7 +133,7 @@ addUser = async (req, res) => {
 
 			if (/appCode/.test(param)) {
 
-				let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]}`));
+				let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
 
 				if (result.length == 0) {
 
@@ -344,7 +350,7 @@ updateUser = async (req, res) => {
 
 			let user = result[0];
 
-			result = await QUERY(USER.checkUserException((req.body.user || user['users.user']), (req.body.email || user['users.email']), (req.body.name || user['users.name']), (req.body.surname || user['users.surname']), user['users.code']));
+			result = await QUERY(USER.checkUserException((req.body['users.user'] || user['users.user']), (req.body['users.email'] || user['users.email']), (req.body['users.name'] || user['users.name']), (req.body['users.surname'] || user['users.surname']), user['users.code']));
 
 			if (result.length == 0) {
 
@@ -355,6 +361,12 @@ updateUser = async (req, res) => {
 						ok = false;
 						message = 'Miss some data';
 						break;
+
+					}
+
+					if (/password|user|email|name|surname/.test(param)) {
+
+						req.body[param] = req.body[param].substring(0, 250);
 
 					}
 
@@ -384,7 +396,7 @@ updateUser = async (req, res) => {
 
 					if (/diff/.test(param)) {
 
-						if (isNaN(req.body[param])) {
+						if (isNaN(req.body[param]) || req.body[param] <= 0 || req.body[param] > 99999999999) {
 
 							ok = false;
 							message = 'Invalid diff';
@@ -408,7 +420,7 @@ updateUser = async (req, res) => {
 
 					if (/appCode/.test(param)) {
 
-						let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]}`));
+						let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
 
 						if (result.length == 0) {
 
@@ -977,6 +989,9 @@ addApplication = async (req, res) => {
 
 			if (req.body['applications.category'] && req.body['applications.app']) {
 
+				req.body['applications.category'] = req.body['applications.category'].substring(0, 250);
+				req.body['applications.app'] = req.body['applications.app'].substring(0, 250);
+
 				let exists = await QUERY(APPLICATION.getApplicationBy(`applications.userCode=${req.params.userCode},applications.app='${req.body['applications.app']}'`));
 
 				if (exists.length == 0) {
@@ -1036,6 +1051,18 @@ updateApplication = async (req, res) => {
 		if (req.params.userCode) {
 
 			if (req.params.applicationCode) {
+
+				if (req.body['applications.category']) {
+
+					req.body['applications.category'] = req.body['applications.category'].substring(0, 250);
+
+				}
+
+				if (req.body['applications.app']) {
+
+					req.body['applications.app'] = req.body['applications.app'].substring(0, 250);
+
+				}
 
 				let result = await QUERY(APPLICATION.checkApplicationException(req.params.applicationCode, req.params.userCode, req.body['applications.app']));
 
@@ -1221,6 +1248,12 @@ addApp = async (req, res) => {
 				ok = false;
 				message = 'Miss some data';
 				break;
+
+			}
+
+			if (/name|description/.test(param)) {
+
+				req.body[param] = req.body[param].substring(0, 250);
 
 			}
 
@@ -1424,6 +1457,12 @@ updateApp = async (req, res) => {
 								ok = false;
 								message = 'Miss some data';
 								break;
+
+							}
+
+							if (/name|description/.test(param)) {
+
+								req.body[param] = req.body[param].substring(0, 250);
 
 							}
 

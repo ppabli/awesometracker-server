@@ -28,13 +28,13 @@ access = async (req, res) => {
 
 				} else {
 
-					res.status(200).json({status: 'error', data:[], msg: 'Invalid user and password combination'});
+					res.status(200).json({status: 'error', data:[], msg: 'Invalid user or password'});
 
 				}
 
 			} else {
 
-				res.status(200).json({status: 'error', data:[], msg: 'Invalid user and password combination'});
+				res.status(200).json({status: 'error', data:[], msg: 'Invalid user'});
 
 			}
 
@@ -99,7 +99,7 @@ addUser = async (req, res) => {
 
 				if (fields['users.appCode']) {
 
-					let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+					let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps`, json: true, headers: {token: CONFIG.API_TOKEN}});
 
 					let apps = result.data.map(app => Number(app['apps.code']));
 
@@ -699,7 +699,7 @@ deleteUser = async (req, res) => {
 
 		let result = await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
 
-		if (result.status == 'ok' && req.body.userCode && req.body.userCode == user['users.code']) {
+		if (result.status == 'ok' && ((req.body.userCode && req.body.userCode == user['users.code']) || !req.body.userCode)) {
 
 			req.session.destroy();
 

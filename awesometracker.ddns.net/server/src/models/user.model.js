@@ -34,13 +34,13 @@ class User {
 
 	static checkUser (user, email, name, surname) {
 
-		return `select * from users where user = '${user}' or email = '${email}' or name = '${name}' and surname = '${surname}'`;
+		return `select * from users where users.user = '${user}' or users.email = '${email}' or users.name = '${name}' and users.surname = '${surname}'`;
 
 	}
 
 	static checkUserException (user, email, name, surname, code) {
 
-		return `select * from users where (user = '${user}' and code != ${code}) or (email = '${email}' and code != ${code}) or (name = '${name}' and code != ${code}) or (surname = '${surname}' and code != ${code})`;
+		return `select * from users where (users.user = '${user}' and users.code != ${code}) or (users.email = '${email}' and users.code != ${code}) or (users.name = '${name}' and users.surname = '${surname}' and users.code != ${code})`;
 
 	}
 

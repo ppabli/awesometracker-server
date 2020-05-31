@@ -7,7 +7,6 @@ const HTTP = require ('http');
 const HTTPS = require ('https');
 const UTIL = require('util');
 
-// Globales
 DOTENV.config();
 CONFIG = process.env;
 
@@ -35,7 +34,6 @@ APP_CATEGORY = require('./models/appCategory.model');
 POST_CATEGORY = require('./models/postCategory.model');
 CALL = require('./models/call.model');
 STATUS = require('./models/status.model');
-
 
 QUERY = UTIL.promisify(DB.query).bind(DB);
 
