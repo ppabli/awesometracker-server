@@ -450,7 +450,7 @@
 
 						});
 
-						this.$router.go('/dashboard');
+						this.$router.push('/login');
 
 					} else {
 

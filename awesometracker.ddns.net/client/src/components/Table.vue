@@ -192,7 +192,15 @@
 					<td>{{$functions.parseDate(log['trackerLogs.start'], true, true)}}</td>
 					<td>{{$functions.parseDate(log['trackerLogs.stop'], true, true)}}</td>
 					<td>{{log['trackerLogs.duration']}}</td>
-					<td v-if="!$route.params.userCode"><button class="btn btn-info" @click="seeUser(log)"><i class="fas fa-user"></i></button></td>
+					<td v-if="!$route.params.userCode">
+
+						<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${log['users.code']}`}">
+
+							<i class="fas fa-user"></i>
+
+						</router-link>
+
+					</td>
 
 				</tr>
 
@@ -210,7 +218,15 @@
 					<td>{{user['users.surname']}}</td>
 					<td>{{$functions.parseDate(user['users.registrationDate'], true, true)}}</td>
 					<td>{{$functions.parseDate(user['users.birthDate'], true, true)}}</td>
-					<td><button class="btn btn-info" @click="seeUser(user)"><i class="fas fa-user"></i></button></td>
+					<td>
+
+						<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${user['users.code']}`}">
+
+							<i class="fas fa-user"></i>
+
+						</router-link>
+
+					</td>
 
 				</tr>
 
@@ -245,7 +261,15 @@
 					<td>{{app['appCategories.name']}}</td>
 					<td>{{$functions.parseDate(app['apps.registrationDate'], true, true)}}</td>
 					<td>{{$functions.parseDate(app['apps.lastUpdate'], true, true)}}</td>
-					<td><button class="btn btn-info" @click="seeApp(app)"><i class="fas fa-atom"></i></button></td>
+					<td>
+
+						<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/apps/${app['apps.code']}`}">
+
+							<i class="fas fa-atom"></i>
+
+						</router-link>
+
+					</td>
 
 				</tr>
 
@@ -260,7 +284,15 @@
 					<td>{{call['apps.name']}}</td>
 					<td>{{call['apiCalls.method']}}</td>
 					<td>{{$functions.parseDate(call['apiCalls.registrationDate'], true, true)}}</td>
-					<td v-if="!$route.params.appCode"><button class="btn btn-info" @click="seeAppCode(call['apps.code'])"><i class="fas fa-atom"></i></button></td>
+					<td v-if="!$route.params.appCode">
+
+						<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/apps/${call['apps.code']}`}">
+
+							<i class="fas fa-atom"></i>
+
+						</router-link>
+
+					</td>
 
 				</tr>
 
@@ -542,34 +574,7 @@
 			'rows',
 			'direction'
 
-		],
-		methods: {
-
-			seeUser: function (log) {
-
-				this.$router.push(`/dashboard/user/${log['users.code']}`);
-
-			},
-
-			seeUserCode: function (code) {
-
-				this.$router.push(`/dashboard/user/${code}`);
-
-			},
-
-			seeApp: function (app) {
-
-				this.$router.push(`/dashboard/apps/${app['apps.code']}`);
-
-			},
-
-			seeAppCode: function (code) {
-
-				this.$router.push(`/dashboard/apps/${code}`);
-
-			},
-
-		}
+		]
 
 	}
 

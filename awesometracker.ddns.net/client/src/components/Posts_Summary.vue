@@ -121,8 +121,18 @@
 							<div class="row align-items-center">
 
 								<p>Posted by: {{post['users.user']}}</p>
-								<button class="btn btn-info ml-auto mr-1" @click="seeUser(post)"><i class="fas fa-user"></i></button>
-								<button class="btn btn-primary" @click="seePost(post)"><i class="fas fa-newspaper"></i></button>
+
+								<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${post['posts.userCode']}`}">
+
+									<i class="fas fa-user"></i>
+
+								</router-link>
+
+								<router-link class="btn btn-primary" tag='button' :to="{path: `/dashboard/posts/${post['posts.code']}`}">
+
+									<i class="fas fa-newspaper"></i>
+
+								</router-link>
 
 							</div>
 
@@ -181,21 +191,6 @@
 				categories: [],
 				filter: '',
 				type: 0,
-
-			}
-
-		},
-		methods: {
-
-			seeUser: function (post) {
-
-				this.$router.push(`/dashboard/user/${post['posts.userCode']}`);
-
-			},
-
-			seePost: function (post) {
-
-				this.$router.push(`/dashboard/posts/${post['posts.code']}`);
 
 			}
 

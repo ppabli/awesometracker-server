@@ -114,15 +114,6 @@
 			}
 
 		},
-		methods: {
-
-			addApp: function () {
-
-				this.$router.push(`/dashboard/apps/addApp`);
-
-			},
-
-		},
 		async created () {
 
 			this.ready = false;

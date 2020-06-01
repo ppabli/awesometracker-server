@@ -206,27 +206,31 @@
 
 				if (sure.value) {
 
-					let auth2 = window.gapi.auth2.getAuthInstance();
+					if (this.user['users.code'] == this.$parent.$parent.$parent.user['users.code']) {
 
-					auth2.signOut().then(function () {
+						let auth2 = window.gapi.auth2.getAuthInstance();
 
-						auth2.disconnect();
+						auth2.signOut().then(function () {
 
-					});
+							auth2.disconnect();
 
-					let result = await Axios.post(`https://awesometracker.ddns.net/dashboard/deleteUser`);
+						});
+
+					}
+
+					let result = await Axios.post(`https://awesometracker.ddns.net/dashboard/deleteUser`, {userCode: this.user['users.code']});
 
 					if (result.data.status == 'ok') {
 
 						await Swal.fire({
 
 							title: 'Deleted!',
-							text: 'Your account has been deleted.',
+							text: result.data.msg,
 							icon: 'success'
 
 						});
 
-						this.$router.push('/');
+						this.user['users.code'] == this.$parent.$parent.$parent.user['users.code'] ? this.$router.push('/') : this.$router.go(-1);
 
 					} else {
 

@@ -230,6 +230,8 @@
 
 				} else if (result.data.status != 'ok') {
 
+					window.gapi.auth2.getAuthInstance().signOut();
+
 					await Swal.fire({
 
 						title: 'Error login',

@@ -29,7 +29,11 @@
 
 					<div class="row m-3 align-items-center justify-content-end">
 
-						<button class="btn btn-success ml-auto" @click="addApp"><i class="fas fa-plus"></i></button>
+						<router-link class="btn btn-success" tag='button' :to="{path: `/dashboard/apps/addApp`}">
+
+							<i class="fas fa-plus"></i>
+
+						</router-link>
 
 					</div>
 
@@ -81,7 +85,11 @@
 
 					<div class="row m-3 align-items-center justify-content-end">
 
-						<button class="btn btn-success" @click="addApp"><i class="fas fa-plus"></i></button>
+						<router-link class="btn btn-success" tag='button' :to="{path: `/dashboard/apps/addApp`}">
+
+							<i class="fas fa-plus"></i>
+
+						</router-link>
 
 					</div>
 
@@ -124,12 +132,6 @@
 
 		},
 		methods: {
-
-			addApp: function () {
-
-				this.$router.push(`/dashboard/apps/addApp`);
-
-			},
 
 			seeApp: function (app) {
 

@@ -103,7 +103,15 @@
 							<td>{{application['applications.app']}}</td>
 							<td>{{$functions.parseDate(application['applications.registrationDate'],true, true)}}</td>
 							<td>{{$functions.parseDate(application['applications.lastUpdate'], true, true)}}</td>
-							<td><button class="btn btn-info" @click="seeUser(application)"><i class="fas fa-user"></i></button></td>
+							<td>
+
+								<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${application['applications.userCode']}`}">
+
+									<i class="fas fa-user"></i>
+
+								</router-link>
+
+							</td>
 							<td><button class="btn btn-warning" @click="editApplication(application)"><i class="fas fa-edit"></i></button></td>
 							<td><button class="btn btn-danger" @click="deleteApplication(application)"><i class="fas fa-trash"></i></button></td>
 
@@ -216,12 +224,6 @@
 
 		},
 		methods: {
-
-			seeUser: function (application) {
-
-				this.$router.push(`/dashboard/user/${application['applications.userCode']}`);
-
-			},
 
 			order: async function(e, orderBy) {
 

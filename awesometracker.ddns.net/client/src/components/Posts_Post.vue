@@ -102,15 +102,6 @@
 			}
 
 		},
-		methods: {
-
-			seeUser: function () {
-
-				this.$router.push(`/dashboard/user/${this.post['posts.userCode']}`);
-
-			},
-
-		},
 		async beforeCreated() {
 
 			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/8?where=posts.code=${this.$route.params.postCode}`);

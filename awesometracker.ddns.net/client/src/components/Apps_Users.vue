@@ -34,7 +34,11 @@
 
 						<div class="col-2 justify-content-center align-items-center">
 
-							<button class="btn btn-success" @click="addUser"><i class="fas fa-plus"></i></button>
+							<router-link class="btn btn-success" tag='button' :to="{path: `/dashboard/user/addUser`}">
+
+								<i class="fas fa-user"></i>
+
+							</router-link>
 
 						</div>
 
@@ -109,8 +113,26 @@
 							<td>{{$functions.parseDate(user['users.registrationDate'], true, true)}}</td>
 							<td>{{$functions.parseDate(user['users.lastUpdate'], true, true)}}</td>
 							<td>{{$functions.parseDate(user['users.birthDate'], true, true)}}</td>
-							<td><button class="btn btn-info" @click="seeUser(user)"><i class="fas fa-user"></i></button></td>
-							<td><button class="btn btn-warning" @click="editUser(user)"><i class="fas fa-user-edit"></i></button></td>
+							<td>
+
+								<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${user['users.code']}`}">
+
+									<i class="fas fa-user"></i>
+
+								</router-link>
+
+							</td>
+							<td>
+
+								<button class="btn btn-warning" @click="editUser(user)"><i class="fas fa-user-edit"></i></button>
+
+								<router-link class="btn btn-warning" tag='button' :to="{path: `/dashboard/user/${user['users.code']}/editUser`}">
+
+									<i class="fas fa-user-edit"></i>
+
+								</router-link>
+
+							</td>
 							<td><button class="btn btn-danger" @click="deleteUser(user)"><i class="fas fa-trash"></i></button></td>
 
 						</tr>
@@ -217,24 +239,6 @@
 
 		},
 		methods: {
-
-			seeUser: function (user) {
-
-				this.$router.push(`/dashboard/user/${user['users.code']}`);
-
-			},
-
-			editUser: function (user) {
-
-				this.$router.push(`/dashboard/user/${user['users.code']}/editUser`);
-
-			},
-
-			addUser: function () {
-
-				this.$router.push(`/dashboard/user/addUser`);
-
-			},
 
 			deleteUser: async function (user) {
 

@@ -92,7 +92,15 @@
 							<td>{{$functions.parseDate(log['trackerLogs.start'], true, true)}}</td>
 							<td>{{$functions.parseDate(log['trackerLogs.stop'], true, true)}}</td>
 							<td>{{log['trackerLogs.duration']}}</td>
-							<td><button class="btn btn-info" @click="seeUser(log)"><i class="fas fa-user"></i></button></td>
+							<td>
+
+								<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${log['trackerLogs.userCode']}`}">
+
+									<i class="fas fa-user"></i>
+
+								</router-link>
+
+							</td>
 							<td><button class="btn btn-danger" @click="deleteLog(log)"><i class="fas fa-trash"></i></button></td>
 
 						</tr>
@@ -181,12 +189,6 @@
 
 		},
 		methods: {
-
-			seeUser: function (log) {
-
-				this.$router.push(`/dashboard/user/${log['trackerLogs.userCode']}`);
-
-			},
 
 			order: async function(e, orderBy) {
 

@@ -34,7 +34,11 @@
 
 						<div class="col-2 justify-content-center align-items-center">
 
-							<button class="btn btn-success" @click="addApp"><i class="fas fa-plus"></i></button>
+							<router-link class="btn btn-success" tag='button' :to="{path: `/dashboard/apps/addApp`}">
+
+								<i class="fas fa-plus"></i>
+
+							</router-link>
 
 						</div>
 
@@ -69,7 +73,7 @@
 
 				<table class="table table-hover">
 
-					<caption>App</caption>
+					<caption>Apps</caption>
 
 					<thead>
 
@@ -106,9 +110,34 @@
 							<td>{{app['appCategories.name']}}</td>
 							<td>{{$functions.parseDate(app['apps.registrationDate'], true, true)}}</td>
 							<td>{{$functions.parseDate(app['apps.lastUpdate'], true, true)}}</td>
-							<td><button class="btn btn-info" @click="seeUser(app)"><i class="fas fa-user"></i></button></td>
-							<td><button class="btn btn-info" @click="seeApp(app)"><i class="fas fa-atom"></i></button></td>
-							<td><button class="btn btn-warning" @click="editApp(app)"><i class="fas fa-edit"></i></button></td>
+							<td>
+
+								<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${app['apps.userCode']}`}">
+
+									<i class="fas fa-user"></i>
+
+								</router-link>
+
+							</td>
+							<td>
+
+								<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/apps/${app['apps.code']}`}">
+
+									<i class="fas fa-atom"></i>
+
+								</router-link>
+
+							</td>
+							<td>
+
+								<router-link class="btn btn-warning" tag='button' :to="{path: `/dashboard/apps/${app['apps.code']}/editApp`}">
+
+									<i class="fas fa-edit"></i>
+
+								</router-link>
+
+							</td>
+
 							<td><button class="btn btn-danger" @click="deleteApp(app)"><i class="fas fa-trash"></i></button></td>
 
 						</tr>
@@ -260,30 +289,6 @@
 					this.logs.reverse();
 
 				}
-
-			},
-
-			seeUser: function (app) {
-
-				this.$router.push(`/dashboard/user/${app['apps.userCode']}`);
-
-			},
-
-			seeApp: function (app) {
-
-				this.$router.push(`/dashboard/apps/${app['apps.code']}`);
-
-			},
-
-			editApp: function (app) {
-
-				this.$router.push(`/dashboard/apps/${app['apps.code']}/editApp`);
-
-			},
-
-			addApp: function () {
-
-				this.$router.push(`/dashboard/apps/addApp`);
 
 			},
 
