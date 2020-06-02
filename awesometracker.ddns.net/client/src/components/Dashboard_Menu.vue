@@ -155,8 +155,8 @@
 
 <script>
 
-	import Swal from 'sweetalert2'
-	import Axios from 'axios'
+	import Swal from 'sweetalert2';
+	import Axios from 'axios';
 
 	export default {
 

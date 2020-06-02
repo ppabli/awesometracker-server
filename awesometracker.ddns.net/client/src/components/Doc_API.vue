@@ -1788,7 +1788,7 @@
 
 <script>
 
-	import Table from './Table.vue'
+	import Table from './Table.vue';
 
 	export default {
 

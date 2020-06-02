@@ -142,10 +142,10 @@
 
 <script>
 
-	import Swal from 'sweetalert2'
-	import Axios from 'axios'
-	import Terms from './components/Doc_Terms'
-	import Privacy from './components/Doc_Privacy'
+	import Swal from 'sweetalert2';
+	import Axios from 'axios';
+	import Terms from './components/Doc_Terms';
+	import Privacy from './components/Doc_Privacy';
 
 	export default {
 

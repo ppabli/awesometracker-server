@@ -16,7 +16,7 @@
 
 <script>
 
-	import Doc_Navbar from './Doc_Navbar.vue'
+	import Doc_Navbar from './Doc_Navbar.vue';
 
 	export default {
 

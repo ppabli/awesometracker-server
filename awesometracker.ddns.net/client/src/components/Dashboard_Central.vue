@@ -16,7 +16,7 @@
 
 <script>
 
-	import Navbar from './Dashboard_Navbar.vue'
+	import Navbar from './Dashboard_Navbar.vue';
 
 	export default {
 

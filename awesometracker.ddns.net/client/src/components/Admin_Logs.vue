@@ -196,7 +196,7 @@
 
 				if (e.target.childNodes.length == 1) {
 
-					document.getElementById('searchIcon').remove()
+					document.getElementById('searchIcon').remove();
 
 					let newNode = document.createElement('i');
 					newNode.classList.add('fas', 'fa-sort', 'float-right');
@@ -210,7 +210,7 @@
 
 					if (result.data.status == 'ok') {
 
-						this.logs = result.data.data
+						this.logs = result.data.data;
 
 					} else {
 
@@ -248,7 +248,7 @@
 
 					if (result.data.status == 'ok') {
 
-						this.logs = result.data.data
+						this.logs = result.data.data;
 
 						await Swal.fire({
 
@@ -294,7 +294,7 @@
 
 			if (result.data.status == 'ok') {
 
-				this.logs = result.data.data
+				this.logs = result.data.data;
 
 			} else {
 
@@ -319,7 +319,7 @@
 
 			if (this.page * this.pageSize > this.logs.filter(log => String(log[this.orderBy]).toLowerCase().match(this.filter.toLowerCase())).length) {
 
-				this.page = 0
+				this.page = 0;
 
 			}
 

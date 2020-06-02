@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import {FUNCTIONS} from './functions/functions.js'
+import {FUNCTIONS} from './functions/functions.js';
 
 Vue.prototype.$functions = FUNCTIONS;
 

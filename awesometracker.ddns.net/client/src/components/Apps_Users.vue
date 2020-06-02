@@ -382,7 +382,7 @@
 
 			if (this.page * this.pageSize > this.users.filter(user => String(user[this.orderBy]).toLowerCase().match(this.filter.toLowerCase())).length) {
 
-				this.page = 0
+				this.page = 0;
 
 			}
 

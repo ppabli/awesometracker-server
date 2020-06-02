@@ -11,8 +11,8 @@
 
 <script>
 
-	import Doc_Menu from './components/Doc_Menu.vue'
-	import Doc_Central from './components/Doc_Central.vue'
+	import Doc_Menu from './components/Doc_Menu.vue';
+	import Doc_Central from './components/Doc_Central.vue';
 
 	export default {
 

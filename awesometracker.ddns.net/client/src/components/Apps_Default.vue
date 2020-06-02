@@ -106,7 +106,7 @@
 <script>
 
 	import Axios from 'axios';
-	import Swal from 'sweetalert2'
+	import Swal from 'sweetalert2';
 
 	import Spinner from './Spinner.vue';
 
@@ -145,7 +145,7 @@
 
 				if (result.data.status == 'ok') {
 
-					this.apps = result.data.data
+					this.apps = result.data.data;
 
 				} else {
 
@@ -176,7 +176,7 @@
 
 			if (result.data.status == 'ok') {
 
-				this.apps = result.data.data
+				this.apps = result.data.data;
 
 			} else {
 

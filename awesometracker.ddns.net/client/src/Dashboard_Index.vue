@@ -11,10 +11,10 @@
 
 <script>
 
-	import Menu from './components/Dashboard_Menu.vue'
-	import Central from './components/Dashboard_Central.vue'
-	import Axios from 'axios'
-	import Swal from 'sweetalert2'
+	import Menu from './components/Dashboard_Menu.vue';
+	import Central from './components/Dashboard_Central.vue';
+	import Axios from 'axios';
+	import Swal from 'sweetalert2';
 
 	export default {
 
@@ -43,13 +43,15 @@
 
 			if (result.data.status == 'ok') {
 
-				this.user = result.data.data.user
+				this.user = result.data.data.user;
+
+				this.apps = null;
 
 				result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11`);
 
 				if (result.data.status == 'ok') {
 
-					this.apps = result.data.data
+					this.apps = result.data.data;
 
 				}
 

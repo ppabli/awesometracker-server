@@ -78,8 +78,8 @@
 
 <script>
 
-	import Axios from 'axios'
-	import Swal from 'sweetalert2'
+	import Axios from 'axios';
+	import Swal from 'sweetalert2';
 	import Spinner from './Spinner.vue';
 
 	export default {

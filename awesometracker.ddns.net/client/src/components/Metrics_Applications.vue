@@ -174,7 +174,7 @@
 <script>
 
 	import Axios from 'axios';
-	import Swal from 'sweetalert2'
+	import Swal from 'sweetalert2';
 	import Spinner from './Spinner.vue';
 
 	export default {
@@ -213,7 +213,7 @@
 
 				if (e.target.childNodes.length == 1) {
 
-					document.getElementById('searchIcon').remove()
+					document.getElementById('searchIcon').remove();
 
 					let newNode = document.createElement('i');
 					newNode.classList.add('fas', 'fa-sort', 'float-right');
@@ -227,7 +227,7 @@
 
 					if (result.data.status == 'ok') {
 
-						this.applications = result.data.data
+						this.applications = result.data.data;
 
 					} else {
 
@@ -441,7 +441,7 @@
 
 					if (result.data.status == 'ok') {
 
-						this.applications = result.data.data
+						this.applications = result.data.data;
 
 						await Swal.fire({
 
@@ -487,7 +487,7 @@
 
 			if (result.data.status == 'ok') {
 
-				this.applications = result.data.data
+				this.applications = result.data.data;
 
 			} else {
 
@@ -512,7 +512,7 @@
 
 			if (this.page * this.pageSize > this.applications.filter(application => String(application[this.orderBy]).toLowerCase().match(this.filter.toLowerCase())).length) {
 
-				this.page = 0
+				this.page = 0;
 
 			}
 

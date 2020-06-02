@@ -75,9 +75,9 @@
 
 <script>
 
-	import Chart from 'chart.js'
+	import Chart from 'chart.js';
 	import Axios from 'axios';
-	import Swal from 'sweetalert2'
+	import Swal from 'sweetalert2';
 
 	import Spinner from './Spinner.vue';
 	import Card from './Card.vue';
