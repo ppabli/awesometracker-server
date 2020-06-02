@@ -1,139 +1,134 @@
-
-
-
 # AWESOMETRACKER
 
 Author: Pablo Liste Cancela | ppabli12@gmail.com
 
-Project descripción
+Project descripción: Proyecto de fin de ciclo DAW IES San Clemente 2018-2020
 
-Proyecto de fin de ciclo DAW IES San Clemente 2018-2020
-
-Versión 0.5
+Versión: 1.0
 
 ### Índice
 
-[Estudio Preliminar 4](#_Toc41985936)
+[Estudio Preliminar 4](#Toc41985936)
 
-[Introducción 4](#_Toc41985937)
+[Introducción 4](#Toc41985937)
 
-[Convenciones 4](#_Toc41985938)
+[Convenciones 4](#Toc41985938)
 
-[Audiencia 5](#_Toc41985939)
+[Audiencia 5](#Toc41985939)
 
-[Objetivo del producto 5](#_Toc41985940)
+[Objetivo del producto 5](#Toc41985940)
 
-[Descripción general 5](#_Toc41985941)
+[Descripción general 5](#Toc41985941)
 
-[Perspectiva 5](#_Toc41985942)
+[Perspectiva 5](#Toc41985942)
 
-[Requisitos del negocio 6](#_Toc41985943)
+[Requisitos del negocio 6](#Toc41985943)
 
-[Categorías 9](#_Toc41985944)
+[Categorías 9](#Toc41985944)
 
-[Tipos de usuario 9](#_Toc41985945)
+[Tipos de usuario 9](#Toc41985945)
 
-[Tipos de apps 10](#_Toc41985946)
+[Tipos de apps 10](#Toc41985946)
 
-[Entorno operacional de la aplicación 11](#_Toc41985947)
+[Entorno operacional de la aplicación 11](#Toc41985947)
 
-[Planificación y costes 12](#_Toc41985948)
+[Planificación y costes 12](#Toc41985948)
 
-[Estimación inicial 12](#_Toc41985949)
+[Estimación inicial 12](#Toc41985949)
 
-[Calendario inicial 12](#_Toc41985950)
+[Calendario inicial 12](#Toc41985950)
 
-[Estimación coste inicial 12](#_Toc41985951)
+[Estimación coste inicial 12](#Toc41985951)
 
-[Tabla de costes 12](#_Toc41985952)
+[Tabla de costes 12](#Toc41985952)
 
-[Costes desarrollo 12](#_Toc41985953)
+[Costes desarrollo 12](#Toc41985953)
 
-[Costes de mantenimiento 13](#_Toc41985954)
+[Costes de mantenimiento 13](#Toc41985954)
 
-[Coste por actividad 13](#_Toc41985955)
+[Coste por actividad 13](#Toc41985955)
 
-[Análisis 14](#_Toc41985956)
+[Análisis 14](#Toc41985956)
 
-[Funciones 14](#_Toc41985957)
+[Funciones 14](#Toc41985957)
 
-[Función 1: Dar de alta al usuario 14](#_Toc41985958)
+[Función 1: Dar de alta al usuario 14](#Toc41985958)
 
-[Función 2: Dar de baja al usuario 14](#_Toc41985959)
+[Función 2: Dar de baja al usuario 14](#Toc41985959)
 
-[Función 3: Modificar un usuario 14](#_Toc41985960)
+[Función 3: Modificar un usuario 14](#Toc41985960)
 
-[Función 4: Mejorar la categoría de un usuario 15](#_Toc41985961)
+[Función 4: Mejorar la categoría de un usuario 15](#Toc41985961)
 
-[Función 5: Iniciar sesión 15](#_Toc41985962)
+[Función 5: Iniciar sesión 15](#Toc41985962)
 
-[Función 6: Dar de alta un log 15](#_Toc41985963)
+[Función 6: Dar de alta un log 15](#Toc41985963)
 
-[Función 7: Eliminar un log 15](#_Toc41985964)
+[Función 7: Eliminar un log 15](#Toc41985964)
 
-[Función 8: Dar de alta una aplicación 15](#_Toc41985965)
+[Función 8: Dar de alta una aplicación 15](#Toc41985965)
 
-[Función 9: Eliminar una aplicación 15](#_Toc41985966)
+[Función 9: Eliminar una aplicación 15](#Toc41985966)
 
-[Función 10: Modificar una aplicación 16](#_Toc41985967)
+[Función 10: Modificar una aplicación 16](#Toc41985967)
 
-[Función 11: Dar de alta una App 16](#_Toc41985968)
+[Función 11: Dar de alta una App 16](#Toc41985968)
 
-[Función 12: Dar de baja una App 16](#_Toc41985969)
+[Función 12: Dar de baja una App 16](#Toc41985969)
 
-[Función 13: Modificar una App 16](#_Toc41985970)
+[Función 13: Modificar una App 16](#Toc41985970)
 
-[Función 14: Mejorar la categoría de una App 16](#_Toc41985971)
+[Función 14: Mejorar la categoría de una App 16](#Toc41985971)
 
-[Recursos necesarios 17](#_Toc41985972)
+[Recursos necesarios 17](#Toc41985972)
 
-[Recursos materiales 17](#_Toc41985973)
+[Recursos materiales 17](#Toc41985973)
 
-[Hardware 17](#_Toc41985974)
+[Hardware 17](#Toc41985974)
 
-[Software 18](#_Toc41985975)
+[Software 18](#Toc41985975)
 
-[Servicios contratados 18](#_Toc41985976)
+[Servicios contratados 18](#Toc41985976)
 
-[Diseño 20](#_Toc41985977)
+[Diseño 20](#Toc41985977)
 
-[Base de datos 20](#_Toc41985978)
+[Base de datos 20](#Toc41985978)
 
-[Modelo entidad relación 21](#_Toc41985979)
+[Modelo entidad relación 21](#Toc41985979)
 
-[Modelo relacional 22](#_Toc41985980)
+[Modelo relacional 22](#Toc41985980)
 
-[Análisis 23](#_Toc41985981)
+[Análisis 23](#Toc41985981)
 
-[Mockups 27](#_Toc41985982)
+[Mockups 27](#Toc41985982)
 
-[Diseño general 27](#_Toc41985983)
+[Diseño general 27](#Toc41985983)
 
-[Index 30](#_Toc41985984)
+[Index 30](#Toc41985984)
 
-[Inicio de sesión (Login) 32](#_Toc41985985)
+[Inicio de sesión (Login) 32](#Toc41985985)
 
-[Recuperación de cuenta 1 (forgot) 34](#_Toc41985986)
+[Recuperación de cuenta 1 (forgot) 34](#Toc41985986)
 
-[Recuperación de cuenta 2 (recover) 35](#_Toc41985987)
+[Recuperación de cuenta 2 (recover) 35](#Toc41985987)
 
-[Creación de cuenta 36](#_Toc41985988)
+[Creación de cuenta 36](#Toc41985988)
 
-[Perfil o App 37](#_Toc41985989)
+[Perfil o App 37](#Toc41985989)
 
-[Data 1 38](#_Toc41985990)
+[Data 1 38](#Toc41985990)
 
-[Data 2 40](#_Toc41985991)
+[Data 2 40](#Toc41985991)
 
-[Anexos 42](#_Toc41985992)
+[Anexos 42](#Toc41985992)
 
-[Anexo 1 42](#_Toc41985993)
+[Anexo 1 42](#Toc41985993)
 
-[Anexo 2 42](#_Toc41985994)
+[Anexo 2 42](#Toc41985994)
 
-[Anexo 3 42](#_Toc41985995)
+[Anexo 3 42](#Toc41985995)
 
-[Anexo 4 42](#_Toc41985996)
+[Anexo 4 42](#Toc41985996)
 
 ### Estudio Preliminar
 
@@ -286,7 +281,7 @@ Los usuarios que usen nuestra aplicación proporcionarán información referente
 
 ### Categorías
 
-En el sistema tanto usuario como apps tienen una categoría asignada. Esta categoría está indicada mediante un código el campo de _ **categoryCode** _ de cada recurso. Dependiendo de la categoría a la que pertenezca el recurso eliminará en mayor o menor medida las restricciones de uso, así como permitirles realizar ciertas acciones extra. En caso de que se quiera realizar un cambio de categoría se tendrá que realizar un único pago de la cantidad marcada en el precio de la categoría. A continuación, se detallan los datos de cada categoría.
+En el sistema tanto usuario como apps tienen una categoría asignada. Esta categoría está indicada mediante un código el campo de  **categoryCode**  de cada recurso. Dependiendo de la categoría a la que pertenezca el recurso eliminará en mayor o menor medida las restricciones de uso, así como permitirles realizar ciertas acciones extra. En caso de que se quiera realizar un cambio de categoría se tendrá que realizar un único pago de la cantidad marcada en el precio de la categoría. A continuación, se detallan los datos de cada categoría.
 
 | **Nombre** | **Precio (€)** | **Código** |
 | --- | --- | --- |
@@ -533,33 +528,33 @@ Una vez ya tenemos escogido el sistema de base de datos para nuestra aplicación
 
 En las imágenes anteriores se puede ver el modelo relacional y modelo entidad relación de nuestra base de datos. En ellas podemos apreciar la existencia de 12 tablas, así como la existencia de relaciones entre ellas, todas de tipo 1-N.
 
-Analizando un poco las tablas tenemos una que destaca en especial la tabla de usuarios. Esta tabla como se puede esperar contendrá todos los usuarios del sistema. De estos usuarios tenemos que almacenar información como _ **code** _ siendo clave primaria de la tabla, almacenamos el código de la aplicación que creó el usuario _ **appCode** _, _ **statusCode** _ que determinará si un usuario puede hacer uso o no de los servicios, _ **visibility** _ que indicará si otros usuarios pueden ver ese perfil así como los datos relacionados con este, _ **diff** _, _ **user** _ que vendría a ser el nick del usuario, _ **password** _ sería la contraseña la cual estará encriptada con la función hash bcrypt, _ **email** _, _ **categoryCode** _que sería el código de usuario ya que nuestra aplicación contendrá diferentes categorías como administrador o usuarios premium, _ **name** _ que vendría a ser el nombre de usuario, _ **surname** _ apellidos del usuario, _ **registrationDate** _ fecha de registro, _ **lastUpdate** _ que vendría a ser la fecha de la última modificación del usuario así como el día de su cumpleaños almacenado en _ **birthDate** _ así como la URL de la imagen de perfil del usuario _ **imageURL** _. Aparte también tiene un conjunto formado por _ **recoverURL** _ y _ **recoverURLCode** _ que serían los campos que se usarían cuando el usuario quisiese recuperar su cuenta porque olvidó de la contraseña.
+Analizando un poco las tablas tenemos una que destaca en especial la tabla de usuarios. Esta tabla como se puede esperar contendrá todos los usuarios del sistema. De estos usuarios tenemos que almacenar información como  **code**  siendo clave primaria de la tabla, almacenamos el código de la aplicación que creó el usuario  **appCode** ,  **statusCode**  que determinará si un usuario puede hacer uso o no de los servicios,  **visibility**  que indicará si otros usuarios pueden ver ese perfil así como los datos relacionados con este,  **diff** ,  **user**  que vendría a ser el nick del usuario,  **password**  sería la contraseña la cual estará encriptada con la función hash bcrypt,  **email** ,  **categoryCode** que sería el código de usuario ya que nuestra aplicación contendrá diferentes categorías como administrador o usuarios premium,  **name**  que vendría a ser el nombre de usuario,  **surname**  apellidos del usuario,  **registrationDate**  fecha de registro,  **lastUpdate**  que vendría a ser la fecha de la última modificación del usuario así como el día de su cumpleaños almacenado en  **birthDate**  así como la URL de la imagen de perfil del usuario  **imageURL** . Aparte también tiene un conjunto formado por  **recoverURL**  y  **recoverURLCode**  que serían los campos que se usarían cuando el usuario quisiese recuperar su cuenta porque olvidó de la contraseña.
 
-Esta tabla está en relación con _ **userCategories** _ que contiene las categorías de los usuarios de las cuales almacenamos código de categoría el cual al igual que el code de la tabla de usuarios sería la clave primaria de la tabla aparte almacenamos un nombre de categoría y descripción, así como su precio y las apps máximas que puede tener creadas.
+Esta tabla está en relación con  **userCategories**  que contiene las categorías de los usuarios de las cuales almacenamos código de categoría el cual al igual que el code de la tabla de usuarios sería la clave primaria de la tabla aparte almacenamos un nombre de categoría y descripción, así como su precio y las apps máximas que puede tener creadas.
 
-Luego tenemos que también está en relación con la tabla de apps, esta tabla contiene todas las apps que se crearon. Esta tabla contiene al igual que toda las anteriores un código de la app que es la clave primaria de la tabla, así como el código del usuario que creó la aplicación y el cual tiene control sobre ella también se almacena el token el cual le permite a la aplicación hacer uso de la API aparte del nombre y descripción de la app. También contiene el _ **statusCode** _ el cual determina si esa app puede hacer uso de los servicios proporcionados por el sistema, _ **visibility** _ el cual determina si otros usuarios tienen acceso a ver los datos de la app, _ **categoryCode** _ el cual determinará la categoría de la app. Ya para terminar la tabla contendrá la URL de la imagen de la app que estará almacenada en el campo _ **imageURL,** _ así como la fecha de registro y última actualización de la app. Luego tenemos que esta tiene una relación con la tabla de _ **appCategories** _ esto es porque las apps pertenecen a una categoría que les permiten hacer ciertas acciones, así como un sistema que controla las peticiones máximas que pueden hacer permitiendo así monetizar el uso de la API.
+Luego tenemos que también está en relación con la tabla de apps, esta tabla contiene todas las apps que se crearon. Esta tabla contiene al igual que toda las anteriores un código de la app que es la clave primaria de la tabla, así como el código del usuario que creó la aplicación y el cual tiene control sobre ella también se almacena el token el cual le permite a la aplicación hacer uso de la API aparte del nombre y descripción de la app. También contiene el  **statusCode**  el cual determina si esa app puede hacer uso de los servicios proporcionados por el sistema,  **visibility**  el cual determina si otros usuarios tienen acceso a ver los datos de la app,  **categoryCode**  el cual determinará la categoría de la app. Ya para terminar la tabla contendrá la URL de la imagen de la app que estará almacenada en el campo  **imageURL,**  así como la fecha de registro y última actualización de la app. Luego tenemos que esta tiene una relación con la tabla de  **appCategories**  esto es porque las apps pertenecen a una categoría que les permiten hacer ciertas acciones, así como un sistema que controla las peticiones máximas que pueden hacer permitiendo así monetizar el uso de la API.
 
-La tabla de _ **appCategories** _ contiene un código de categoría, nombre de la categoría, descripción y precio aparte del número máximo de peticiones diarias que puede hacer la app a nuestra API.
+La tabla de  **appCategories**  contiene un código de categoría, nombre de la categoría, descripción y precio aparte del número máximo de peticiones diarias que puede hacer la app a nuestra API.
 
-En relación con esta tabla tenemos la tabla de _ **apiCalls** _, esta tabla lleva un registro de las peticiones que hace cada app a la API permitiendo llevar un control más preciso del sistema. Esta contiene un código que sería la clave primaria de la tabla que sería el número con el cual se registró la llamada, _ **appCode** _ que sería el código de la app que hizo la llamada, así como la URL solicitada, método empleado, así como la IP de la máquina que realizó la petición y fecha en la cual se realizó.
+En relación con esta tabla tenemos la tabla de  **apiCalls** , esta tabla lleva un registro de las peticiones que hace cada app a la API permitiendo llevar un control más preciso del sistema. Esta contiene un código que sería la clave primaria de la tabla que sería el número con el cual se registró la llamada,  **appCode**  que sería el código de la app que hizo la llamada, así como la URL solicitada, método empleado, así como la IP de la máquina que realizó la petición y fecha en la cual se realizó.
 
-Aparte de estas tablas tenemos otras que si bien son algo más sencillas son las más importantes ya que la aplicación se basa en registrar las aplicaciones que usa el usuario en su equipo, así como cuanto tiempo y todos estos datos se almacenan en la tabla de _ **trackerLogs** _.
+Aparte de estas tablas tenemos otras que si bien son algo más sencillas son las más importantes ya que la aplicación se basa en registrar las aplicaciones que usa el usuario en su equipo, así como cuanto tiempo y todos estos datos se almacenan en la tabla de  **trackerLogs** .
 
 Esta tabla contiene un código de registro siendo este la clave primaria de la tabla, así como el código de usuario al que pertenece cada registro y el código de la aplicación registrada luego tenemos que también almacena la fecha de inicio de la aplicación esto equivale a cuando el usuario empezó a usar la aplicación en su equipo, así como la fecha cuando dejo de usarla bien porque el cerro o porque cambió de aplicación. Como diferencia entre estos 2 campos tenemos el tiempo en segundos que uso cada aplicación el usuario.
 
-Hemos visto que la tabla de trackerLogs tiene una relación con la tabla de _ **applications** _ esta tabla contiene un registro con las aplicaciones que los usuarios han usado así la categoría a la que pertenecen cada una. Más en profundidad contiene al igual que todas las tablas del sistema un campo code que sería la clave primaria de la tabla un campo userCode para relacionar cada aplicación con el usuario al que pertenece aparte de los campos _ **category** _ y _ **app** _ que indican a qué categoría equivale cada aplicación así como el nombre de la aplicación aparte y como medida de control tenemos que hay un campo _ **registrationDate** _ que nos proporciona la fecha cuando fue registrada esa aplicación en el sistema así como el campo _ **lastUpdate** _ que registra la fecha de la última modificación.
+Hemos visto que la tabla de trackerLogs tiene una relación con la tabla de  **applications**  esta tabla contiene un registro con las aplicaciones que los usuarios han usado así la categoría a la que pertenecen cada una. Más en profundidad contiene al igual que todas las tablas del sistema un campo code que sería la clave primaria de la tabla un campo userCode para relacionar cada aplicación con el usuario al que pertenece aparte de los campos  **category**  y  **app**  que indican a qué categoría equivale cada aplicación así como el nombre de la aplicación aparte y como medida de control tenemos que hay un campo  **registrationDate**  que nos proporciona la fecha cuando fue registrada esa aplicación en el sistema así como el campo  **lastUpdate**  que registra la fecha de la última modificación.
 
-Luego y si bien no cumple una función extremadamente necesaria tenemos la última tabla _ **sessionLogs** _ esta tabla nos proporciona un registro de todos los inicios de sesión y cierre de sesión en el sistema, así como el dispositivo desde donde se realizó la acción, el usuario que la realizó gracias a su código de usuario, así como la fecha cuando se realizó la acción.
+Luego y si bien no cumple una función extremadamente necesaria tenemos la última tabla  **sessionLogs**  esta tabla nos proporciona un registro de todos los inicios de sesión y cierre de sesión en el sistema, así como el dispositivo desde donde se realizó la acción, el usuario que la realizó gracias a su código de usuario, así como la fecha cuando se realizó la acción.
 
-Como hemos visto en la tabla de usuarios y app estas contienen un campo _ **status** _, este campo indica al sistema si estos recursos están activados y tienen acceso al sistema. Para llevar un mejor control de los status estos están en relación con la tabla _ **status** _ mediante un código de estatus. Esta tabla contiene un campo code que sería el campo que conforma la clave primaria, así como los campos _ **name** _ y _ **description** _ que proporcionan el nombre del estado, así como una pequeña descripción.
+Como hemos visto en la tabla de usuarios y app estas contienen un campo  **status** , este campo indica al sistema si estos recursos están activados y tienen acceso al sistema. Para llevar un mejor control de los status estos están en relación con la tabla  **status**  mediante un código de estatus. Esta tabla contiene un campo code que sería el campo que conforma la clave primaria, así como los campos  **name**  y  **description**  que proporcionan el nombre del estado, así como una pequeña descripción.
 
-La tabla _ **appCalls** _ si bien no es la más útil sí que nos permite llevar a cabo un control de quien accede a nuestra página web, si bien está está haciendo uso de sistemas de seguimiento y control como Google Analytics esta tabla también nos permite obtener alguna información extra por nuestra cuenta. Esta tabla está conformada por los siguientes campos: _ **code** _ que sería el código de petición y clave primaria de la tabla, _ **IP** _ de la máquina desde la cual se realizó la petición, URL solicitada, _ **method** _ que nos indicará el método de petición empleado, así como la fecha en cual se realizó.
+La tabla  **appCalls**  si bien no es la más útil sí que nos permite llevar a cabo un control de quien accede a nuestra página web, si bien está está haciendo uso de sistemas de seguimiento y control como Google Analytics esta tabla también nos permite obtener alguna información extra por nuestra cuenta. Esta tabla está conformada por los siguientes campos:  **code**  que sería el código de petición y clave primaria de la tabla,  **IP**  de la máquina desde la cual se realizó la petición, URL solicitada,  **method**  que nos indicará el método de petición empleado, así como la fecha en cual se realizó.
 
-Como última adición durante el desarrollo tenemos _ **posts** _, Estos anuncios están almacenados en la base de datos en la tabla _ **posts** _. Esta tabla es formada al igual que todas por un campo _ **code** _ que vendría a ser la clave primaria de tabla, así como por _ **userCode** _ que almacenará el código del usuario creador del post, así como los campos _ **body** _ y _ **title** _ que vendría a ser el contenido y el título de la noticia. Ya para terminar tendríamos un campo fecha que almacenará el momento del registro, así como el código de categoría al que pertenece y que está en relación con la tabla de _ **postCateogries** _.
+Como última adición durante el desarrollo tenemos  **posts** , Estos anuncios están almacenados en la base de datos en la tabla  **posts** . Esta tabla es formada al igual que todas por un campo  **code**  que vendría a ser la clave primaria de tabla, así como por  **userCode**  que almacenará el código del usuario creador del post, así como los campos  **body**  y  **title**  que vendría a ser el contenido y el título de la noticia. Ya para terminar tendríamos un campo fecha que almacenará el momento del registro, así como el código de categoría al que pertenece y que está en relación con la tabla de  **postCateogries** .
 
-Esta sería la última tabla de nuestra base de datos y almacena las categorías a las que puede pertenecer un post. Esta tabla está formada por un código de categoría siendo este la clave primaria de la tabla y por los campos _ **name** _ y _ **description** _ que proporcionan el nombre de la categoría, así como una breve descripción de la misma.
+Esta sería la última tabla de nuestra base de datos y almacena las categorías a las que puede pertenecer un post. Esta tabla está formada por un código de categoría siendo este la clave primaria de la tabla y por los campos  **name**  y  **description**  que proporcionan el nombre de la categoría, así como una breve descripción de la misma.
 
-Hemos visto a qué equivale cada campo de las diferentes tablas de nuestra base de datos, pero no hemos visto los tipos de datos que estos usan. Como resumen tenemos que los datos de tipo fecha hacen uso de timestamp (yyyy-MM-dd HH:mm:ss) que nos permiten almacenar tanto el día como la hora aparte en la mayoría de casos donde se hace uso de este tipo de datos tiene un valor por de defecto de current\_timestamp.
+Hemos visto a qué equivale cada campo de las diferentes tablas de nuestra base de datos, pero no hemos visto los tipos de datos que estos usan. Como resumen tenemos que los datos de tipo fecha hacen uso de timestamp (yyyy-MM-dd HH:mm:ss) que nos permiten almacenar tanto el día como la hora aparte en la mayoría de casos donde se hace uso de este tipo de datos tiene un valor por de defecto de current\timestamp.
 
 Para los campos code de las tablas los cuales son los campos que forman la clave primaria tenemos que estos son de tipo int con un máximo de 11 dígitos, así como no permiten nulos y por defecto son auto incrementales.
 
@@ -593,7 +588,7 @@ En cuanto a las páginas que requieren de un inicio de sesión tenemos que todas
 
 Aquí se muestra la página por defecto de la aplicación cuando accedemos desde un navegador a la URL. Dentro del bloque central vemos que se mostrará el logo de la aplicación, así como el nombre y un slogan. Justo debajo de estos elementos tenemos que se muestran una serie de botones los cuales se tiene pensado que enlacen con la documentación de aplicación, así como con la página de login que veremos más adelante. Justo debajo tendremos una sección de novedades donde se mostrarán las últimas noticias de nuestra aplicación en forma de pequeño resumen. Justo debajo tendríamos unos iconos que representan la esencia de la aplicación, así como un footer que incluiría información extra sobre el autor y licencia.
 
-![image](https://drive.google.com/uc?export=view&id=1bQimpCiXFJgZX0qjMu6QXoPwa_YgUPD5)
+![image](https://drive.google.com/uc?export=view&id=1bQimpCiXFJgZX0qjMu6QXoPwaYgUPD5)
 
 ### Inicio de sesión (Login)
 
@@ -625,7 +620,7 @@ Esta vista contiene lo que verá el usuario cuando acceda a su perfil o al de cu
 
 Los diferentes datos que muestre la aplicación a partir de los datos recopilados se tienen que mostrar de alguna manera. Para solucionar este problema en un principio haremos uso de estos 2 diseños que se muestran a continuación. El primero sería el empleado para ver datos de una manera masiva como por ejemplo el registro de aplicaciones o de logs. En estos casos haríamos uso de tablas que nos permitirían mostrar todos los registros. Para dar facilidades a estas vistas las tablas tendrán un tamaño personalizable (selector situado en la parte superior izquierda) así como un sistema de paginación u búsqueda por campo que permitirá al usuario visualizar los datos de una manera más cómodo. Además de estas medidas se pueden organizar las tablas según los datos de las cabeceras. Luego estas vistas proporcionarán a los usuarios diferentes funcionalidades como la opción de borrar, añadir o editar los diferentes registros. Para estas acciones se hará uso de un pop que ocupará la pantalla y donde se permitirá al usuario la introducción de datos, así como la confirmación de la acción.
 
-![image](https://drive.google.com/uc?export=view&id=10cmCmWcA-Xmqln67598f_vRPajrPKHSs)
+![image](https://drive.google.com/uc?export=view&id=10cmCmWcA-Xmqln67598fvRPajrPKHSs)
 
 ### Data 2
 
