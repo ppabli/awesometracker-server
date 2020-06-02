@@ -122,7 +122,7 @@
 
 								<p>Posted by: {{post['users.user']}}</p>
 
-								<router-link class="btn btn-info" tag='button' :to="{path: `/dashboard/user/${post['posts.userCode']}`}">
+								<router-link class="btn btn-info ml-auto m-1" tag='button' :to="{path: `/dashboard/user/${post['posts.userCode']}`}">
 
 									<i class="fas fa-user"></i>
 

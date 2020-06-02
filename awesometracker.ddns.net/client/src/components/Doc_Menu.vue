@@ -216,12 +216,14 @@
 					<h6 class='mb-0'>Terms</h6>
 
 				</router-link>
-				
+
 				<router-link to="/docs/privacy" class="list-group-item bg-light rounded-0 border-top border-right-0 border-left-0 border-bottom-0 text-success">
 
 					<h6 class='mb-0'>Privacy</h6>
 
 				</router-link>
+
+				<a href="https://www.youtube.com/playlist?list=PL-1Ze9GVKLwzRJGEltgkMl-ICTp4Jo66a" target="_blank" class="list-group-item bg-light rounded-0 border-top border-right-0 border-left-0 border-bottom-0 text-success">Guides</a>
 
 			</div>
 

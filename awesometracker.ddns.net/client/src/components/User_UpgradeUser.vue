@@ -141,9 +141,9 @@
 		},
 		beforeCreated() {
 
-			if (this.$parent.$parent.$parent.user['users.code'] != this.$route.params.userCode || this.$parent.$parent.$parent.user['users.categoryCode'] > 2) {
+			if (this.$parent.$parent.$parent.user['users.code'] != this.$route.params.userCode || this.$parent.$parent.$parent.user['users.categoryCode'] <= 2) {
 
-				this.$route.go(-1);
+				this.$router.push(`/dashboard/user/${this.$route.params.userCode}`);
 
 			}
 
@@ -268,7 +268,7 @@
 
 								});
 
-								this.$router.go(-1);
+								this.$router.push(`/dashboard/user/${this.user['users.code']}`);
 
 							} else {
 

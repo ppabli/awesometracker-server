@@ -144,9 +144,9 @@
 		},
 		beforeCreated() {
 
-			if (this.$parent.$parent.$parent.apps.filter(app => app['apps.code'] == this.$route.params.appCode).length == 1) {
+			if (this.$parent.$parent.$parent.apps.filter(app => app['apps.code'] == this.$route.params.appCode).length == 1 || this.$parent.$parent.$parent.apps.filter(app => app['apps.code'] == this.$route.params.appCode)[0]['apps.categoryCode'] <= 2) {
 
-				this.$route.go(-1);
+				this.$router.push(`/dashboard/app/${this.$route.params.appCode}`);
 
 			}
 
@@ -279,7 +279,7 @@
 
 								});
 
-								this.$router.go(-1);
+								this.$router.push(`/dashboard/app/${this.app['apps.code']}`);
 
 							} else {
 

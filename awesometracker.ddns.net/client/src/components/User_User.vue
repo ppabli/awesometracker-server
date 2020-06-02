@@ -86,7 +86,7 @@
 
 							<div class="row mt-3 m-0 p-0 border-top pt-2 justify-content-center" v-if="$parent.$parent.$parent.user['users.code'] == user['users.code'] || $parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || $parent.$parent.$parent.apps.filter(app => app['apps.code'] == user['users.appCode']).length == 1">
 
-								<router-link class="btn btn-success m-1" tag='button' :to="{path: '/dashboard/user/' + user['users.code'] + '/upgradeUser'}" v-if="$parent.$parent.$parent.user['users.categoryCode'] > 2">
+								<router-link class="btn btn-success m-1" tag='button' :to="{path: '/dashboard/user/' + user['users.code'] + '/upgradeUser'}" v-if="$parent.$parent.$parent.user['users.code'] == user['users.code'] && user['users.categoryCode'] > 2">
 
 									Upgrade User
 									<i class="fas fa-angle-double-up ml-2"></i>

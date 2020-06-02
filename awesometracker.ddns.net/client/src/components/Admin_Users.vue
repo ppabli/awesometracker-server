@@ -36,7 +36,7 @@
 
 							<router-link class="btn btn-success" tag='button' :to="{path: `/dashboard/user/addUser`}">
 
-								<i class="fas fa-user"></i>
+								<i class="fas fa-plus"></i>
 
 							</router-link>
 
@@ -123,8 +123,6 @@
 
 							</td>
 							<td>
-
-								<button class="btn btn-warning" @click="editUser(user)"><i class="fas fa-user-edit"></i></button>
 
 								<router-link class="btn btn-warning" tag='button' :to="{path: `/dashboard/user/${user['users.code']}/editUser`}">
 

@@ -95,7 +95,7 @@
 
 								</router-link>
 
-								<router-link class="btn btn-success m-1" tag='button' :to="{path: '/dashboard/apps/' + app['apps.code'] + '/upgradeApp'}" v-if="app['apps.categoryCode'] > 2">
+								<router-link class="btn btn-success m-1" tag='button' :to="{path: '/dashboard/apps/' + app['apps.code'] + '/upgradeApp'}" v-if="app['apps.userCode'] == $parent.$parent.$parent.user['users.code'] && app['apps.categoryCode'] > 2">
 
 									Upgrade app
 									<i class="fas fa-angle-double-up ml-2"></i>
