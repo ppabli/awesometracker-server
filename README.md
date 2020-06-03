@@ -6,130 +6,6 @@ Project descripción: Proyecto de fin de ciclo DAW IES San Clemente 2018-2020
 
 Versión: 1.0
 
-### Índice
-
-[Estudio Preliminar 4](#Toc41985936)
-
-[Introducción 4](#Toc41985937)
-
-[Convenciones 4](#Toc41985938)
-
-[Audiencia 5](#Toc41985939)
-
-[Objetivo del producto 5](#Toc41985940)
-
-[Descripción general 5](#Toc41985941)
-
-[Perspectiva 5](#Toc41985942)
-
-[Requisitos del negocio 6](#Toc41985943)
-
-[Categorías 9](#Toc41985944)
-
-[Tipos de usuario 9](#Toc41985945)
-
-[Tipos de apps 10](#Toc41985946)
-
-[Entorno operacional de la aplicación 11](#Toc41985947)
-
-[Planificación y costes 12](#Toc41985948)
-
-[Estimación inicial 12](#Toc41985949)
-
-[Calendario inicial 12](#Toc41985950)
-
-[Estimación coste inicial 12](#Toc41985951)
-
-[Tabla de costes 12](#Toc41985952)
-
-[Costes desarrollo 12](#Toc41985953)
-
-[Costes de mantenimiento 13](#Toc41985954)
-
-[Coste por actividad 13](#Toc41985955)
-
-[Análisis 14](#Toc41985956)
-
-[Funciones 14](#Toc41985957)
-
-[Función 1: Dar de alta al usuario 14](#Toc41985958)
-
-[Función 2: Dar de baja al usuario 14](#Toc41985959)
-
-[Función 3: Modificar un usuario 14](#Toc41985960)
-
-[Función 4: Mejorar la categoría de un usuario 15](#Toc41985961)
-
-[Función 5: Iniciar sesión 15](#Toc41985962)
-
-[Función 6: Dar de alta un log 15](#Toc41985963)
-
-[Función 7: Eliminar un log 15](#Toc41985964)
-
-[Función 8: Dar de alta una aplicación 15](#Toc41985965)
-
-[Función 9: Eliminar una aplicación 15](#Toc41985966)
-
-[Función 10: Modificar una aplicación 16](#Toc41985967)
-
-[Función 11: Dar de alta una App 16](#Toc41985968)
-
-[Función 12: Dar de baja una App 16](#Toc41985969)
-
-[Función 13: Modificar una App 16](#Toc41985970)
-
-[Función 14: Mejorar la categoría de una App 16](#Toc41985971)
-
-[Recursos necesarios 17](#Toc41985972)
-
-[Recursos materiales 17](#Toc41985973)
-
-[Hardware 17](#Toc41985974)
-
-[Software 18](#Toc41985975)
-
-[Servicios contratados 18](#Toc41985976)
-
-[Diseño 20](#Toc41985977)
-
-[Base de datos 20](#Toc41985978)
-
-[Modelo entidad relación 21](#Toc41985979)
-
-[Modelo relacional 22](#Toc41985980)
-
-[Análisis 23](#Toc41985981)
-
-[Mockups 27](#Toc41985982)
-
-[Diseño general 27](#Toc41985983)
-
-[Index 30](#Toc41985984)
-
-[Inicio de sesión (Login) 32](#Toc41985985)
-
-[Recuperación de cuenta 1 (forgot) 34](#Toc41985986)
-
-[Recuperación de cuenta 2 (recover) 35](#Toc41985987)
-
-[Creación de cuenta 36](#Toc41985988)
-
-[Perfil o App 37](#Toc41985989)
-
-[Data 1 38](#Toc41985990)
-
-[Data 2 40](#Toc41985991)
-
-[Anexos 42](#Toc41985992)
-
-[Anexo 1 42](#Toc41985993)
-
-[Anexo 2 42](#Toc41985994)
-
-[Anexo 3 42](#Toc41985995)
-
-[Anexo 4 42](#Toc41985996)
-
 ### Estudio Preliminar
 
 ## Introducción
@@ -516,13 +392,13 @@ Toda aplicación necesita datos para poder funcionar y la nuestra no va a ser un
 
 Una vez ya tenemos escogido el sistema de base de datos para nuestra aplicación tenemos que ver que tablas tenemos que crear, que datos almacenará cada una de ellas y las relaciones entre estas.
 
-## Modelo entidad relación
+## Modelo entidad-relación
 
-![image](https://drive.google.com/uc?export=view&id=1vPhv0-kAUz3NLEb2uGteMWQVikYmto6M)
+![ERD_img](https://drive.google.com/uc?export=view&id=1vPhv0-kAUz3NLEb2uGteMWQVikYmto6M)
 
 ## Modelo relacional
 
-![image](https://drive.google.com/uc?export=view&id=1bm9XQydXZi2JvSqZcA-BQD0KAgqWNX2b)
+![RM_img](https://drive.google.com/uc?export=view&id=1bm9XQydXZi2JvSqZcA-BQD0KAgqWNX2b)
 
 ## Análisis
 
@@ -578,55 +454,55 @@ Los diseños que se muestran están realizados teniendo como base un dispositivo
 
 Todas las páginas de nuestro sitio web que no requieran de un inicio de sesión es decir a las que todo el mundo sean usuarios registrados o no tienen acceso mantienen un conjunto de elementos y características comunes entre ellas. Estas son que el contenido de los diferentes sitios este contenido dentro de un div (2) el cual a su vez está comprendido dentro de otro div más grande y sobre el cual se mostrara el fondo que serán los colores de la página (1). Dentro del div (2) que contendrá las diferentes opciones, formularios, textos y demás para las diferentes localizaciones de nuestro sitio también tenemos elementos comunes como son el uso del logo de la aplicación, así como el nombre como cabecera para el bloque.
 
-![image](https://drive.google.com/uc?export=view&id=1bQimpCiXFJgZX0qjMu6QXoPwa_YgUPD5)
+![index_img](https://drive.google.com/uc?export=view&id=1bQimpCiXFJgZX0qjMu6QXoPwa_YgUPD5)
 
 En cuanto a las páginas que requieren de un inicio de sesión tenemos que todas tienen una barra de navegación la cual muestra el botón que permite abrir y cerrar el menú lateral que se encontrara situado la izquierda de la página, así como el nombre de la página. En lo que abarca al menú tenemos que este contendrá el logo de la página, así como un conjunto de submenús que permitirán al usuario recorrer nuestro sitio web. Este menú se adaptará al tamaño de la página. Dentro de estas páginas los diseños que se mostrarán estarán contenido dentro de un bloque del bloque de contenido manteniendo estáticos la barra de navegación como el menú lateral.
 
-![image](https://drive.google.com/uc?export=view&id=1g5j3bpidoe2ppiDF2cUgZRgBjIbhPmyB)
+![dasboard_img](https://drive.google.com/uc?export=view&id=1g5j3bpidoe2ppiDF2cUgZRgBjIbhPmyB)
 
 ### Index
 
 Aquí se muestra la página por defecto de la aplicación cuando accedemos desde un navegador a la URL. Dentro del bloque central vemos que se mostrará el logo de la aplicación, así como el nombre y un slogan. Justo debajo de estos elementos tenemos que se muestran una serie de botones los cuales se tiene pensado que enlacen con la documentación de aplicación, así como con la página de login que veremos más adelante. Justo debajo tendremos una sección de novedades donde se mostrarán las últimas noticias de nuestra aplicación en forma de pequeño resumen. Justo debajo tendríamos unos iconos que representan la esencia de la aplicación, así como un footer que incluiría información extra sobre el autor y licencia.
 
-![image](https://drive.google.com/uc?export=view&id=1bQimpCiXFJgZX0qjMu6QXoPwaYgUPD5)
+![index_img](https://drive.google.com/uc?export=view&id=1bQimpCiXFJgZX0qjMu6QXoPwa_YgUPD5)
 
 ### Inicio de sesión (Login)
 
 En este diseño vamos a mostrar la página que los usuarios verán cuando intenten iniciar sesión en nuestra aplicación. Manteniendo la coherencia entre las diferentes páginas del sitio esta también tiene un div con el contenido de la aplicación sobre otro div que contendrá en fondo. En este bloque principal tenemos a su vez y al igual que los otros lugares del sitio el logo de la aplicación, así como el nombre de la misma. Justo debajo tendríamos el formulario de inicio de sesión con las credenciales que se decidan implementar, así como el botón de subir del formulario. A continuación, tendríamos el botón que nos mostraría la página para recuperar la contraseña en caso de que no nos acordemos, así como otro enlace a la página para registrarse en caso de que no se tenga cuenta. Justo debajo tenemos 2 links que en un principio se tiene pensado que muestren la política de privacidad, así como los términos y condiciones que aceptan los usuarios al hacer uso de nuestros servicios. En caso de que ocurra algún error se mostrar una alerta indicando el error que se produjo.
 
-![image](https://drive.google.com/uc?export=view&id=1sqEFtfLZZO90NzvtrC0ncdH8FSlNi7EO)
+![login_img](https://drive.google.com/uc?export=view&id=1sqEFtfLZZO90NzvtrC0ncdH8FSlNi7EO)
 
 ### Recuperación de cuenta 1 (forgot)
 
 Vamos a revisar la página de que permite a los usuarios recuperar su cuenta. Este diseño es el más básico de todos los que dispone nuestra página ya que solo incluye a parte de lo típico que es el bloque de contenido con el logo y nombre de la aplicación sobre un div que contiene el fondo, un formulario con un campo y un botón de subir, así como los links a la política de privacidad y términos y condiciones y un botón para acceder al formulario para crear una cuenta.
 
-![image](https://drive.google.com/uc?export=view&id=1ZwrGZRGydiZs5q-VC2tXqdhrrObJKJjb)
+![forgot_img](https://drive.google.com/uc?export=view&id=1ZwrGZRGydiZs5q-VC2tXqdhrrObJKJjb)
 
 ### Recuperación de cuenta 2 (recover)
 
 Este diseño será el que disfrutará el usuario cuando reinicie la contraseña de su cuenta en caso de que la olvidara. En este disponemos de un formulario con 4 campos que serán las credenciales que se requerirán para reiniciar la contraseña de la cuenta, así como un botón de envió de formulario para llevar a cabo la acción. Aparte de estos elementos tenemos los ya típicos de la página y que están explicados en modelos anteriores.
 
-![image](https://drive.google.com/uc?export=view&id=1F2jkccj8HtwKxRjWNix7AlsPKG2gV9lC)
+![recover_img](https://drive.google.com/uc?export=view&id=1F2jkccj8HtwKxRjWNix7AlsPKG2gV9lC)
 
 ### Creación de cuenta
 
-Aquí veremos el diseño que tendrá la página que permitirá al usuario crear una cuenta en el sistema. En este diseño y teniendo como base el diseño típico de nuestro sitio tenemos un formulario con el conjunto de campos a cubrir que serán necesarios para crear el usuario, así como el botón que permite el envío de este. Justo debajo tendríamos un texto explicativo de la siguiente opción que el un inicio es la de ir a la página de inicio de sesión para ello disponemos de un botón. Justo debajo de este tendríamos el conjunto de link que harán referencia a la política de privacidad, así como los términos y condiciones de uso. ![image](https://drive.google.com/uc?export=view&id=1PvBg8cORUuXr4Qsoa8nvcOOVM7ANCEux)
+Aquí veremos el diseño que tendrá la página que permitirá al usuario crear una cuenta en el sistema. En este diseño y teniendo como base el diseño típico de nuestro sitio tenemos un formulario con el conjunto de campos a cubrir que serán necesarios para crear el usuario, así como el botón que permite el envío de este. Justo debajo tendríamos un texto explicativo de la siguiente opción que el un inicio es la de ir a la página de inicio de sesión para ello disponemos de un botón. Justo debajo de este tendríamos el conjunto de link que harán referencia a la política de privacidad, así como los términos y condiciones de uso. ![createAccount_img](https://drive.google.com/uc?export=view&id=1PvBg8cORUuXr4Qsoa8nvcOOVM7ANCEux)
 
 ### Perfil o App
 
-Esta vista contiene lo que verá el usuario cuando acceda a su perfil o al de cualquier otro usuario o app. En este diseño podemos ver que dentro de la página del perfil se verá una foto del recurso, así como los datos del mismo como nombre, fecha de registro cumpleaños y demás a su vez justo debajo de los datos estarían las opciones que podría hacer dar de baja el recurso o editarlo. Justo debajo tenemos un conjunto de gráficos que mostrarán diferentes datos del usuario o app como tiempo de uso, registros, tiempo diario y demás. ![image](https://drive.google.com/uc?export=view&id=1P48RMTR04NK2d4ZpfJ-30mekyS3Yq0Sc)
+Esta vista contiene lo que verá el usuario cuando acceda a su perfil o al de cualquier otro usuario o app. En este diseño podemos ver que dentro de la página del perfil se verá una foto del recurso, así como los datos del mismo como nombre, fecha de registro cumpleaños y demás a su vez justo debajo de los datos estarían las opciones que podría hacer dar de baja el recurso o editarlo. Justo debajo tenemos un conjunto de gráficos que mostrarán diferentes datos del usuario o app como tiempo de uso, registros, tiempo diario y demás. ![info_img](https://drive.google.com/uc?export=view&id=1P48RMTR04NK2d4ZpfJ-30mekyS3Yq0Sc)
 
 ### Data 1
 
 Los diferentes datos que muestre la aplicación a partir de los datos recopilados se tienen que mostrar de alguna manera. Para solucionar este problema en un principio haremos uso de estos 2 diseños que se muestran a continuación. El primero sería el empleado para ver datos de una manera masiva como por ejemplo el registro de aplicaciones o de logs. En estos casos haríamos uso de tablas que nos permitirían mostrar todos los registros. Para dar facilidades a estas vistas las tablas tendrán un tamaño personalizable (selector situado en la parte superior izquierda) así como un sistema de paginación u búsqueda por campo que permitirá al usuario visualizar los datos de una manera más cómodo. Además de estas medidas se pueden organizar las tablas según los datos de las cabeceras. Luego estas vistas proporcionarán a los usuarios diferentes funcionalidades como la opción de borrar, añadir o editar los diferentes registros. Para estas acciones se hará uso de un pop que ocupará la pantalla y donde se permitirá al usuario la introducción de datos, así como la confirmación de la acción.
 
-![image](https://drive.google.com/uc?export=view&id=10cmCmWcA-Xmqln67598fvRPajrPKHSs)
+![data1_img](https://drive.google.com/uc?export=view&id=10cmCmWcA-Xmqln67598fvRPajrPKHSs)
 
 ### Data 2
 
 Esta es otra vista que usaremos para mostrar los datos a los usuarios. Esta vista es una mucho más trabajada que mostrará datos en forma de gráficos, tanto de líneas, barras, pociones, etc. así como mediante números y porcentajes que resumirá los datos de manera que resulte sencilla de ver. En la primera sección justo después de la barra de navegación tenemos un conjunto de grupos (cards) que contendrán datos en forma de resumen de uso por ejemplo el número de aplicaciones del usuario o el número de logs que ha realizado el día actual entre otros muchos. A continuación, en otro bloque tenemos los gráficos estos darán información mucho más extendida en el tiempo y proporcionarán al usuario la capacidad de interactuar con ella de una manera más sencilla pudiendo ajustar las gráficas cambiar los colores y demás. Estos gráficos además y con el fin de resultar más amigables se podrán ocultar pensando en las pequeñas pantallas de los dispositivos móviles.
 
-![image](https://drive.google.com/uc?export=view&id=1g5j3bpidoe2ppiDF2cUgZRgBjIbhPmyB)
+![data2_img](https://drive.google.com/uc?export=view&id=1g5j3bpidoe2ppiDF2cUgZRgBjIbhPmyB)
 
 ### Anexos
 
