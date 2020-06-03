@@ -6,7 +6,7 @@
 
 		<div v-if='ready == true && apps.length != 0'>
 
-			<div class="row mt-3 mt-md-0 justify-content-center align-items-center">
+			<div class="row mt-3 align-items-center">
 
 				<div class="col-9">
 
@@ -25,7 +25,7 @@
 
 				</div>
 
-				<div class="col-3">
+				<div class="col-3" v-if="apps.length < $parent.$parent.$parent.user['userCategories.maximumApps']">
 
 					<div class="row m-3 align-items-center justify-content-end">
 
@@ -41,9 +41,9 @@
 
 			</div>
 
-			<div class="row m-0 p-0 mt-3 justify-content-center">
+			<div class="row m-0 p-0 justify-content-center">
 
-				<div class="col-12 col-md-4 col-xl-2 mt-3"  v-for="app in apps" v-bind:key="app">
+				<div class="col-12 col-md-4 col-xl-2 mt-3" v-for="app in apps" v-bind:key="app">
 
 					<div class="card" @click="seeApp(app)">
 

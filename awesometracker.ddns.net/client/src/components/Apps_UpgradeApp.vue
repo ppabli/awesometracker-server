@@ -279,7 +279,7 @@
 
 								});
 
-								this.$router.push(`/dashboard/app/${this.app['apps.code']}`);
+								this.$router.push(`/dashboard/apps/${this.app['apps.code']}`);
 
 							} else {
 
