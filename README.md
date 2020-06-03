@@ -275,7 +275,7 @@ Para minimizar los gastos se hará uso de aplicaciones Open Source o gratuitas c
 
 ##### Coste por actividad
 
-| **Actividad** | **Duración (horas) **|** Coste (€) **|** Coste total (€)** |
+| **Actividad** | **Duración (horas)** | **Coste (€)** | **Coste total (€)** |
 | --- | --- | --- | --- |
 | **Estudio preliminar** | 80 | 333 | 77 | 400 |
 | **Análisis de requisitos** | 120 | 500 | 130 | 636 |
