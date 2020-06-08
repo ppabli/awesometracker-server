@@ -22,7 +22,7 @@ Visibilidad – Privacidad de la cuenta de usuario o app. Permite o no a los dem
 
 ## Instalacion
 
-Dado que hacemos uso de NodeJS para la aplicacion web el proceso de instalacion de nuestro software es extremadamente sencillo. Para poder hacer uso del codigo desarrollado, tanto de cliente como de servidor, tenemos que descargar los ficheros contenidos en las carpetas correspondientes [cliente](awesometracker-server/awesometracker.ddns.net/client) o [servidor](awesometracker-server/awesometracker.ddns.net/server).
+Dado que hacemos uso de NodeJS para la aplicacion web el proceso de instalacion de nuestro software es extremadamente sencillo. Para poder hacer uso del codigo desarrollado, tanto de cliente como de servidor, tenemos que descargar los ficheros contenidos en las carpetas correspondientes [cliente](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/client) o [servidor](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/server).
 
 Una vez descargado lo unico que tenemos que hacer es ejecutar el comando `npm install` y automaticamente el sistema descargara todas las dependencias necesarias para poder poner nuestro proyecto en uso.
 
@@ -66,10 +66,10 @@ A continuación, se listan las páginas más empleadas durante el desarrollo.
 
 ## Memoria
 
-1. [Estudio preliminar](doc/templates/1_estudio_preliminar.md)
-2. [Análisis](doc/templates/2_analisis.md)
-3. [Diseno](doc/templates/3_diseno.md)
-4. [Codificación y pruebas](doc/templates/4_codificacion_pruebas.md)
+1. [Estudio preliminar](docs/templates/1_estudio_preliminar.md)
+2. [Análisis](docs/templates/2_analisis.md)
+3. [Diseno](docs/templates/3_diseno.md)
+4. [Codificación y pruebas](docs/templates/4_codificacion_pruebas.md)
 
 ## Anexos
 
