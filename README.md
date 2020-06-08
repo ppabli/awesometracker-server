@@ -22,7 +22,9 @@ Visibilidad – Privacidad de la cuenta de usuario o app. Permite o no a los dem
 
 ## Instalacion
 
-Dado que hacemos uso de NodeJS para la aplicacion web el proceso de instalacion de nuestro software es extremadamente sencillo. Para poder hacer uso del codigo desarrollado, tanto de cliente como de servidor, tenemos que descargar los ficheros contenidos en las carpetas correspondientes [cliente](awesometracker-server/awesometracker.ddns.net/client/) o [servidor](awesometracker-server/awesometracker.ddns.net/server/). Una vez descargado lo unico que tenemos que hacer es ejecutar el comando `npm install` y automaticamente el sistema descargara todas las dependencias necesarias para poder poner nuestro proyecto en uso.
+Dado que hacemos uso de NodeJS para la aplicacion web el proceso de instalacion de nuestro software es extremadamente sencillo. Para poder hacer uso del codigo desarrollado, tanto de cliente como de servidor, tenemos que descargar los ficheros contenidos en las carpetas correspondientes [cliente](awesometracker-server/awesometracker.ddns.net/client) o [servidor](awesometracker-server/awesometracker.ddns.net/server).
+
+Una vez descargado lo unico que tenemos que hacer es ejecutar el comando `npm install` y automaticamente el sistema descargara todas las dependencias necesarias para poder poner nuestro proyecto en uso.
 
 ## Sobre el autor
 
