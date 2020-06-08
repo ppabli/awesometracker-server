@@ -8,11 +8,11 @@ Una vez ya tenemos escogido el sistema de base de datos para nuestra aplicación
 
 ## Modelo entidad relación
 
-[modeloER](doc/img/modeloER.png)
+[modeloER](/doc/img/modeloER.png)
 
 ## Modelo relacional
 
-[modeloRelacional](doc/img/modeloRelacional.png)
+[modeloRelacional](/doc/img/modeloRelacional.png)
 
 ## Análisis
 
@@ -68,52 +68,52 @@ Los diseños que se muestran están realizados teniendo como base un dispositivo
 
 Todas las páginas de nuestro sitio web que no requieran de un inicio de sesión es decir a las que todo el mundo sean usuarios registrados o no tienen acceso mantienen un conjunto de elementos y características comunes entre ellas. Estas son que el contenido de los diferentes sitios este contenido dentro de un div (2) el cual a su vez está comprendido dentro de otro div más grande y sobre el cual se mostrara el fondo que serán los colores de la página (1). Dentro del div (2) que contendrá las diferentes opciones, formularios, textos y demás para las diferentes localizaciones de nuestro sitio también tenemos elementos comunes como son el uso del logo de la aplicación, así como el nombre como cabecera para el bloque.
 
-[img_index](doc/img/index.png)
+[img_index](/doc/img/index.png)
 
 En cuanto a las páginas que requieren de un inicio de sesión tenemos que todas tienen una barra de navegación la cual muestra el botón que permite abrir y cerrar el menú lateral que se encontrara situado la izquierda de la página, así como el nombre de la página. En lo que abarca al menú tenemos que este contendrá el logo de la página, así como un conjunto de submenús que permitirán al usuario recorrer nuestro sitio web. Este menú se adaptará al tamaño de la página. Dentro de estas páginas los diseños que se mostrarán estarán contenido dentro de un bloque del bloque de contenido manteniendo estáticos la barra de navegación como el menú lateral.
 
-[img_menu](doc/img/menu.png)
+[img_menu](/doc/img/menu.png)
 
 ### Index
 
 Aquí se muestra la página por defecto de la aplicación cuando accedemos desde un navegador a la URL. Dentro del bloque central vemos que se mostrará el logo de la aplicación, así como el nombre y un slogan. Justo debajo de estos elementos tenemos que se muestran una serie de botones los cuales se tiene pensado que enlacen con la documentación de aplicación, así como con la página de login que veremos más adelante. Justo debajo tendremos una sección de novedades donde se mostrarán las últimas noticias de nuestra aplicación en forma de pequeño resumen. Justo debajo tendríamos unos iconos que representan la esencia de la aplicación, así como un footer que incluiría información extra sobre el autor y licencia.
 
-[img_index](doc/img/index.png)
+[img_index](/doc/img/index.png)
 
 ### Inicio de sesión (Login)
 
 En este diseño vamos a mostrar la página que los usuarios verán cuando intenten iniciar sesión en nuestra aplicación. Manteniendo la coherencia entre las diferentes páginas del sitio esta también tiene un div con el contenido de la aplicación sobre otro div que contendrá en fondo. En este bloque principal tenemos a su vez y al igual que los otros lugares del sitio el logo de la aplicación, así como el nombre de la misma. Justo debajo tendríamos el formulario de inicio de sesión con las credenciales que se decidan implementar, así como el botón de subir del formulario. A continuación, tendríamos el botón que nos mostraría la página para recuperar la contraseña en caso de que no nos acordemos, así como otro enlace a la página para registrarse en caso de que no se tenga cuenta. Justo debajo tenemos 2 links que en un principio se tiene pensado que muestren la política de privacidad, así como los términos y condiciones que aceptan los usuarios al hacer uso de nuestros servicios. En caso de que ocurra algún error se mostrar una alerta indicando el error que se produjo.
 
-[img_login](doc/img/login.png)
+[img_login](/doc/img/login.png)
 
 ### Recuperación de cuenta 1 (forgot)
 
 Vamos a revisar la página de que permite a los usuarios recuperar su cuenta. Este diseño es el más básico de todos los que dispone nuestra página ya que solo incluye a parte de lo típico que es el bloque de contenido con el logo y nombre de la aplicación sobre un div que contiene el fondo, un formulario con un campo y un botón de subir, así como los links a la política de privacidad y términos y condiciones y un botón para acceder al formulario para crear una cuenta.
 
-[img_forgot](doc/img/forgot.png)
+[img_forgot](/doc/img/forgot.png)
 
 ### Recuperación de cuenta 2 (recover)
 
 Este diseño será el que disfrutará el usuario cuando reinicie la contraseña de su cuenta en caso de que la olvidara. En este disponemos de un formulario con 4 campos que serán las credenciales que se requerirán para reiniciar la contraseña de la cuenta, así como un botón de envió de formulario para llevar a cabo la acción. Aparte de estos elementos tenemos los ya típicos de la página y que están explicados en modelos anteriores.
 
-[img_recover](doc/img/recover.png)
+[img_recover](/doc/img/recover.png)
 
 ### Creación de cuenta
 
-Aquí veremos el diseño que tendrá la página que permitirá al usuario crear una cuenta en el sistema. En este diseño y teniendo como base el diseño típico de nuestro sitio tenemos un formulario con el conjunto de campos a cubrir que serán necesarios para crear el usuario, así como el botón que permite el envío de este. Justo debajo tendríamos un texto explicativo de la siguiente opción que el un inicio es la de ir a la página de inicio de sesión para ello disponemos de un botón. Justo debajo de este tendríamos el conjunto de link que harán referencia a la política de privacidad, así como los términos y condiciones de uso. [img_create](doc/img/create.png)
+Aquí veremos el diseño que tendrá la página que permitirá al usuario crear una cuenta en el sistema. En este diseño y teniendo como base el diseño típico de nuestro sitio tenemos un formulario con el conjunto de campos a cubrir que serán necesarios para crear el usuario, así como el botón que permite el envío de este. Justo debajo tendríamos un texto explicativo de la siguiente opción que el un inicio es la de ir a la página de inicio de sesión para ello disponemos de un botón. Justo debajo de este tendríamos el conjunto de link que harán referencia a la política de privacidad, así como los términos y condiciones de uso. [img_create](/doc/img/create.png)
 
 ### Perfil o App
 
-Esta vista contiene lo que verá el usuario cuando acceda a su perfil o al de cualquier otro usuario o app. En este diseño podemos ver que dentro de la página del perfil se verá una foto del recurso, así como los datos del mismo como nombre, fecha de registro cumpleaños y demás a su vez justo debajo de los datos estarían las opciones que podría hacer dar de baja el recurso o editarlo. Justo debajo tenemos un conjunto de gráficos que mostrarán diferentes datos del usuario o app como tiempo de uso, registros, tiempo diario y demás. [img_profile](doc/img/profile.png)
+Esta vista contiene lo que verá el usuario cuando acceda a su perfil o al de cualquier otro usuario o app. En este diseño podemos ver que dentro de la página del perfil se verá una foto del recurso, así como los datos del mismo como nombre, fecha de registro cumpleaños y demás a su vez justo debajo de los datos estarían las opciones que podría hacer dar de baja el recurso o editarlo. Justo debajo tenemos un conjunto de gráficos que mostrarán diferentes datos del usuario o app como tiempo de uso, registros, tiempo diario y demás. [img_profile](/doc/img/profile.png)
 
 ### Data 1
 
 Los diferentes datos que muestre la aplicación a partir de los datos recopilados se tienen que mostrar de alguna manera. Para solucionar este problema en un principio haremos uso de estos 2 diseños que se muestran a continuación. El primero sería el empleado para ver datos de una manera masiva como por ejemplo el registro de aplicaciones o de logs. En estos casos haríamos uso de tablas que nos permitirían mostrar todos los registros. Para dar facilidades a estas vistas las tablas tendrán un tamaño personalizable (selector situado en la parte superior izquierda) así como un sistema de paginación u búsqueda por campo que permitirá al usuario visualizar los datos de una manera más cómodo. Además de estas medidas se pueden organizar las tablas según los datos de las cabeceras. Luego estas vistas proporcionarán a los usuarios diferentes funcionalidades como la opción de borrar, añadir o editar los diferentes registros. Para estas acciones se hará uso de un pop que ocupará la pantalla y donde se permitirá al usuario la introducción de datos, así como la confirmación de la acción.
 
-[img_data_1](doc/img/data.png)
+[img_data_1](/doc/img/data.png)
 
 ### Data 2
 
 Esta es otra vista que usaremos para mostrar los datos a los usuarios. Esta vista es una mucho más trabajada que mostrará datos en forma de gráficos, tanto de líneas, barras, pociones, etc. así como mediante números y porcentajes que resumirá los datos de manera que resulte sencilla de ver. En la primera sección justo después de la barra de navegación tenemos un conjunto de grupos (cards) que contendrán datos en forma de resumen de uso por ejemplo el número de aplicaciones del usuario o el número de logs que ha realizado el día actual entre otros muchos. A continuación, en otro bloque tenemos los gráficos estos darán información mucho más extendida en el tiempo y proporcionarán al usuario la capacidad de interactuar con ella de una manera más sencilla pudiendo ajustar las gráficas cambiar los colores y demás. Estos gráficos además y con el fin de resultar más amigables se podrán ocultar pensando en las pequeñas pantallas de los dispositivos móviles.
 
-[img_data_2](doc/img/dashboard.png)
+[img_data_2](/doc/img/dashboard.png)

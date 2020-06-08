@@ -36,9 +36,9 @@ En cuanto a las tecnologias que mas he usado se encuentran las siguientes:
 4. Vue.JS
 
 Puedes ponerte en contacto conmigo o saber mas sobre mi en los siguientes enlaces:
-[ppabli12@gmail.com](ppabli12@gmail.com)
-[a18pablolc@iessanclemente.net](a18pablolc@iessanclemente.net)
-[https://github.com/ppabli](https://github.com/ppabli)
+- [ppabli12@gmail.com](ppabli12@gmail.com)
+- [a18pablolc@iessanclemente.net](a18pablolc@iessanclemente.net)
+- [https://github.com/ppabli](https://github.com/ppabli)
 
 ## Licencia
 
@@ -65,7 +65,7 @@ A continuación, se listan las páginas más empleadas durante el desarrollo.
 ## Memoria
 
 1. [Estudio preliminar](doc/templates/1_estudio_preliminar.md)
-2. [Análisis:](doc/templates/2_analisis.md)
+2. [Análisis](doc/templates/2_analisis.md)
 3. [Diseno](doc/templates/3_diseno.md)
 4. [Codificación y pruebas](doc/templates/4_codificacion_pruebas.md)
 
@@ -75,5 +75,5 @@ A continuación, se listan las páginas más empleadas durante el desarrollo.
 2. [Aplicacion web](https://awesometracker.ddns.net)
 3. Repositorios
 	1. [Repositorio servidor](https://github.com/ppabli/awesometracker-server)
-	2. [Repositorio aplicación escritorio](https://github.com/ppabli/awesometracker-server)	
+	2. [Repositorio aplicación escritorio](https://github.com/ppabli/awesometracker-desktop)
 4. [Lista de reproducción](https://www.youtube.com/playlist?list=PL-1Ze9GVKLwzRJGEltgkMl-ICTp4Jo66a)

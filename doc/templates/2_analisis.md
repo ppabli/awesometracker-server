@@ -19,7 +19,7 @@ Requerirá de los siguientes datos para completarse:
 - Fecha de última actualización la cual será la hora actual del sistema.
 - Fecha de cumpleaños.
 - Diff por defecto tiene el valor de 1.
-- URl de la imagen del usuario en caso de no proporcionar ninguna por defecto se utilizará la básica de la aplicación [1](doc/img/default.png).
+- URl de la imagen del usuario en caso de no proporcionar ninguna por defecto se utilizará la básica de la aplicación [1](/doc/img/default.png).
 - Código de estatus del usuario por defecto 1.
 - Código de categoría del usuario por defecto se asigna la mínima categoría, es decir el código 7.
 - Visibilidad del usuario pudiendo ser public o private se asigna por defecto public.
@@ -110,7 +110,7 @@ Requerirá de los siguientes datos para completarse:
 - Código de categoría a la que pertenece.
 - Fecha de registro la cual será la hora del sistema en el momento de creación.
 - Fecha de última modificación la cual será la hora del sistema en el momento de creación
-- URL de la imagen de la app por defecto hará uso de la imagen por defecto [2](doc/img/default.png).
+- URL de la imagen de la app por defecto hará uso de la imagen por defecto [2](/doc/img/default.png).
 
 ### Función 12: Dar de baja una App
 
