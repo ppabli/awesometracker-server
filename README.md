@@ -1,6 +1,6 @@
-# Proxecto de fin de ciclo DAW | AWESOMETRACKER
+# Proyecto de fin de ciclo DAW | AWESOMETRACKER
 
-## Descripcion
+## Descripción
 
 Este documento presenta un servicio que permite a los usuarios ver datos relacionados con el uso que hace del ordenador similar a la aplicación de tiempo de uso disponible en los productos de Apple. Esta idea nace de la falta de algo similar en el ecosistema de Windows/Linux y que impide a los usuarios saber cuánto tiempo pasan trabajando en el ordenador o que aplicaciones no han usado últimamente entre muchas otra, así como la creciente demanda en todo el mundo de seguridad y salud digital.
 
@@ -20,7 +20,7 @@ Estatus – Estado de un recurso. Se emplea para los usuarios o apps. Permite o 
 
 Visibilidad – Privacidad de la cuenta de usuario o app. Permite o no a los demás usuarios visualizar los datos tanto propios como relacionas de dicho recurso tanto.
 
-## Instalacion
+## Instalación
 
 Dado que hacemos uso de NodeJS para la aplicacion web el proceso de instalacion de nuestro software es extremadamente sencillo. Para poder hacer uso del codigo desarrollado, tanto de cliente como de servidor, tenemos que descargar los ficheros contenidos en las carpetas correspondientes [cliente](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/client) o [servidor](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/server).
 
@@ -28,8 +28,8 @@ Una vez descargado lo unico que tenemos que hacer es ejecutar el comando `npm in
 
 ## Sobre el autor
 
-Mi nombre es Pablo Liste Cancela, tengo 21 anos y actualmente soy estudiante de 2 DAw en el IES San Clemente.
-Desde pequeno me ha gustado la tecnologia y siempre he tenido curiosidad de saber como funcionan las cosas es ese el motivo por el cual decidi estudiar programacion.
+Mi nombre es Pablo Liste Cancela, tengo 21 años y actualmente soy estudiante de 2 DAw en el IES San Clemente.
+Desde pequeño me ha gustado la tecnologia y siempre he tenido curiosidad de saber como funcionan las cosas ese es el motivo por el cual decidi estudiar programacion.
 
 En cuanto a las tecnologias que mas he usado se encuentran las siguientes:
 1. JavaScript
@@ -68,13 +68,13 @@ A continuación, se listan las páginas más empleadas durante el desarrollo.
 
 1. [Estudio preliminar](docs/templates/1_estudio_preliminar.md)
 2. [Análisis](docs/templates/2_analisis.md)
-3. [Diseno](docs/templates/3_diseno.md)
+3. [Diseño](docs/templates/3_diseno.md)
 4. [Codificación y pruebas](docs/templates/4_codificacion_pruebas.md)
 
 ## Anexos
 
 1. [Documentación web](https://awesometracker.ddns.net/docs)
-2. [Aplicacion web](https://awesometracker.ddns.net)
+2. [Aplicación web](https://awesometracker.ddns.net)
 3. Repositorios
 	1. [Repositorio servidor](https://github.com/ppabli/awesometracker-server)
 	2. [Repositorio aplicación escritorio](https://github.com/ppabli/awesometracker-desktop)
