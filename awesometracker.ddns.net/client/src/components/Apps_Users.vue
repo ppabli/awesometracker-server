@@ -315,6 +315,8 @@
 
 					let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy${orderBy}`);
 
+					this.orderBy = orderBy;
+
 					if (result.data.status == 'ok') {
 
 						let users = result.data.data;

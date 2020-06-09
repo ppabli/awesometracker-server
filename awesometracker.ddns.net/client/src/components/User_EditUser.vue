@@ -114,7 +114,7 @@
 							<div class="col-12 mb-3 col-md-6 mb-md-0">
 
 								<label for="birthDate" class="sr-only">Birth date</label>
-								<input type="date" id="users.birthDate" class="form-control" placeholder="Birth date" :value="user['users.birthDate'].split('T')[0]">
+								<input type="date" min="1971-01-01" id="users.birthDate" class="form-control" placeholder="Birth date" :value="user['users.birthDate'].split('T')[0]">
 
 							</div>
 
@@ -491,7 +491,11 @@
 
 						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/1?userCode=${this.$route.params.userCode}`);
 
-						this.$parent.$parent.$parent.user = result.data.data[0];
+						if (this.$parent.$parent.$parent.user['users.code'] == this.$route.params.userCode) {
+
+							this.$parent.$parent.$parent.user = result.data.data[0];
+
+						}
 
 						this.$router.go(-1);
 

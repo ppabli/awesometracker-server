@@ -268,6 +268,14 @@
 
 								});
 
+								let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/1?userCode=${this.$route.params.userCode}`);
+
+								if (this.$parent.$parent.$parent.user['users.code'] == this.$route.params.userCode) {
+
+									this.$parent.$parent.$parent.user = result.data.data[0];
+
+								}
+
 								this.$router.push(`/dashboard/user/${this.user['users.code']}`);
 
 							} else {

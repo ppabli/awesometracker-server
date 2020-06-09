@@ -366,7 +366,7 @@
 				let result = await Swal.fire({
 
 					title: 'Edit application',
-					html: `<label for='category' class='sr-only'>Category</label><input type='text' maxlength="250" id='category' class='form-control mt-2' placeholder='Category' value='${application['applications.category']}'><label for='application' class='sr-only'>Application</label><input type='text' maxlength="250" id='application' class='form-control mt-2' placeholder='Application' value='${application['applications.app']}'><label for='userCode' class='sr-only'>User</label><select id='userCode' class='form-control mt-2' value="${application['users.code']}">${this.users.map(user => `<option value="${user['users.code']}">${user['users.user']}</option>`)}`,
+					html: `<label for='category' class='sr-only'>Category</label><input type='text' maxlength="250" id='category' class='form-control mt-2' placeholder='Category' value='${application['applications.category']}'><label for='application' class='sr-only'>Application</label><input type='text' maxlength="250" id='application' class='form-control mt-2' placeholder='Application' value='${application['applications.app']}'><label for='userCode' class='sr-only'>User</label><select id='userCode' class='form-control mt-2' value="${application['applications.userCode']}">${this.users.map(user => `<option value="${user['users.code']}">${user['users.user']}</option>`)}`,
 					focusConfirm: false,
 					showCancelButton: true,
 					confirmButtonText: 'Save',

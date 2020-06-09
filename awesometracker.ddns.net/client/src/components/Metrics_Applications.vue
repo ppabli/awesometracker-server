@@ -287,7 +287,7 @@
 
 							let msg = result.data.msg;
 
-							result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/3?orderBy='${this.orderBy}'`)
+							result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/3?orderBy=${this.orderBy}`)
 
 							if (result.data.status == 'ok') {
 

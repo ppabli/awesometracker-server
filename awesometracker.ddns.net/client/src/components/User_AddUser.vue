@@ -114,7 +114,7 @@
 							<div class="col-12 mb-3 col-md-6 mb-md-0">
 
 								<label for="birthDate" class="sr-only">Birth date</label>
-								<input type="date" id="users.birthDate" class="form-control" placeholder="Birth date" required>
+								<input type="date" min="1971-01-01" id="users.birthDate" class="form-control" placeholder="Birth date" required>
 
 							</div>
 

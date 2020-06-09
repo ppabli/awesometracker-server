@@ -25,7 +25,7 @@
 
 				</div>
 
-				<div class="col-3" v-if="apps.length < $parent.$parent.$parent.user['userCategories.maximumApps']">
+				<div class="col-3" v-if="apps.length < $parent.$parent.$parent.user['userCategories.maximumApps'] || $parent.$parent.$parent.user['userCategories.maximumApps'] == 0">
 
 					<div class="row mr-3 align-items-center justify-content-end">
 
