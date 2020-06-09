@@ -21,7 +21,7 @@ checkCalls = async (req, res, next) => {
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data : e, msg: ''});
+		res.status(200).json({status: 'error', data: e, msg: '', doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
@@ -50,7 +50,7 @@ checkStatus = async (req, res, next) => {
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: [], msg: e});
+		res.status(200).json({status: 'error', data: [], msg: e, doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
@@ -129,7 +129,7 @@ checkPermits = async (req, res, next) => {
 
 		}
 
-		valid ? next() : res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that'});
+		valid ? next() : res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that', doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 

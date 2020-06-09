@@ -51,19 +51,19 @@ checkToken = async (req, res, next) => {
 
 			} else {
 
-				res.status(200).json({status: 'error', data: [], msg: 'The provided token is not correct'});
+				res.status(200).json({status: 'error', data: [], msg: 'The provided token is not correct', doc: 'https://awesometracker.ddns.net/docs'});
 
 			}
 
 		} else {
 
-		res.status(200).json({status: 'error', data: [], msg: 'No token has been provided'});
+			res.status(200).json({status: 'error', data: [], msg: 'No token has been provided', doc: 'https://awesometracker.ddns.net/docs'});
 
 		}
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: [], msg: e});
+		res.status(200).json({status: 'error', data: [], msg: e, doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
@@ -92,7 +92,7 @@ checkCalls = async (req, res, next) => {
 
 				} else {
 
-					res.status(200).json({status: 'error', data: [], msg: 'The maximum number of requests has been exceeded'})
+					res.status(200).json({status: 'error', data: [], msg: 'The maximum number of requests has been exceeded', doc: 'https://awesometracker.ddns.net/docs'})
 
 				}
 
@@ -102,7 +102,7 @@ checkCalls = async (req, res, next) => {
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: [], msg: e});
+		res.status(200).json({status: 'error', data: [], msg: e, doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
@@ -134,7 +134,7 @@ checkApp = async (req, res, next) => {
 
 				} else {
 
-					res.status(200).json({status: 'error', data: [], msg: 'Maximum apps reached'});
+					res.status(200).json({status: 'error', data: [], msg: 'Maximum apps reached', doc: 'https://awesometracker.ddns.net/docs'});
 
 				}
 
@@ -142,13 +142,13 @@ checkApp = async (req, res, next) => {
 
 		} else {
 
-			res.status(200).json({status: 'error', data: [], msg: 'Invalid user provided'});
+			res.status(200).json({status: 'error', data: [], msg: 'Invalid user provided', doc: 'https://awesometracker.ddns.net/docs'});
 
 		}
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: [], msg: e});
+		res.status(200).json({status: 'error', data: [], msg: e, doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
@@ -172,7 +172,7 @@ checkStatus = async (req, res, next) => {
 
 				} else {
 
-					res.status(200).json({status: 'error', data: [], msg: `Invalid app status | App status: ${user['status.name']} | Status description: ${user['status.description']}`})
+					res.status(200).json({status: 'error', data: [], msg: `Invalid app status | App status: ${user['status.name']} | Status description: ${user['status.description']}`, doc: 'https://awesometracker.ddns.net/docs'})
 
 				}
 
@@ -184,13 +184,13 @@ checkStatus = async (req, res, next) => {
 
 		} else {
 
-			res.status(200).json({status: 'error', data: [], msg: `Invalid app status | App status: ${res.locals.application['status.name']} | Status description: ${res.locals.application['status.description']}`})
+			res.status(200).json({status: 'error', data: [], msg: `Invalid app status | App status: ${res.locals.application['status.name']} | Status description: ${res.locals.application['status.description']}`, doc: 'https://awesometracker.ddns.net/docs'})
 
 		}
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: [], msg: e});
+		res.status(200).json({status: 'error', data: [], msg: e, doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
@@ -281,7 +281,7 @@ filter = (req, res, next) => {
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: [], msg: 'General error'});
+		res.status(200).json({status: 'error', data: [], msg: 'General error', doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
@@ -382,29 +382,29 @@ checkPermits = async (req, res, next) => {
 
 					}
 
-					valid ? next() : res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that'});
+					valid ? next() : res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that', doc: 'https://awesometracker.ddns.net/docs'});
 
 				} else {
 
-					res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that'});
+					res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | You do not have permissions to do that', doc: 'https://awesometracker.ddns.net/docs'});
 
 				}
 
 			} else {
 
-				res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | User does not exist'});
+				res.status(200).json({status: 'error', data: [], msg: 'Error checking permissions | User does not exist', doc: 'https://awesometracker.ddns.net/docs'});
 
 			}
 
 		} else {
 
-			res.status(200).json({status : 'error', data: [], msg: 'Usercode missing'});
+			res.status(200).json({status : 'error', data: [], msg: 'Usercode missing', doc: 'https://awesometracker.ddns.net/docs'});
 
 		}
 
 	} catch (e) {
 
-		res.status(200).json({status: 'error', data: [], msg: e});
+		res.status(200).json({status: 'error', data: [], msg: e, doc: 'https://awesometracker.ddns.net/docs'});
 
 	}
 
