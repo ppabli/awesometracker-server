@@ -66,6 +66,7 @@ addUser = async (req, res) => {
 
 		let error = false;
 		let ok = true;
+		let fileName = null;
 
 		for (param in req.body) {
 
@@ -121,7 +122,7 @@ addUser = async (req, res) => {
 
 			if (/birthDate/.test(param)) {
 
-				if (new Date() - new Date(req.body[param]) <= 0) {
+				if (new Date() - new Date(req.body[param]) <= 0 || new Date(req.body[param]) < new Date(0)) {
 
 					ok = false;
 					message = 'Invalid birthdate';
@@ -133,7 +134,7 @@ addUser = async (req, res) => {
 
 			if (/appCode/.test(param)) {
 
-				let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
+				let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]}`));
 
 				if (result.length == 0) {
 
@@ -204,7 +205,7 @@ addUser = async (req, res) => {
 
 							await REQUEST.get(req.body[param]);
 
-							var fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
+							fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
 							REQUEST2(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`));
 
@@ -226,7 +227,7 @@ addUser = async (req, res) => {
 
 						await REQUEST.get(req.body[param]);
 
-						var fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}`;
+						fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}`;
 
 						REQUEST2(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`));
 
@@ -242,7 +243,7 @@ addUser = async (req, res) => {
 
 				} else if (/temp/.test(req.body[param])) {
 
-					var fileName = req.body[param].split('/userImg/')[1];
+					fileName = req.body[param].split('/userImg/')[1];
 
 				}
 
@@ -301,7 +302,7 @@ addUser = async (req, res) => {
 
 		}
 
-		if (!ok || error) {
+		if ((!ok || error) && fileName) {
 
 			FS.unlink('/var/www/awesometracker.ddns.net/userImg/' + fileName, () => {});
 
@@ -329,6 +330,7 @@ updateUser = async (req, res) => {
 
 		let error = false;
 		let ok = true;
+		let fileName = null;
 
 		if (req.params.userCode) {
 
@@ -408,7 +410,7 @@ updateUser = async (req, res) => {
 
 					if (/birthDate/.test(param)) {
 
-						if (new Date() - new Date(req.body[param]) <= 0) {
+						if (new Date() - new Date(req.body[param]) <= 0 || new Date(req.body[param]) < new Date(0)) {
 
 							ok = false;
 							message = 'Invalid birthdate';
@@ -420,7 +422,7 @@ updateUser = async (req, res) => {
 
 					if (/appCode/.test(param)) {
 
-						let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
+						let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]}`));
 
 						if (result.length == 0) {
 
@@ -446,31 +448,17 @@ updateUser = async (req, res) => {
 
 							if (req.body[param] > user['users.categoryCode']) {
 
-								let actualApps = await QUERY(USER_CATEGORY.getUserCategoryBy(`userCategories.code=${user['users.categoryCode']}`));
-
 								let newApps = await QUERY(USER_CATEGORY.getUserCategoryBy(`userCategories.code=${req.body[param]}`));
 
-								result = await QUERY(APP.getAppBy(`apps.userCode=${user['users.code']}`, undefined, 'apps.code', 'DESC'));
+								let apps = await QUERY(APP.getAppBy(`apps.userCode=${user['users.code']}`, undefined, 'apps.code', 'DESC'));
 
-								let apps = result;
+								if (apps.length > newApps[0]['userCategories.maximumApps'] && newApps[0]['userCategories.maximumApps'] != 0) {
 
-								if (apps.length > newApps['apps.maximumApps'] && newApps['apps.maximumApps'] != 0) {
-
-									let diff = Math.abs(actualApps['apps.maximumApps'] - newApps['apps.maximumApps']);
+									let diff = apps.length - newApps[0]['userCategories.maximumApps'];
 
 									for (let app = 0; app < diff && app < apps.length; app++) {
 
-										result = await QUERY(USER.getUserBy(`users.appCode=${apps[app]['apps.code']}`));
-
-										let users = result
-
-										for (user in users) {
-
-											await await QUERY(USER.updateUserBy(`users.code=${users[user]['users.code']}`, {'users.statusCode': req.body[param]}));
-
-										}
-
-										await await QUERY(APP.updateAppBy(`apps.code=${apps[app]['apps.code']}`, {'apps.statusCode': req.body[param]}));
+										await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${apps[app]['apps.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
 
 									}
 
@@ -541,7 +529,7 @@ updateUser = async (req, res) => {
 
 									await REQUEST.get(req.body[param]);
 
-									let fileName = `${user['users.code']}_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
+									fileName = `${user['users.code']}_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
 									await REQUEST(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`, () => {
 
@@ -633,7 +621,7 @@ updateUser = async (req, res) => {
 
 		}
 
-		if (!ok || error) {
+		if ((!ok || error) && fileName) {
 
 			FS.unlink('/var/www/awesometracker.ddns.net/userImg/' + fileName, () => {});
 
@@ -1240,6 +1228,7 @@ addApp = async (req, res) => {
 
 		let error = false;
 		let ok = true;
+		let fileName = null;
 
 		for (param in req.body) {
 
@@ -1330,7 +1319,7 @@ addApp = async (req, res) => {
 
 							await REQUEST.get(req.body[param]);
 
-							var fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
+							fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
 							REQUEST2(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/appImg/${fileName}`));
 
@@ -1348,7 +1337,7 @@ addApp = async (req, res) => {
 
 				} else if (/temp/.test(req.body[param])) {
 
-					var fileName = req.body[param].split('/appImg/')[1];
+					fileName = req.body[param].split('/appImg/')[1];
 
 				}
 
@@ -1407,7 +1396,7 @@ addApp = async (req, res) => {
 
 		}
 
-		if (!ok || error) {
+		if (!(ok || error) && fileName) {
 
 			FS.unlink('/var/www/awesometracker.ddns.net/appImg/' + fileName, () => {});
 
@@ -1435,6 +1424,7 @@ updateApp = async (req, res) => {
 
 		let error = false;
 		let ok = true;
+		let fileName = null;
 
 		if (req.params.userCode) {
 
@@ -1527,7 +1517,7 @@ updateApp = async (req, res) => {
 
 											await REQUEST.get(req.body[param]);
 
-											let fileName = `${app['apps.code']}_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
+											fileName = `${app['apps.code']}_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
 											await REQUEST(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/appImg/${fileName}`, () => {
 
@@ -1633,7 +1623,7 @@ updateApp = async (req, res) => {
 
 		}
 
-		if (!ok || error) {
+		if ((!ok || error) && fileName) {
 
 			FS.unlink('/var/www/awesometracker.ddns.net/appImg/' + fileName, () => {});
 
