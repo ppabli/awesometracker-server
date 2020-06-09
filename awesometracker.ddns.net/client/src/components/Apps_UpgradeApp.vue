@@ -156,10 +156,7 @@
 
 					this.app = result.data.data[0];
 
-					alert(this.$parent.$parent.$parent.user['users.code']);
-					alert(this.app['apps.userCode']);
-
-					if (this.$parent.$parent.$parent.user['users.code'] == this.app['apps.userCode'] || this.app['apps.categoryCode'] <= 2) {
+					if (this.$parent.$parent.$parent.user['users.code'] != this.app['apps.userCode'] || this.app['apps.categoryCode'] <= 2) {
 
 						this.$router.push(`/dashboard/apps/${this.$route.params.appCode}`);
 

@@ -173,7 +173,7 @@
 
 		</div>
 
-		<div v-else>
+		<div v-else-if="ready == true">
 
 			<div class="row">
 

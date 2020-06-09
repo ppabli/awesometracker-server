@@ -32,7 +32,7 @@
 
 					<div class="row mt-3 mt-md-0 justify-content-md-end justify-content-center">
 
-						<div class="col-2">
+						<div class="col-2 justify-content-center align-items-center">
 
 							<button class="btn btn-success" @click="addApplication"><i class="fas fa-plus"></i></button>
 
