@@ -71,7 +71,7 @@
 
 					</div>
 
-					<div class="form-group" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || $parent.$parent.$parent.apps">
+					<div class="form-group">
 
 						<div class="form-row" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN'">
 
@@ -184,7 +184,8 @@
 				ready: false,
 				categories: [],
 				users: [],
-				status: []
+				status: [],
+				apps: [],
 
 			}
 
@@ -363,6 +364,7 @@
 			this.ready = false;
 
 			this.status = [];
+			this.apps = [];
 
 			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/12?orderBy=status.code`);
 
@@ -385,6 +387,14 @@
 				this.$router.go(-1);
 
 				return;
+
+			}
+
+			result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
+
+			if (result.data.status == 'ok') {
+
+				this.apps = result.data.data;
 
 			}
 

@@ -4,7 +4,7 @@
 
 		<Spinner v-if="ready == false"/>
 
-		<div class="row mt-3 justify-content-center" v-if="ready == true && user != null && ($parent.$parent.$parent.user['users.code'] == user['users.code'] || $parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || $parent.$parent.$parent.apps.filter(app => app['apps.code'] == user['users.appCode']).length == 1)">
+		<div class="row mt-3 justify-content-center" v-if="ready == true && user != null && ($parent.$parent.$parent.user['users.code'] == user['users.code'] || $parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || apps.filter(app => app['apps.code'] == user['users.appCode']).length == 1)">
 
 			<div class="col-12">
 
@@ -175,7 +175,7 @@
 
 					</div>
 
-					<div class="form-group" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || $parent.$parent.$parent.apps.filter(app => app['apps.code'] == user['users.appCode']).length == 1">
+					<div class="form-group" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || apps.filter(app => app['apps.code'] == user['users.appCode']).length == 1">
 
 						<div class="form-row" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN'">
 
@@ -221,7 +221,7 @@
 								<label for="users.appCode" class="sr-only">App owner</label>
 								<select id='users.appCode' class="form-control" :value='user["users.appCode"]' required>
 
-									<option v-for='app in $parent.$parent.$parent.apps' :key="app" :value='app["apps.code"]'>{{app['apps.name']}}</option>
+									<option v-for='app in apps' :key="app" :value='app["apps.code"]'>{{app['apps.name']}}</option>
 
 								</select>
 
@@ -489,6 +489,10 @@
 
 						});
 
+						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/1?userCode=${this.$route.params.userCode}`);
+
+						this.$parent.$parent.$parent.user = result.data.data[0];
+
 						this.$router.go(-1);
 
 					} else {
@@ -525,6 +529,7 @@
 			this.ready = false;
 
 			this.user = null;
+			this.apps = [];
 
 			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/1?userCode=${this.$route.params.userCode}`);
 
@@ -532,9 +537,17 @@
 
 				this.user = result.data.data[0];
 
-				if (this.$parent.$parent.$parent.user['users.code'] != this.user['users.code'] && this.$parent.$parent.$parent.user['userCategories.name'] != 'ADMIN' && this.$parent.$parent.$parent.apps.filter(app => app['apps.code'] == this.user['users.appCode']).length != 1) {
+				result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
 
-					this.$router.go(-1);
+				if (result.data.status == 'ok') {
+
+					this.apps = result.data.data;
+
+					if (this.$parent.$parent.$parent.user['users.code'] != this.user['users.code'] && this.$parent.$parent.$parent.user['userCategories.name'] != 'ADMIN' && this.apps.filter(app => app['apps.code'] == this.user['users.appCode']).length != 1) {
+
+						this.$router.go(-1);
+
+					}
 
 				}
 

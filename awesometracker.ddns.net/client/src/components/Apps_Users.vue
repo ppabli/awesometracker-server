@@ -187,7 +187,7 @@
 
 				</div>
 
-				<div class="col-3" v-if="$parent.$parent.$parent.apps.length != 0">
+				<div class="col-3" v-if="apps.length != 0">
 
 					<div class="row m-3 align-items-center justify-content-end">
 
@@ -235,6 +235,7 @@
 				orderBy: 'users.code',
 				filter: '',
 
+				apps: [],
 				users: [],
 
 			}
@@ -268,7 +269,7 @@
 
 							let users = result.data.data;
 
-							let apps = this.$parent.$parent.$parent.apps.map(app => app['apps.code']);
+							let apps = this.apps.map(app => app['apps.code']);
 
 							this.users = users.filter(user => apps.includes(user['users.appCode']));
 
@@ -318,7 +319,7 @@
 
 						let users = result.data.data;
 
-						let apps = this.$parent.$parent.$parent.apps.map(app => app['apps.code']);
+						let apps = this.apps.map(app => app['apps.code']);
 
 						this.users = users.filter(user => apps.includes(user['users.appCode']));
 
@@ -358,24 +359,47 @@
 			this.ready = false;
 
 			this.users = [];
+			this.apps = []
 
-			if (this.$parent.$parent.$parent.apps.length != 0) {
+			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
 
-				let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
+			if (result.data.status == 'ok') {
 
-				if (result.data.status == 'ok') {
+				if (result.data.data.length != 0) {
 
-					let users = result.data.data;
+					this.apps = result.data.data;
 
-					let apps = this.$parent.$parent.$parent.apps.map(app => app['apps.code']);
+					if (this.apps.length != 0) {
 
-					this.users = users.filter(user => apps.includes(user['users.appCode']));
+						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
+
+						let users = result.data.data;
+
+						let apps = this.apps.map(app => app['apps.code']);
+
+						this.users = users.filter(user => apps.includes(user['users.appCode']));
+
+					}
 
 				}
 
-			}
+				this.ready = true;
 
-			this.ready = true;
+			} else {
+
+				await Swal.fire({
+
+					showConfirmButton: false,
+					timer: 5000,
+					title: 'Invalid session',
+					text: 'Redirecting',
+					icon: 'warning'
+
+				});
+
+				this.$router.push('/login');
+
+			}
 
 		},
 		updated() {

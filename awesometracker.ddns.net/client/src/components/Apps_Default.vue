@@ -27,7 +27,7 @@
 
 				<div class="col-3" v-if="apps.length < $parent.$parent.$parent.user['userCategories.maximumApps']">
 
-					<div class="row m-3 align-items-center justify-content-end">
+					<div class="row mr-3 align-items-center justify-content-end">
 
 						<router-link class="btn btn-success" tag='button' :to="{path: `/dashboard/apps/addApp`}">
 

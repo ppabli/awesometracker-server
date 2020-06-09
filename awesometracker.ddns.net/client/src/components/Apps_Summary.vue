@@ -4,11 +4,11 @@
 
 		<Spinner v-if="ready == false"/>
 
-		<div v-if="ready == true && $parent.$parent.$parent.apps.length != 0">
+		<div v-if="ready == true && apps.length != 0">
 
 			<div class="row justify-content-center">
 
-				<Card v-bind:data="$parent.$parent.$parent.user['userCategories.maximumApps'] != 0 ? $parent.$parent.$parent.apps.length + ' / ' + $parent.$parent.$parent.user['userCategories.maximumApps'] : $parent.$parent.$parent.apps.length" title="Your apps"/>
+				<Card v-bind:data="$parent.$parent.$parent.user['userCategories.maximumApps'] != 0 ? apps.length + ' / ' + $parent.$parent.$parent.user['userCategories.maximumApps'] : apps.length" title="Your apps"/>
 				<Card v-bind:data="users.length" title="Total users"/>
 				<Card v-bind:data="logs.length" title="Total logs"/>
 				<Card v-bind:data="applications.length" title="Total applications"/>
@@ -22,7 +22,7 @@
 				<Card v-bind:data="$functions.parseHours($functions.averageUsePerApplication(logs))" title="Average use per application" v-if="logs.length != 0"/>
 				<Card v-bind:data="$functions.parseHours($functions.averageUsePerCategory(logs))" title="Average use per category" v-if="logs.length != 0"/>
 				<Card v-bind:data="$functions.parseHours($functions.averageUsePerUser(logs))" title="Average use per user" v-if="logs.length != 0"/>
-				<Card v-bind:data="Math.round(apiCalls.length / $parent.$parent.$parent.apps.length)" title="Average API calls per app" v-if="apiCalls.length != 0 && $parent.$parent.$parent.apps.length != 0"/>
+				<Card v-bind:data="Math.round(apiCalls.length / apps.length)" title="Average API calls per app" v-if="apiCalls.length != 0 && apps.length != 0"/>
 				<Card v-bind:data="Math.round(logs.length / users.length)" title="Average logs per user" v-if="logs.length != 0 && users.length != 0"/>
 				<Card v-bind:data="Math.round(applications.length / users.length)" title="Average applications per user" v-if="applications.length != 0 && users.length != 0"/>
 
@@ -34,7 +34,7 @@
 				<Card_Graph v-bind:title="'Use per category'" v-bind:cardID='2' v-if="logs.length != 0"/>
 				<Card_Graph v-bind:title="'Use per application'" v-bind:cardID='3' v-if="logs.length != 0"/>
 				<Card_Graph v-bind:title="'Users per day'" v-bind:cardID='4' v-if="users.length != 0"/>
-				<Card_Graph v-bind:title="'Apps per day'" v-bind:cardID='5' v-if="$parent.$parent.$parent.apps.length != 0"/>
+				<Card_Graph v-bind:title="'Apps per day'" v-bind:cardID='5' v-if="apps.length != 0"/>
 				<Card_Graph v-bind:title="'Applications and logs'" v-bind:cardID='6' v-if="logs.length != 0 &&  applications.length != 0"/>
 				<Card_Graph v-bind:title="'Use per month'" v-bind:cardID='7' v-if="logs.length != 0"/>
 				<Card_Graph v-bind:title="'Calls per day'" v-bind:cardID='8' v-if="apiCalls.length != 0"/>
@@ -48,7 +48,7 @@
 				<Table v-bind:data="logs" v-bind:title="'Last 15 logs'" v-bind:rows="15" v-bind:type="'logs'" v-bind:direction="'reverse'" v-if="logs.length != 0"/>
 				<Table v-bind:data="users" v-bind:title="'Last 15 users'" v-bind:rows="15" v-bind:type="'users'" v-bind:direction="'reverse'" v-if="users.length != 0"/>
 				<Table v-bind:data="applications" v-bind:title="'Last 15 applications'" v-bind:rows="15" v-bind:type="'applications'" v-bind:direction="'reverse'" v-if="applications.length != 0"/>
-				<Table v-bind:data="$parent.$parent.$parent.apps" v-bind:title="'Last 15 apps'" v-bind:rows="15" v-bind:type="'apps'" v-bind:direction="'reverse'" v-if="$parent.$parent.$parent.apps.length != 0"/>
+				<Table v-bind:data="apps" v-bind:title="'Last 15 apps'" v-bind:rows="15" v-bind:type="'apps'" v-bind:direction="'reverse'" v-if="apps.length != 0"/>
 				<Table v-bind:data="apiCalls" v-bind:title="'Last 15 API calls'" v-bind:rows="15" v-bind:type="'apiCalls'" v-bind:direction="'reverse'" v-if="apiCalls.length != 0"/>
 				<Table v-bind:data="logsPerMonth" v-bind:title="'Logs per month'" v-bind:type="'logs_months'" v-if='logsPerMonth != null'/>
 				<Table v-bind:data="appsPerMonth" v-bind:title="'Apps per month'" v-bind:type="'apps_months'" v-if='appsPerMonth != null'/>
@@ -101,6 +101,7 @@
 
 				ready: false,
 
+				apps: [],
 				apiCalls: [],
 				users: [],
 				logs: [],
@@ -118,57 +119,70 @@
 
 			this.ready = false;
 
+			this.apps = [];
 			this.applications = [];
 			this.users = [];
 			this.logs = [];
 			this.apiCalls = [];
 
-			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/7?orderBy=applications.code`);
+			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
 
 			if (result.data.status == 'ok') {
 
-				let applications = result.data.data;
+				if (result.data.data.length != 0) {
 
-				result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/5?orderBy=trackerLogs.code`);
+					this.apps = result.data.data;
 
-				if (result.data.status == 'ok') {
-
-					let logs = result.data.data;
-
-					result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/16?orderBy=apiCalls.code`);
+					result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/7?orderBy=applications.code`);
 
 					if (result.data.status == 'ok') {
 
-						let apiCalls = result.data.data;
+						let applications = result.data.data;
 
-						let users = [];
-
-						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
+						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/5?orderBy=trackerLogs.code`);
 
 						if (result.data.status == 'ok') {
 
-							users = result.data.data;
+							let logs = result.data.data;
 
-							this.users = users.filter(user => this.$parent.$parent.$parent.apps.includes(user['users.appCode']));
-							this.apiCalls = apiCalls.filter(call => this.$parent.$parent.$parent.apps.includes(call['apiCalls.appCode']));
+							result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/16?orderBy=apiCalls.code`);
 
-							users = this.users.map(user => user['users.code']);
+							if (result.data.status == 'ok') {
 
-							this.applications = applications.filter(application => users.includes(application['applications.userCode']));
-							this.logs = logs.filter(log => users.includes(log['trackerLogs.userCode']));
+								let apiCalls = result.data.data;
 
-							this.logsPerMonth = this.$functions.logsPerMonth(this.logs);
-							this.apiCallsPerMonth = this.$functions.apiCallsPerMonth(this.apiCalls);
-							this.appsPerMonth = this.$functions.appsPerMonth(this.$parent.$parent.$parent.apps);
-							this.applicationsPerMonth = this.$functions.applicationsPerMonth(this.applications);
+								let users = [];
 
-							this.ready = true;
+								result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
+
+								if (result.data.status == 'ok') {
+
+									users = result.data.data;
+
+									this.users = users.filter(user => this.apps.includes(user['users.appCode']));
+									this.apiCalls = apiCalls.filter(call => this.apps.includes(call['apiCalls.appCode']));
+
+									users = this.users.map(user => user['users.code']);
+
+									this.applications = applications.filter(application => users.includes(application['applications.userCode']));
+									this.logs = logs.filter(log => users.includes(log['trackerLogs.userCode']));
+
+									this.logsPerMonth = this.$functions.logsPerMonth(this.logs);
+									this.apiCallsPerMonth = this.$functions.apiCallsPerMonth(this.apiCalls);
+									this.appsPerMonth = this.$functions.appsPerMonth(this.apps);
+									this.applicationsPerMonth = this.$functions.applicationsPerMonth(this.applications);
+
+								}
+
+							}
 
 						}
 
 					}
 
 				}
+
+				this.ready = true;
 
 			} else {
 
@@ -199,7 +213,7 @@
 			let chart2Data = this.$functions.usePerCategory(this.logs);
 			let chart3Data = this.$functions.usePerApplication(this.logs);
 			let chart4Data = this.$functions.usersPerDay(this.users);
-			let chart5Data = this.$functions.appsPerDay(this.$parent.$parent.$parent.apps);
+			let chart5Data = this.$functions.appsPerDay(this.apps);
 			let chart61Data = this.$functions.applicationsPerDay(this.applications);
 			let chart62Data = this.$functions.logsPerDay(this.logs);
 			let chart7Data = this.$functions.usePerMonth(this.logs);

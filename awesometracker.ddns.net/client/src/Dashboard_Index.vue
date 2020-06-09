@@ -2,8 +2,8 @@
 
 	<div class="row p-0 m-0 w-100" id="background">
 
-		<Menu v-if="user != null && apps != null"/>
-		<Central v-if="user != null && apps != null"/>
+		<Menu v-if="user != null"/>
+		<Central v-if="user != null"/>
 
 	</div>
 
@@ -30,7 +30,6 @@
 			return {
 
 				user: null,
-				apps: null,
 
 			}
 
@@ -44,16 +43,6 @@
 			if (result.data.status == 'ok') {
 
 				this.user = result.data.data.user;
-
-				this.apps = null;
-
-				result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11`);
-
-				if (result.data.status == 'ok') {
-
-					this.apps = result.data.data;
-
-				}
 
 			} else {
 

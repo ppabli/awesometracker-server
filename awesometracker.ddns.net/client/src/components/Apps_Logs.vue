@@ -129,7 +129,7 @@
 
 						</li>
 
-						<li class="page-item" v-if='page + 1 < Math.ceil(applications.filter(application => String(application[orderBy]).toLowerCase().match(filter.toLowerCase())).length / Number(pageSize))'>
+						<li class="page-item" v-if='page + 1 < Math.ceil(logs.filter(log => String(log[orderBy]).toLowerCase().match(filter.toLowerCase())).length / Number(pageSize))'>
 
 							<a class="page-link" @click='changePage(page + 1)'>Next</a>
 
@@ -183,6 +183,7 @@
 				orderBy: 'trackerLogs.code',
 				filter: '',
 
+				apps: [],
 				logs: [],
 				users: [],
 
@@ -190,12 +191,6 @@
 
 		},
 		methods: {
-
-			seeUser: function (log) {
-
-				this.$router.push(`/dashboard/user/${log['trackerLogs.userCode']}`);
-
-			},
 
 			order: async function(e, orderBy) {
 
@@ -300,30 +295,40 @@
 
 			this.ready = false;
 
+			this.apps = [];
 			this.logs = [];
 			this.users = [];
 
-			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/5?orderBy=trackerLogs.code`);
+			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
 
 			if (result.data.status == 'ok') {
 
-				let logs = result.data.data;
-				let users = [];
-				let apps = [];
+				if (result.data.data.length != 0) {
 
-				result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
+					this.apps = result.data.data;
 
-				if (result.data.status == 'ok') {
+					if (this.apps.length != 0) {
 
-					users = result.data.data;
+						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/5?orderBy=trackerLogs.code`);
 
-					apps = this.$parent.$parent.$parent.apps.map(app => app['apps.code']);
+						let logs = result.data.data;
+						let users = [];
+						let apps = [];
 
-					this.users = users.filter(user => apps.includes(user['users.appCode']));
+						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
 
-					users = this.users.map(user => user['users.code']);
+						users = result.data.data;
 
-					this.logs = logs.filter(log => users.includes(log['trackerLogs.userCode']));
+						apps = this.apps.map(app => app['apps.code']);
+						this.users = users.filter(user => apps.includes(user['users.appCode']));
+
+						users = this.users.map(user => user['users.code']);
+
+						this.logs = logs.filter(log => users.includes(log['trackerLogs.userCode']));
+
+					}
+
+					this.ready = true;
 
 				}
 
@@ -342,8 +347,6 @@
 				this.$router.push('/login');
 
 			}
-
-			this.ready = true;
 
 		},
 

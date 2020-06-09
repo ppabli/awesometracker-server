@@ -142,15 +142,6 @@
 			}
 
 		},
-		beforeCreated() {
-
-			if (this.$parent.$parent.$parent.apps.filter(app => app['apps.code'] == this.$route.params.appCode).length == 1 || this.$parent.$parent.$parent.apps.filter(app => app['apps.code'] == this.$route.params.appCode)[0]['apps.categoryCode'] <= 2) {
-
-				this.$router.push(`/dashboard/app/${this.$route.params.appCode}`);
-
-			}
-
-		},
 		async created() {
 
 			this.ready = false;
@@ -164,6 +155,15 @@
 				if (result.data.data.length == 1) {
 
 					this.app = result.data.data[0];
+
+					alert(this.$parent.$parent.$parent.user['users.code']);
+					alert(this.app['apps.userCode']);
+
+					if (this.$parent.$parent.$parent.user['users.code'] == this.app['apps.userCode'] || this.app['apps.categoryCode'] <= 2) {
+
+						this.$router.push(`/dashboard/apps/${this.$route.params.appCode}`);
+
+					}
 
 				} else {
 

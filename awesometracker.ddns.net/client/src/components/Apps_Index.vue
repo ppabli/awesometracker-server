@@ -9,15 +9,6 @@
 	export default {
 
 		name: 'Apps_Index',
-		beforeCreated() {
-
-			if (!this.$parent.$parent.apps && this.$parent.$parent.$parent.user['userCategories.name'] != 'ADMIN') {
-
-				this.$router.go(-1);
-
-			}
-
-		},
 
 	}
 

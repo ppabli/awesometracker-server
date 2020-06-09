@@ -84,7 +84,7 @@
 
 							</div>
 
-							<div class="row mt-3 m-0 p-0 border-top pt-2 justify-content-center" v-if="$parent.$parent.$parent.user['users.code'] == user['users.code'] || $parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || $parent.$parent.$parent.apps.filter(app => app['apps.code'] == user['users.appCode']).length == 1">
+							<div class="row mt-3 m-0 p-0 border-top pt-2 justify-content-center" v-if="$parent.$parent.$parent.user['users.code'] == user['users.code'] || $parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || apps.filter(app => app['apps.code'] == user['users.appCode']).length == 1">
 
 								<router-link class="btn btn-success m-1" tag='button' :to="{path: '/dashboard/user/' + user['users.code'] + '/upgradeUser'}" v-if="$parent.$parent.$parent.user['users.code'] == user['users.code'] && user['users.categoryCode'] > 2">
 
@@ -180,6 +180,7 @@
 
 				ready: false,
 				user: null,
+				apps: [],
 				logs: [],
 				applications: [],
 				reverseLogs: [],
@@ -272,6 +273,14 @@
 				if (result.data.data.length == 1) {
 
 					this.user = result.data.data[0];
+
+					result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
+
+					if (result.data.status == 'ok') {
+
+						this.apps = result.data.data;
+
+					}
 
 					if (this.user['users.visibility'] != 'public' && this.user['users.code'] != this.$parent.$parent.$parent.user['users.code']) {
 

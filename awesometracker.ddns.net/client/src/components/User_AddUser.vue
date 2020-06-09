@@ -4,7 +4,7 @@
 
 		<Spinner v-if="ready == false"/>
 
-		<div class="row mt-3 justify-content-center" v-if="ready == true && $parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || $parent.$parent.$parent.apps.length != 0">
+		<div class="row mt-3 justify-content-center" v-if="ready == true && $parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || apps.length != 0">
 
 			<div class="col-12">
 
@@ -163,7 +163,7 @@
 
 					</div>
 
-					<div class="form-group" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || $parent.$parent.$parent.apps">
+					<div class="form-group" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN' || apps.length != 0">
 
 						<div class="form-row" v-if="$parent.$parent.$parent.user['userCategories.name'] == 'ADMIN'">
 
@@ -209,7 +209,7 @@
 								<label for="users.appCode" class="sr-only">App owner</label>
 								<select id='users.appCode' class="form-control" required>
 
-									<option v-for='app in $parent.$parent.$parent.apps' :key="app" :value='app["apps.code"]'>{{app['apps.name']}}</option>
+									<option v-for='app in apps' :key="app" :value='app["apps.code"]'>{{app['apps.name']}}</option>
 
 								</select>
 
@@ -506,7 +506,7 @@
 		},
 		beforeCreated() {
 
-			if (this.$parent.$parent.$parent.user['userCategories.name'] != 'ADMIN' && !this.$parent.$parent.$parent.apps) {
+			if (this.$parent.$parent.$parent.user['userCategories.name'] != 'ADMIN') {
 
 				this.$router.go(-1);
 
@@ -562,6 +562,16 @@
 				if (result.data.status == 'ok') {
 
 					this.categories = result.data.data;
+
+				}
+
+			} else {
+
+				let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
+
+				if (result.data.status == 'ok') {
+
+					this.apps = result.data.data;
 
 				}
 

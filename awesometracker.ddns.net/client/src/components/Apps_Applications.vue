@@ -213,12 +213,13 @@
 				orderBy: 'applications.code',
 				filter: '',
 
+				apps: [],
 				applications: [],
 				users: [],
 
 				category: null,
 				application: null,
-				userCode: null
+				userCode: null,
 
 			}
 
@@ -502,35 +503,45 @@
 
 			this.ready = false;
 
+			this.apps = [];
 			this.applications = [];
 			this.users = [];
 
-			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/7?orderBy=applications.code`);
+			let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/11?orderBy=apps.code`)
 
 			if (result.data.status == 'ok') {
 
-				let applications = result.data.data;
+				if (result.data.data.length != 0) {
 
-				let users = [];
-				let apps = [];
+					this.apps = result.data.data;
 
-				result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
+					if (this.apps.length != 0) {
 
-				if (result.data.status == 'ok') {
+						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/7?orderBy=applications.code`);
 
-					users = result.data.data;
+						let applications = result.data.data;
 
-					apps = this.$parent.$parent.$parent.apps.map(app => app['apps.code']);
+						let users = [];
+						let apps = [];
 
-					this.users = users.filter(user => apps.includes(user['users.appCode']));
+						result = await Axios.get(`https://awesometracker.ddns.net/dashboard/data/4?orderBy=users.code`);
 
-					users = this.users.map(user => user['users.code']);
+						users = result.data.data;
 
-					this.applications = applications.filter(application => users.includes(application['applications.userCode']));
+						apps = this.apps.map(app => app['apps.code']);
 
-					this.ready = true;
+						this.users = users.filter(user => apps.includes(user['users.appCode']));
+
+						users = this.users.map(user => user['users.code']);
+
+						this.applications = applications.filter(application => users.includes(application['applications.userCode']));
+
+
+					}
 
 				}
+
+				this.ready = true;
 
 			} else {
 
