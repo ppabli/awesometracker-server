@@ -136,7 +136,7 @@ addUser = async (req, res) => {
 
 				let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
 
-				if (result.length == 0) {
+				if (result.length == 0 && res.locals.application['apps.token'] != CONFIG.API_TOKEN) {
 
 					ok = false;
 					message = 'Invalid appCode';
@@ -257,7 +257,7 @@ addUser = async (req, res) => {
 
 			if (result.length == 0) {
 
-				let user = new USER(res.locals.application['apps.code'], req.body['users.user'], req.body['users.password'], req.body['users.email'], req.body['users.name'], req.body['users.surname'], req.body['users.birthDate'], req.body['users.diff'] || undefined, req.body['users.imageURL'] || undefined, req.body['users.statusCode'] || undefined , req.body['users.categoryCode'] || undefined, req.body['users.visibility'] || undefined);
+				let user = new USER(req.body['users.appCode'] || res.locals.application['apps.code'], req.body['users.user'], req.body['users.password'], req.body['users.email'], req.body['users.name'], req.body['users.surname'], req.body['users.birthDate'], req.body['users.diff'] || undefined, req.body['users.imageURL'] || undefined, req.body['users.statusCode'] || undefined , req.body['users.categoryCode'] || undefined, req.body['users.visibility'] || undefined);
 
 				result = await QUERY(user.insert());
 
@@ -422,9 +422,8 @@ updateUser = async (req, res) => {
 
 					if (/appCode/.test(param)) {
 
-						let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
 
-						if (result.length == 0) {
+						if (result.length == 0 && res.locals.application['apps.token'] != CONFIG.API_TOKEN) {
 
 							ok = false;
 							message = 'Invalid appCode';
