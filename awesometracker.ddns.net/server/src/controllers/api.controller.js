@@ -134,7 +134,7 @@ addUser = async (req, res) => {
 
 			if (/appCode/.test(param)) {
 
-				let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]}`));
+				let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
 
 				if (result.length == 0) {
 
@@ -422,7 +422,7 @@ updateUser = async (req, res) => {
 
 					if (/appCode/.test(param)) {
 
-						let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]}`));
+						let result = await QUERY(APP.getAppBy(`apps.code=${req.body[param]},apps.userCode=${res.locals.application['apps.userCode']}`));
 
 						if (result.length == 0) {
 

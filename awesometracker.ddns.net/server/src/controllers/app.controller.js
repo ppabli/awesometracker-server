@@ -199,7 +199,6 @@ addUser = async (req, res) => {
 
 				}
 
-
 				if (result.status == 'ok') {
 
 					let transporter = NODEMAILER.createTransport({
@@ -661,7 +660,19 @@ updateUser= async (req, res) => {
 
 			if (ok) {
 
-				result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+				let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/apps?where=apps.code=${fields['users.appCode']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+
+				let app = result.data[0];
+
+				if (app) {
+
+					result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, json: true, headers: {token: app['apps.token']}, form: data});
+
+				} else {
+
+					result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+
+				}
 
 				if (result.status == 'ok' && user['users.code'] == fields['users.code']) {
 
