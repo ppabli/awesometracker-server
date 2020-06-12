@@ -174,75 +174,23 @@
 
 				let id_token = googleUser.getAuthResponse().id_token;
 
-				let user = await Axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${id_token}`);
+				let result = await Axios.post(`https://awesometracker.ddns.net/accessGoogle`, {token: id_token});
 
-				let result = await Axios.post(`https://awesometracker.ddns.net/access`, {user: user.data.email, password: (id_token.substring(15, 65) + '!')});
+				if (result.data.status == 'ok') {
 
-				if (result.data.status != 'ok' && result.data.msg == 'Invalid user') {
+					this.$router.push('/dashboard');
 
-					let formData = new FormData();
-					formData.append('users.user', user.data.name);
-					formData.append('users.password', id_token.substring(15, 65) + '!');
-					formData.append('users.email', user.data.email);
-					formData.append('users.name', user.data.name.split(' ')[0]);
-					formData.append('users.surname', user.data.family_name);
-					formData.append('users.birthDate', user.data.birthday || '1971-01-01');
-					formData.append('users.imageURL', user.data.picture);
-					formData.append('users.diff', 1);
-
-					result = await Axios.post(`https://awesometracker.ddns.net/addUser`, formData);
-
-					if (result.data.status == 'ok') {
-
-						result = await Axios.post(`https://awesometracker.ddns.net/access`, {user: user.data.email, password: (id_token.substring(15, 65) + '!')});
-
-						if (result.data.status == 'ok') {
-
-							this.$router.push('/dashboard');
-
-						} else {
-
-							window.gapi.auth2.getAuthInstance().signOut();
-
-							await Swal.fire({
-
-								title: 'Error login',
-								text: result.data.msg,
-								icon: 'info'
-
-							});
-
-						}
-
-					} else {
-
-						window.gapi.auth2.getAuthInstance().signOut();
-
-						await Swal.fire({
-
-							title: 'Error creating new user',
-							text: result.data.msg,
-							icon: 'info'
-
-						});
-
-					}
-
-				} else if (result.data.status != 'ok') {
+				} else {
 
 					window.gapi.auth2.getAuthInstance().signOut();
 
 					await Swal.fire({
 
-						title: 'Error login',
+						title: 'Error',
 						text: result.data.msg,
 						icon: 'info'
 
 					});
-
-				} else {
-
-					this.$router.push('/dashboard');
 
 				}
 
