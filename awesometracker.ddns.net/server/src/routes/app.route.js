@@ -16,6 +16,7 @@ ROUTER.get('docs/privacy', APP_CONTROLLER.index);
 ROUTER.get('/posts', APP_CONTROLLER.getIndexPosts);
 
 ROUTER.post('/access', APP_CONTROLLER.access);
+ROUTER.post('/accessGoogle', APP_CONTROLLER.accessGoogle);
 ROUTER.post('/addUser', APP_CONTROLLER.addUser);
 ROUTER.post('/addLog', APP_CONTROLLER.addLog);
 ROUTER.post('/forgotPassword', APP_CONTROLLER.forgotPassword);

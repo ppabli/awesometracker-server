@@ -18,6 +18,7 @@ FORMIDABLE = require('formidable');
 FS = require('fs');
 CRYPTO = require('crypto');
 PAYPAL = require('@paypal/checkout-server-sdk');
+GOOGLE = require('google-auth-library');
 
 FUNCTIONS = require('./lib/functions');
 PASSWORD = require('./lib/password');

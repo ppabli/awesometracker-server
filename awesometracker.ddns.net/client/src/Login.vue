@@ -188,7 +188,7 @@
 
 						title: 'Error',
 						text: result.data.msg,
-						icon: 'info'
+						icon: 'info',
 
 					});
 

@@ -52,6 +52,97 @@ access = async (req, res) => {
 
 };
 
+accessGoogle = async (req, res) => {
+
+	try {
+
+		let client = new GOOGLE.OAuth2Client(CONFIG.CLIENT_ID);
+
+		let ticket = await client.verifyIdToken({
+
+			idToken: req.body.token,
+			audience: CONFIG.CLIENT_ID
+
+		});
+
+		let user = ticket.getPayload();
+
+		let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user.email}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+
+		if (result.data.length == 1) {
+
+			QUERY(USER.insertSessionLog(result.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
+
+			req.session.user = result.data[0];
+
+			req.session.save();
+
+			res.status(200).json({status: 'ok', data: req.session.user, msg: 'Todo ok'});
+
+		} else {
+
+			let data = {
+
+				'users.user': user.name,
+				'users.password': req.body.token.substring(15, 65) + '!',
+				'users.email': user.email,
+				'users.name': user.name.split(' ')[0],
+				'users.surname': user.family_name,
+				'users.birthDate': user.birthday || '1971-01-01',
+				'users.imageURL': user.picture,
+				'users.diff': 1
+
+			}
+
+			result = await REQUEST.post({url: 'https://awesometracker.ddns.net/api/v1/users', json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+
+			if (result.status == 'ok') {
+
+				let result2 = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user.email}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+
+				QUERY(USER.insertSessionLog(result2.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
+
+				req.session.user = result2.data[0];
+
+				req.session.save();
+
+				let transporter = NODEMAILER.createTransport({
+
+					service: 'gmail',
+					auth: {
+
+						user: CONFIG.EMAIL,
+						pass: CONFIG.EMAIL_PASSWORD
+
+					}
+
+				});
+
+				let mailOptions = {
+
+					from: CONFIG.EMAIL,
+					to: data['users.email'],
+					subject: 'New account created',
+					html: `<h1>Credentials</h1>Email: ${user.email}, Password: ${req.body.token.substring(15, 65) + '!'}.<p>Use this credentials to login on the desktop app</p>`
+
+				};
+
+				transporter.sendMail(mailOptions);
+
+			}
+
+			res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+
+		}
+
+	} catch (e) {
+
+		res.status(200).json({status: 'error', data: e, msg: 'General error | Await 1 minute until next try'});
+
+	}
+
+}
+
 logout = async (req, res) => {
 
 	try {
@@ -1223,4 +1314,4 @@ captureAppTransaction = async (req, res) => {
 
 }
 
-module.exports = {index, access, logout, forgotPassword, recoverUser, data, getIndexPosts, addLog, deleteLog, addApplication, updateApplication, deleteApplication, addUser, updateUser, deleteUser, addApp, updateApp, deleteApp, createUserTransaction, captureUserTransaction, createAppTransaction, captureAppTransaction};
+module.exports = {index, access, accessGoogle, logout, forgotPassword, recoverUser, data, getIndexPosts, addLog, deleteLog, addApplication, updateApplication, deleteApplication, addUser, updateUser, deleteUser, addApp, updateApp, deleteApp, createUserTransaction, captureUserTransaction, createAppTransaction, captureAppTransaction};
