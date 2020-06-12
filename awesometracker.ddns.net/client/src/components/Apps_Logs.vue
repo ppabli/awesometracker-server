@@ -328,9 +328,9 @@
 
 					}
 
-					this.ready = true;
-
 				}
+
+				this.ready = true;
 
 			} else {
 
