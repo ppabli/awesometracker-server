@@ -139,15 +139,6 @@
 			}
 
 		},
-		beforeCreated() {
-
-			if (this.$parent.$parent.$parent.user['users.code'] != this.$route.params.userCode || this.$parent.$parent.$parent.user['users.categoryCode'] <= 2) {
-
-				this.$router.push(`/dashboard/user/${this.$route.params.userCode}`);
-
-			}
-
-		},
 		async created() {
 
 			this.ready = false;
@@ -159,6 +150,12 @@
 			if (result.data.status == 'ok') {
 
 				this.user = result.data.data[0];
+
+				if (this.user['users.code'] != this.$route.params.userCode || this.user['users.categoryCode'] <= 2) {
+
+					this.$router.push(`/dashboard/user/${this.$route.params.userCode}`);
+
+				}
 
 			} else {
 

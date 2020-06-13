@@ -28,7 +28,7 @@ Una vez descargado lo unico que tenemos que hacer es ejecutar el comando `npm in
 
 ## Sobre el autor
 
-Mi nombre es Pablo Liste Cancela, tengo 21 años y actualmente soy estudiante de 2 DAw en el IES San Clemente.
+Mi nombre es Pablo Liste Cancela, tengo 21 años y actualmente soy estudiante de 2 DAW en el IES San Clemente.
 Desde pequeño me ha gustado la tecnologia y siempre he tenido curiosidad de saber como funcionan las cosas ese es el motivo por el cual decidi estudiar programacion.
 
 En cuanto a las tecnologias que mas he usado se encuentran las siguientes:
