@@ -5,7 +5,8 @@ const POOL = MYSQL.createPool({
 	host: CONFIG.DB_HOST,
 	user: CONFIG.DB_USER,
 	password: CONFIG.DB_PASSWORD,
-	database: CONFIG.DB_DB
+	database: CONFIG.DB_DB,
+	timezone: 'UTC'
 
 });
 
