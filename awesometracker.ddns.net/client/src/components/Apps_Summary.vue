@@ -159,8 +159,10 @@
 
 									users = result.data.data;
 
-									this.users = users.filter(user => this.apps.includes(user['users.appCode']));
-									this.apiCalls = apiCalls.filter(call => this.apps.includes(call['apiCalls.appCode']));
+									let apps = this.apps.map(app => app['apps.code']);
+
+									this.users = users.filter(user => apps.includes(user['users.appCode']));
+									this.apiCalls = apiCalls.filter(call => apps.includes(call['apiCalls.appCode']));
 
 									users = this.users.map(user => user['users.code']);
 
