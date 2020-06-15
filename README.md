@@ -22,14 +22,16 @@ Visibilidad – Privacidad de la cuenta de usuario o app. Permite o no a los dem
 
 ## Instalación
 
-Dado que hacemos uso de NodeJS para la aplicacion web el proceso de instalacion de nuestro software es extremadamente sencillo. Para poder hacer uso del codigo desarrollado, tanto de cliente como de servidor, tenemos que descargar los ficheros contenidos en las carpetas correspondientes [cliente](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/client) o [servidor](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/server).
+Dado que hacemos uso de NodeJS para la aplicación web el proceso de instalación de nuestro software es extremadamente sencillo. Para poder hacer uso del codigo desarrollado, tanto de cliente como de servidor, tenemos que descargar los ficheros contenidos en las carpetas correspondientes [cliente](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/client) o [servidor](https://github.com/ppabli/awesometracker-server/tree/master/awesometracker.ddns.net/server).
 
 Una vez descargado lo unico que tenemos que hacer es ejecutar el comando `npm install` y automaticamente el sistema descargara todas las dependencias necesarias para poder poner nuestro proyecto en uso.
+
+En cuanto a la base de datos necesaria para el funcionamiento de la aplicación tenemos que ejecutar el script que esta proporcionado en el repositorio [script](docs/script.sql). Este script creara las tablas necesarias para la aplicación (se debe tener ya creada la base de datos donde queremos que se creen las tablas). A mayores del script el sistema necesita un usuario con todos los permisos sobre la base de datos creada, esta acción queda a manos del usuario. Si se desea conocer mas en detalles los campos, tipo de datos empleados y demas información sobre la base de datos esta esta indicada en la documentación del proyecto [documentacion](docs/Documentacion.pdf).
 
 ## Sobre el autor
 
 Mi nombre es Pablo Liste Cancela, tengo 21 años y actualmente soy estudiante de 2 DAW en el IES San Clemente.
-Desde pequeño me ha gustado la tecnologia y siempre he tenido curiosidad de saber como funcionan las cosas ese es el motivo por el cual decidi estudiar programacion.
+Desde pequeño me ha gustado la tecnologia y siempre he tenido curiosidad de saber como funcionan las cosas ese es el motivo por el cual decidi estudiar programación.
 
 En cuanto a las tecnologias que mas he usado se encuentran las siguientes:
 1. JavaScript
@@ -44,7 +46,7 @@ Puedes ponerte en contacto conmigo o saber mas sobre mi en los siguientes enlace
 
 ## Licencia
 
-Este proyecto tiene una licencia MIT. Esta licencia permite el uso del codigo, imagenes y demas contenido presente en este repositorio tanto para uso comercial como privado asi como su modificacion y distribucion. A su vez no se aporta ningun tipo de garantia y se elimina cualquier tipo de responsabilidad.
+Este proyecto tiene una licencia MIT. Esta licencia permite el uso del codigo, imagenes y demas contenido presente en este repositorio tanto para uso comercial como privado asi como su modificación y distribución. A su vez no se aporta ningun tipo de garantia y se elimina cualquier tipo de responsabilidad.
 
 [Licencia](LICENSE)
 

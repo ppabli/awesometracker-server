@@ -245,6 +245,8 @@
 
 							});
 
+							this.$router.push('/login');
+
 						} else {
 
 							await Swal.fire({

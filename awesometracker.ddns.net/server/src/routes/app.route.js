@@ -39,8 +39,8 @@ ROUTER.get('/dashboard/metrics/summary', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/metrics/logs', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/metrics/applications', APP_CONTROLLER.index);
 
-ROUTER.get('/dashboard/apps/', APP_CONTROLLER.index);
-ROUTER.get('/dashboard/apps/:appCode/', APP_CONTROLLER.index);
+ROUTER.get('/dashboard/apps', APP_CONTROLLER.index);
+ROUTER.get('/dashboard/apps/:appCode', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/apps/summary', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/apps/users', APP_CONTROLLER.index);
 ROUTER.get('/dashboard/apps/addApp', APP_CONTROLLER.index);

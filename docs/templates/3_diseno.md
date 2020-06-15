@@ -14,6 +14,18 @@ Una vez ya tenemos escogido el sistema de base de datos para nuestra aplicación
 
 ![modeloRelacional](./../img/modeloRelacional.png)
 
+## Digrama de clases
+
+![diagramaClases](./../img/diagramaClases.png)
+
+## Casos de uso
+
+![casosUso](./../img/casosUso.png)
+
+## Mapa del sitio web
+
+![mapaSitio](./../img/mapaSitio.png)
+
 ## Análisis
 
 En las imágenes anteriores se puede ver el modelo relacional y modelo entidad relación de nuestra base de datos. En ellas podemos apreciar la existencia de 12 tablas, así como la existencia de relaciones entre ellas, todas de tipo 1-N.
@@ -44,7 +56,7 @@ Como última adición durante el desarrollo tenemos **posts**, Estos anuncios es
 
 Esta sería la última tabla de nuestra base de datos y almacena las categorías a las que puede pertenecer un post. Esta tabla está formada por un código de categoría siendo este la clave primaria de la tabla y por los campos **name** y **description** que proporcionan el nombre de la categoría, así como una breve descripción de la misma.
 
-Hemos visto a qué equivale cada campo de las diferentes tablas de nuestra base de datos, pero no hemos visto los tipos de datos que estos usan. Como resumen tenemos que los datos de tipo fecha hacen uso de timestamp (yyyy-MM-dd HH:mm:ss) que nos permiten almacenar tanto el día como la hora aparte en la mayoría de casos donde se hace uso de este tipo de datos tiene un valor por de defecto de currenttimestamp.
+Hemos visto a qué equivale cada campo de las diferentes tablas de nuestra base de datos, pero no hemos visto los tipos de datos que estos usan. Como resumen tenemos que los datos de tipo fecha hacen uso de timestamp (yyyy-MM-dd HH:mm:ss) que nos permiten almacenar tanto el día como la hora aparte en la mayoría de casos donde se hace uso de este tipo de datos tiene un valor por de defecto de current\_timestamp.
 
 Para los campos code de las tablas los cuales son los campos que forman la clave primaria tenemos que estos son de tipo int con un máximo de 11 dígitos, así como no permiten nulos y por defecto son auto incrementales.
 
@@ -54,7 +66,7 @@ Para los campos de tipo texto como nombres, descripciones y demás haremos uso d
 
 ## Mockups
 
-Hoy en día es muy importante el diseño de una aplicación ya que, aunque la aplicación funcione muy bien si el diseño no resultaba adecuado a las condiciones donde se va usar la aplicación, usuarios que van a usarla, etc. no valdrá de nada. Para solucionar este problema haremos uso de las recomendaciones que nos proporcionan numerosos profesionales y medios
+Hoy en día es muy importante el diseño de una aplicación ya que, aunque la aplicación funcione muy bien si el diseño no resultaba adecuado a las condiciones donde se va usar la aplicación, usuarios que van a usarla, etc. no valdrá de nada. Para solucionar este problema haremos uso de las recomendaciones que nos proporcionan numerosos profesionales y medios.
 
 - [https://es.wikipedia.org/wiki/Mockup](https://es.wikipedia.org/wiki/Mockup)
 - [https://ingenieriadesoftware.es/generacion-interfaces-usuario-desde-mockups-inteligencia-artificial/](https://ingenieriadesoftware.es/generacion-interfaces-usuario-desde-mockups-inteligencia-artificial/)
@@ -66,7 +78,7 @@ Los diseños que se muestran están realizados teniendo como base un dispositivo
 
 ### Diseño general
 
-Todas las páginas de nuestro sitio web que no requieran de un inicio de sesión es decir a las que todo el mundo sean usuarios registrados o no tienen acceso mantienen un conjunto de elementos y características comunes entre ellas. Estas son que el contenido de los diferentes sitios este contenido dentro de un div (2) el cual a su vez está comprendido dentro de otro div más grande y sobre el cual se mostrara el fondo que serán los colores de la página (1). Dentro del div (2) que contendrá las diferentes opciones, formularios, textos y demás para las diferentes localizaciones de nuestro sitio también tenemos elementos comunes como son el uso del logo de la aplicación, así como el nombre como cabecera para el bloque.
+Todas las páginas de nuestro sitio web que no requieran de un inicio de sesión es decir a las que todo el mundo sean usuarios registrados o no tienen acceso mantienen un conjunto de elementos y características comunes entre ellas. Estas son que el contenido de los diferentes sitios este contenido dentro de un div el cual a su vez está comprendido dentro de otro div más grande y sobre el cual se mostrara el fondo que serán los colores de la página. Dentro del div que contendrá las diferentes opciones, formularios, textos y demás para las diferentes localizaciones de nuestro sitio también tenemos elementos comunes como son el uso del logo de la aplicación, así como el nombre como cabecera para el bloque.
 
 ![img_index](./../img/index.png)
 
@@ -100,11 +112,15 @@ Este diseño será el que disfrutará el usuario cuando reinicie la contraseña 
 
 ### Creación de cuenta
 
-Aquí veremos el diseño que tendrá la página que permitirá al usuario crear una cuenta en el sistema. En este diseño y teniendo como base el diseño típico de nuestro sitio tenemos un formulario con el conjunto de campos a cubrir que serán necesarios para crear el usuario, así como el botón que permite el envío de este. Justo debajo tendríamos un texto explicativo de la siguiente opción que el un inicio es la de ir a la página de inicio de sesión para ello disponemos de un botón. Justo debajo de este tendríamos el conjunto de link que harán referencia a la política de privacidad, así como los términos y condiciones de uso. ![img_create](./../img/create.png)
+Aquí veremos el diseño que tendrá la página que permitirá al usuario crear una cuenta en el sistema. En este diseño y teniendo como base el diseño típico de nuestro sitio tenemos un formulario con el conjunto de campos a cubrir que serán necesarios para crear el usuario, así como el botón que permite el envío de este. Justo debajo tendríamos un texto explicativo de la siguiente opción que el un inicio es la de ir a la página de inicio de sesión para ello disponemos de un botón. Justo debajo de este tendríamos el conjunto de link que harán referencia a la política de privacidad, así como los términos y condiciones de uso.
+
+![img_create](./../img/create.png)
 
 ### Perfil o App
 
-Esta vista contiene lo que verá el usuario cuando acceda a su perfil o al de cualquier otro usuario o app. En este diseño podemos ver que dentro de la página del perfil se verá una foto del recurso, así como los datos del mismo como nombre, fecha de registro cumpleaños y demás a su vez justo debajo de los datos estarían las opciones que podría hacer dar de baja el recurso o editarlo. Justo debajo tenemos un conjunto de gráficos que mostrarán diferentes datos del usuario o app como tiempo de uso, registros, tiempo diario y demás. ![img_profile](./../img/profile.png)
+Esta vista contiene lo que verá el usuario cuando acceda a su perfil o al de cualquier otro usuario o app. En este diseño podemos ver que dentro de la página del perfil se verá una foto del recurso, así como los datos del mismo como nombre, fecha de registro cumpleaños y demás a su vez justo debajo de los datos estarían las opciones que podría hacer dar de baja el recurso o editarlo. Justo debajo tenemos un conjunto de gráficos que mostrarán diferentes datos del usuario o app como tiempo de uso, registros, tiempo diario y demás.
+
+![img_profile](./../img/profile.png)
 
 ### Data 1
 

@@ -23,7 +23,7 @@ GOOGLE = require('google-auth-library');
 FUNCTIONS = require('./lib/functions');
 PASSWORD = require('./lib/password');
 PAYPAL_CLIENT = require('./lib/paypal');
-DB = require('./lib/database')
+DB = require('./lib/database');
 
 USER = require('./models/user.model');
 APP = require('./models/app.model');
