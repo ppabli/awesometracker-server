@@ -144,6 +144,24 @@
 		},
 		async created() {
 
+			if (!window.paypal) {
+
+				await Swal.fire({
+
+					showConfirmButton: false,
+					timer: 5000,
+					title: 'Error PayPal',
+					text: 'Unable to load PayPal API. Please disable any type of addblock',
+					icon: 'error'
+
+				});
+
+				this.$router.go(-1);
+
+				return;
+
+			}
+
 			this.ready = false;
 
 			this.app = null;

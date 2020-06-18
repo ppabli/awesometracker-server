@@ -86,7 +86,7 @@ addUser = async (req, res) => {
 
 			if (/password/.test(param)) {
 
-				if (!(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$/.test(req.body[param]))) {
+				if (!(/^(?=.*\d)(?=.*[\u0021\u0023-\u0026\u0028-\u002f\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$/.test(req.body[param]))) {
 
 					ok = false;
 					message = 'Invalid password';
@@ -374,7 +374,7 @@ updateUser = async (req, res) => {
 
 					if (/password/.test(param)) {
 
-						if (!(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$/.test(req.body[param]))) {
+						if (!(/^(?=.*\d)(?=.*[\u0021\u0023-\u0026\u0028-\u002f\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$/.test(req.body[param]))) {
 
 							ok = false;
 							message = 'Invalid password';

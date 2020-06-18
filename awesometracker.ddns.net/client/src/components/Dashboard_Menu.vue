@@ -185,7 +185,11 @@
 
 				e.preventDefault();
 
-				window.gapi.auth2.getAuthInstance().signOut();
+				if (window.gapi) {
+
+					window.gapi.auth2.getAuthInstance().signOut();
+
+				}
 
 				let result = await Axios.get(`https://awesometracker.ddns.net/dashboard/logout`);
 
@@ -214,15 +218,19 @@
 		},
 		mounted() {
 
-			window.gapi.load('auth2', function() {
+			if (window.gapi) {
 
-				window.gapi.auth2.init({
+				window.gapi.load('auth2', function() {
 
-					client_id: '79581400886-fld0pe7j7ohgqbkm8n75qimhikq6caoh.apps.googleusercontent.com',
+					window.gapi.auth2.init({
+
+						client_id: '79581400886-fld0pe7j7ohgqbkm8n75qimhikq6caoh.apps.googleusercontent.com',
+
+					});
 
 				});
 
-			});
+			}
 
 		}
 

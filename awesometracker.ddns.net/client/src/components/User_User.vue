@@ -209,13 +209,17 @@
 
 					if (this.user['users.code'] == this.$parent.$parent.$parent.user['users.code']) {
 
-						let auth2 = window.gapi.auth2.getAuthInstance();
+						if (window.gapi) {
 
-						auth2.signOut().then(function () {
+							let auth2 = window.gapi.auth2.getAuthInstance();
 
-							auth2.disconnect();
+							auth2.signOut().then(function () {
 
-						});
+								auth2.disconnect();
+
+							});
+
+						}
 
 					}
 
@@ -254,15 +258,19 @@
 
 			this.ready = false;
 
-			window.gapi.load('auth2', function() {
+			if (window.gapi) {
 
-				window.gapi.auth2.init({
+				window.gapi.load('auth2', function() {
 
-					client_id: '79581400886-fld0pe7j7ohgqbkm8n75qimhikq6caoh.apps.googleusercontent.com',
+					window.gapi.auth2.init({
+
+						client_id: '79581400886-fld0pe7j7ohgqbkm8n75qimhikq6caoh.apps.googleusercontent.com',
+
+					});
 
 				});
 
-			});
+			}
 
 			this.user = null;
 
