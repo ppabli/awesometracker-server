@@ -62,13 +62,13 @@ const SERVER = EXPRESS();
 
 SERVER.set('trust proxy', true)
 
-SERVER.use('/js', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/js'));
-SERVER.use('/css', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/css'));
-SERVER.use('/img', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/img'));
-SERVER.use('/favicon.ico', EXPRESS.static('/var/www/awesometracker.ddns.net/client/dist/favicon.ico'));
+SERVER.use('/js', EXPRESS.static('/awesometracker.ddns.net/client/js'));
+SERVER.use('/css', EXPRESS.static('/awesometracker.ddns.net/client/css'));
+SERVER.use('/img', EXPRESS.static('/awesometracker.ddns.net/client/img'));
+SERVER.use('/favicon.ico', EXPRESS.static('/awesometracker.ddns.net/client/favicon.ico'));
 
-SERVER.use('/userImg', EXPRESS.static('/var/www/awesometracker.ddns.net/userImg'));
-SERVER.use('/appImg', EXPRESS.static('/var/www/awesometracker.ddns.net/appImg'));
+SERVER.use('/userImg', EXPRESS.static('/awesometracker.ddns.net/userImg'));
+SERVER.use('/appImg', EXPRESS.static('/awesometracker.ddns.net/appImg'));
 
 SERVER.use(BODYPARSER.json());
 SERVER.use(BODYPARSER.urlencoded({extended: true}));
