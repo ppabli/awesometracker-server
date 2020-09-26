@@ -16,7 +16,9 @@ checkCalls = async (req, res, next) => {
 
 	try {
 
-		QUERY(CALL.insertAppCall(/([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/.exec(req.ip)[0], req.url, req.method));
+		let ip = req.headers['X-Real-IP'] || /([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/.exec(req.ip)[0];
+
+		QUERY(CALL.insertAppCall(ip, req.url, req.method));
 		next();
 
 	} catch (e) {
@@ -86,12 +88,10 @@ adminRoutes = (req, res, next) => {
 
 checkPermits = async (req, res, next) => {
 
-	let result = await REQUEST.get({url: 'https://awesometracker.ddns.net/api/v1/apps', json: true, headers: {token: CONFIG.API_TOKEN}});
+	let result = await AXIOS.get('https://awesometracker.ddns.net/api/v1/apps', {headers: {token: CONFIG.API_TOKEN}});
 
-	let apps = result.data;
+	let apps = result.data.data;
 	let valid = false;
-
-	let form = new FORMIDABLE.IncomingForm();
 
 	if (user['users.categoryCode'] == CONFIG.ADMIN_CATEGORY) {
 
@@ -111,9 +111,9 @@ checkPermits = async (req, res, next) => {
 
 			for (let app = 0; app < apps.length && !valid; app++) {
 
-				let newUsers = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users?where=users.appCode=${apps[app]['apps.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+				let newUsers = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users?where=users.appCode=${apps[app]['apps.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
-				users = users.concat(newUsers.data);
+				users = users.concat(newUsers.data.data);
 
 				for (let user = 0; user < users.length && !valid; user++) {
 

@@ -203,11 +203,11 @@ addUser = async (req, res) => {
 
 						try {
 
-							await REQUEST.get(req.body[param]);
+							await AXIOS.get(req.body[param]);
 
 							fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
-							REQUEST2(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`));
+							AXIOS(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`));
 
 							req.body[param] = `https://awesometracker.ddns.net/userImg/${fileName}`;
 
@@ -225,11 +225,11 @@ addUser = async (req, res) => {
 
 					try {
 
-						await REQUEST.get(req.body[param]);
+						await AXIOS.get(req.body[param]);
 
 						fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}`;
 
-						REQUEST2(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`));
+						AXIOS(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`));
 
 						req.body[param] = `https://awesometracker.ddns.net/userImg/${fileName}`;
 
@@ -457,7 +457,7 @@ updateUser = async (req, res) => {
 
 									for (let app = 0; app < diff && app < apps.length; app++) {
 
-										await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${apps[app]['apps.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+										await AXIOS.delete(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${apps[app]['apps.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
 									}
 
@@ -526,11 +526,11 @@ updateUser = async (req, res) => {
 
 								try {
 
-									await REQUEST.get(req.body[param]);
+									await AXIOS.get(req.body[param]);
 
 									fileName = `${user['users.code']}_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
-									await REQUEST(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`, () => {
+									await AXIOS(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/userImg/${fileName}`, () => {
 
 										req.body[param] = `https://awesometracker.ddns.net/userImg/${fileName}`;
 
@@ -656,7 +656,7 @@ deleteUser = async (req, res) => {
 
 			for (app in apps) {
 
-				await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.params.userCode}/apps/${apps[app]['apps.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+				await AXIOS.delete(`https://awesometracker.ddns.net/api/v1/users/${req.params.userCode}/apps/${apps[app]['apps.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
 			}
 
@@ -1316,11 +1316,11 @@ addApp = async (req, res) => {
 
 						try {
 
-							await REQUEST.get(req.body[param]);
+							await AXIOS.get(req.body[param]);
 
 							fileName = `temp_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
-							REQUEST2(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/appImg/${fileName}`));
+							AXIOS(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/appImg/${fileName}`));
 
 							req.body[param] = `https://awesometracker.ddns.net/appImg/${fileName}`;
 
@@ -1514,11 +1514,11 @@ updateApp = async (req, res) => {
 
 										try {
 
-											await REQUEST.get(req.body[param]);
+											await AXIOS.get(req.body[param]);
 
 											fileName = `${app['apps.code']}_${CRYPTO.createHash('md5').update(String(new Date().getTime())).digest("hex")}.${extension}`;
 
-											await REQUEST(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/appImg/${fileName}`, () => {
+											await AXIOS(req.body[param]).pipe(FS.createWriteStream(`/var/www/awesometracker.ddns.net/appImg/${fileName}`, () => {
 
 												req.body[param] = `https://awesometracker.ddns.net/appImg/${fileName}`;
 
@@ -1658,7 +1658,7 @@ deleteApp = async (req, res) => {
 
 				for (user in users) {
 
-					await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${users[user]['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+					await AXIOS.delete(`https://awesometracker.ddns.net/api/v1/users/${users[user]['users.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
 				}
 

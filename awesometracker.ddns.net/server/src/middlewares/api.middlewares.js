@@ -87,7 +87,9 @@ checkCalls = async (req, res, next) => {
 
 				if (maximumCalls == 0 || calls < maximumCalls) {
 
-					QUERY(CALL.insertApiCall(res.locals.application['apps.code'], /([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/.exec(req.ip)[0], req.url, req.method));
+					let ip = req.headers['X-Real-IP'] || /([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/.exec(req.ip)[0];
+
+					QUERY(CALL.insertApiCall(res.locals.application['apps.code'], ip, req.url, req.method));
 					next();
 
 				} else {

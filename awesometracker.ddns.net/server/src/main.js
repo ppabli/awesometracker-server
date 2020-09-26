@@ -1,4 +1,3 @@
-// Modulos especificos
 const BODYPARSER = require('body-parser');
 const SESSION = require('express-session');
 const COOKIEPARSER = require('cookie-parser');
@@ -10,8 +9,7 @@ const UTIL = require('util');
 DOTENV.config();
 CONFIG = process.env;
 
-REQUEST = require('request-promise');
-REQUEST2 = require('request');
+AXIOS = require("axios");
 EXPRESS = require('express');
 NODEMAILER = require('nodemailer');
 FORMIDABLE = require('formidable');
@@ -60,7 +58,7 @@ const APPROUTES = require('./routes/app.route');
 
 const SERVER = EXPRESS();
 
-SERVER.set('trust proxy', true)
+SERVER.set('trust proxy', true);
 
 SERVER.use('/js', EXPRESS.static('/awesometracker.ddns.net/client/js'));
 SERVER.use('/css', EXPRESS.static('/awesometracker.ddns.net/client/css'));

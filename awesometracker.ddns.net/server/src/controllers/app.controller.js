@@ -1,6 +1,6 @@
 index = (req, res) => {
 
-	res.sendFile('/var/www/awesometracker.ddns.net/client/dist/index.html');
+	res.sendFile('/awesometracker.ddns.net/client/index.html');
 
 };
 
@@ -10,17 +10,15 @@ access = async (req, res) => {
 
 		if (req.body.user != '' && req.body.password != '' && (/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,}$/.test(req.body.password))) {
 
-			let result = undefined;
+			let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, {headers: {token: CONFIG.API_TOKEN}});
 
-			result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+			if (result.data.data.length == 1) {
 
-			if (result.data.length == 1) {
+				if (PASSWORD.comparePasswords(req.body.password, result.data.data[0]['users.password'])) {
 
-				if (PASSWORD.comparePasswords(req.body.password, result.data[0]['users.password'])) {
+					QUERY(USER.insertSessionLog(result.data.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
 
-					QUERY(USER.insertSessionLog(result.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
-
-					req.session.user = result.data[0];
+					req.session.user = result.data.data[0];
 
 					req.session.save();
 
@@ -67,13 +65,13 @@ accessGoogle = async (req, res) => {
 
 		let user = ticket.getPayload();
 
-		let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user.email}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user.email}`, {headers: {token: CONFIG.API_TOKEN}});
 
-		if (result.data.length == 1) {
+		if (result.data.data.length == 1) {
 
-			QUERY(USER.insertSessionLog(result.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
+			QUERY(USER.insertSessionLog(result.data.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
 
-			req.session.user = result.data[0];
+			req.session.user = result.data.data[0];
 
 			req.session.save();
 
@@ -94,15 +92,15 @@ accessGoogle = async (req, res) => {
 
 			}
 
-			result = await REQUEST.post({url: 'https://awesometracker.ddns.net/api/v1/users', json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+			result = await AXIOS.post('https://awesometracker.ddns.net/api/v1/users', data, {headers: {token: CONFIG.API_TOKEN}});
 
-			if (result.status == 'ok') {
+			if (result.data.status == 'ok') {
 
-				let result2 = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user.email}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+				let result2 = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user.email}`, {headers: {token: CONFIG.API_TOKEN}});
 
-				QUERY(USER.insertSessionLog(result2.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
+				QUERY(USER.insertSessionLog(result2.data.data[0]['users.code'], 'session start', req.headers['user-agent'].split(0, 250)));
 
-				req.session.user = result2.data[0];
+				req.session.user = result2.data.data[0];
 
 				req.session.save();
 
@@ -131,7 +129,7 @@ accessGoogle = async (req, res) => {
 
 			}
 
-			res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+			res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 		}
 
@@ -190,9 +188,9 @@ addUser = async (req, res) => {
 
 				if (fields['users.appCode']) {
 
-					let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps`, json: true, headers: {token: CONFIG.API_TOKEN}});
+					let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps`, {headers: {token: CONFIG.API_TOKEN}});
 
-					let apps = result.data.map(app => Number(app['apps.code']));
+					let apps = result.data.data.map(app => Number(app['apps.code']));
 
 					if (!apps.includes(Number(fields['users.appCode']))) {
 
@@ -276,9 +274,9 @@ addUser = async (req, res) => {
 
 			if (ok) {
 
-				result = await REQUEST.post({url: 'https://awesometracker.ddns.net/api/v1/users', json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+				result = await AXIOS.post('https://awesometracker.ddns.net/api/v1/users', data, {headers: {token: CONFIG.API_TOKEN}});
 
-				if (result.status == 'ok') {
+				if (result.data.status == 'ok') {
 
 					let transporter = NODEMAILER.createTransport({
 
@@ -305,7 +303,7 @@ addUser = async (req, res) => {
 
 				}
 
-				res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+				res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 			} else {
 
@@ -380,9 +378,9 @@ addApp = async (req, res) => {
 
 			if (ok) {
 
-				let result = await REQUEST.post({url: `https://awesometracker.ddns.net/api/v1/users/${data['apps.userCode'] || user['users.code']}/apps`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+				let result = await AXIOS.post(`https://awesometracker.ddns.net/api/v1/users/${data['apps.userCode'] || user['users.code']}/apps`, data, {headers: {token: CONFIG.API_TOKEN}});
 
-				res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+				res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 			} else {
 
@@ -407,11 +405,11 @@ forgotPassword = async (req, res) => {
 		let recoverURLCode = PASSWORD.encryptPassword((new Date().getTime()).toString()).substring(10, 260);
 		let recoverCode = PASSWORD.encryptPassword((new Date().getTime()).toString()).substring(10, 25);
 
-		let result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.recoverURLCode': recoverURLCode, 'users.recoverCode': recoverCode}})
+		let result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.recoverURLCode': recoverURLCode, 'users.recoverCode': recoverCode}})
 
-		if (result.status == 'ok') {
+		if (result.data.status == 'ok') {
 
-			result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}})
+			result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, {headers: {token: CONFIG.API_TOKEN}})
 
 			let transporter = NODEMAILER.createTransport({
 
@@ -450,7 +448,7 @@ forgotPassword = async (req, res) => {
 
 		} else {
 
-			res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+			res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 		}
 
@@ -466,15 +464,15 @@ recoverUser = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}?where=users.recoverURLCode='${req.body.recoverURLCode}',users.recoverCode='${req.body.recoverCode}'`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}?where=users.recoverURLCode='${req.body.recoverURLCode}',users.recoverCode='${req.body.recoverCode}'`, {headers: {token: CONFIG.API_TOKEN}});
 
-		if (result.data.length == 1) {
+		if (result.data.data.length == 1) {
 
-			user = result.data[0];
+			user = result.data.data[0];
 
-			result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.password': req.body.password, 'users.recoverURLCode': '', 'users.recoverCode': ''}});
+			result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.password': req.body.password, 'users.recoverURLCode': '', 'users.recoverCode': ''}});
 
-			if (result.status == 'ok') {
+			if (result.data.status == 'ok') {
 
 				let transporter = NODEMAILER.createTransport({
 
@@ -513,13 +511,13 @@ recoverUser = async (req, res) => {
 
 			} else {
 
-				res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+				res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 			}
 
 		} else {
 
-			res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+			res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 		}
 
@@ -535,9 +533,9 @@ addLog = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.post({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/trackerLogs`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'trackerLogs.app': req.body['trackerLogs.app'], 'trackerLogs.start': req.body['trackerLogs.start'], 'trackerLogs.stop': req.body['trackerLogs.stop']}});
+		let result = await AXIOS.post(`https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/trackerLogs`, {'trackerLogs.app': req.body['trackerLogs.app'], 'trackerLogs.start': req.body['trackerLogs.start'], 'trackerLogs.stop': req.body['trackerLogs.stop']}, {headers: {token: CONFIG.API_TOKEN}});
 
-		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
 
@@ -551,8 +549,8 @@ deleteLog = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/trackerLogs/${req.body.logCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+		let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/trackerLogs/${req.body.logCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
 
@@ -566,8 +564,8 @@ addApplication = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.post({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'applications.category': req.body.category, 'applications.app': req.body.app}});
-		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+		let result = await AXIOS.post(`https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications`, {'applications.category': req.body.category, 'applications.app': req.body.app}, {headers: {token: CONFIG.API_TOKEN}});
+		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
 
@@ -581,8 +579,8 @@ updateApplication = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'applications.category': req.body['applications.category'], 'applications.app': req.body['applications.app'], 'applications.userCode': req.body['applications.userCode'] || user['users.code']}});
-		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+		let result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'applications.category': req.body['applications.category'], 'applications.app': req.body['applications.app'], 'applications.userCode': req.body['applications.userCode'] || user['users.code']}});
+		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
 
@@ -596,8 +594,8 @@ deleteApplication = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+		let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
 
@@ -628,9 +626,9 @@ updateUser= async (req, res) => {
 
 				if (fields['users.appCode']) {
 
-					let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps`, json: true, headers: {token: CONFIG.API_TOKEN}});
+					let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps`, {headers: {token: CONFIG.API_TOKEN}});
 
-					let apps = result.data.map(app => Number(app['apps.code']));
+					let apps = result.data.data.map(app => Number(app['apps.code']));
 
 					if (!apps.includes(Number(fields['users.appCode']))) {
 
@@ -643,15 +641,15 @@ updateUser= async (req, res) => {
 
 				if (fields['users.code']) {
 
-					let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+					let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${fields['users.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
-					if (result.status == 'ok' && result.data.length == 1) {
+					if (result.data.status == 'ok' && result.data.data.length == 1) {
 
-						let finalUser = result.data[0];
+						let finalUser = result.data.data[0];
 
-						result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps`, json: true, headers: {token: CONFIG.API_TOKEN}});
+						result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps`, {headers: {token: CONFIG.API_TOKEN}});
 
-						let apps = result.data.map(app => Number(app['apps.code']));
+						let apps = result.data.data.map(app => Number(app['apps.code']));
 
 						if (!apps.includes(Number(finalUser['users.appCode']))) {
 
@@ -739,19 +737,19 @@ updateUser= async (req, res) => {
 
 			if (ok) {
 
-				result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+				result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
 
-				if (result.status == 'ok' && user['users.code'] == fields['users.code']) {
+				if (result.data.status == 'ok' && user['users.code'] == fields['users.code']) {
 
-					let result2 = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+					let result2 = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
-					req.session.user = result2.data[0];
+					req.session.user = result2.data.data[0];
 
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+					res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 				} else {
 
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+					res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 				}
 
@@ -775,15 +773,15 @@ deleteUser = async (req, res) => {
 
 	try {
 
-		let result = await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
 
-		if (result.status == 'ok' && ((req.body.userCode && req.body.userCode == user['users.code']) || !req.body.userCode)) {
+		if (result.data.status == 'ok' && ((req.body.userCode && req.body.userCode == user['users.code']) || !req.body.userCode)) {
 
 			req.session.destroy();
 
 		}
 
-		res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 
 	} catch (e) {
@@ -848,15 +846,15 @@ updateApp = async (req, res) => {
 
 			if (ok) {
 
-				result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['originalUserCode'] || user['users.code']}/apps/${fields['apps.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+				result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['originalUserCode'] || user['users.code']}/apps/${fields['apps.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
 
 				if (result.status == 'ok' && user['users.code'] == fields['apps.useCode']) {
 
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+					res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 				} else {
 
-					res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+					res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 				}
 
@@ -878,8 +876,8 @@ updateApp = async (req, res) => {
 
 deleteApp = async (req, res) => {
 
-	let result = await REQUEST.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/apps/${req.body.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-	res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+	let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/apps/${req.body.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+	res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 }
 
@@ -1020,9 +1018,9 @@ data = async (req, res) => {
 
 				}
 
-				result = await REQUEST.get({url: url, json: true, headers: {token: CONFIG.API_TOKEN}});
+				result = await AXIOS.get(url, {headers: {token: CONFIG.API_TOKEN}});
 
-				res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+				res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 			}
 
@@ -1042,14 +1040,14 @@ data = async (req, res) => {
 
 getIndexPosts = async (req, res) => {
 
-	let result = await REQUEST.get({url: 'https://awesometracker.ddns.net/api/v1/posts?where=posts.categoryCode!=1&orderBy=posts.code&order=desc', json: true, headers: {token: CONFIG.API_TOKEN}});
-	res.status(200).json({status: result.status, data: result.data, msg: result.msg});
+	let result = await AXIOS.get('https://awesometracker.ddns.net/api/v1/posts?where=posts.categoryCode!=1&orderBy=posts.code&order=desc', {headers: {token: CONFIG.API_TOKEN}});
+	res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 }
 
 createUserTransaction = async (req, res) => {
 
-	let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/userCategories`, json: true, headers: {token: CONFIG.API_TOKEN}});
+	let result = await AXIOS.get('https://awesometracker.ddns.net/api/v1/userCategories', {headers: {token: CONFIG.API_TOKEN}});
 
 	let price = undefined;
 	let name = undefined;
@@ -1063,8 +1061,8 @@ createUserTransaction = async (req, res) => {
 
 	} else {
 
-		price = String(result.data[req.body.option - 1]['userCategories.price']);
-		name = String(result.data[req.body.option - 1]['userCategories.name']) + ' account upgrade';
+		price = String(result.data.data[req.body.option - 1]['userCategories.price']);
+		name = String(result.data.data[req.body.option - 1]['userCategories.name']) + ' account upgrade';
 
 	}
 
@@ -1146,17 +1144,17 @@ captureUserTransaction = async (req, res) => {
 
 			let total = Number(capture.result.purchase_units[0].payments.captures[0].amount.value);
 
-			let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/userCategories?where=userCategories.price=${total}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+			let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/userCategories?where=userCategories.price=${total}`, {headers: {token: CONFIG.API_TOKEN}});
 
-			let newCategory = result.data[0]['userCategories.code'];
+			let newCategory = result.data.data[0]['userCategories.code'];
 
-			result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.categoryCode': newCategory}});
+			result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}`, {headers: {token: CONFIG.API_TOKEN}, form: {'users.categoryCode': newCategory}});
 
-			if (result.status == 'ok' && user['users.code'] == req.params.userCode) {
+			if (result.data.status == 'ok' && user['users.code'] == req.params.userCode) {
 
-				result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+				result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
-				req.session.user = result.data[0];
+				req.session.user = result.data.data[0];
 
 				res.status(200).json({status: 'ok', data: [], msg: 'Payment made successfully. Your account has been updated. Thank you'});
 
@@ -1182,10 +1180,10 @@ captureUserTransaction = async (req, res) => {
 
 createAppTransaction = async (req, res) => {
 
-	let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/appCategories`, json: true, headers: {token: CONFIG.API_TOKEN}});
+	let result = await AXIOS.get('https://awesometracker.ddns.net/api/v1/appCategories', {headers: {token: CONFIG.API_TOKEN}});
 
-	let result2 = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
-	let app = result2.data[0];
+	let result2 = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, {headers: {token: CONFIG.API_TOKEN}});
+	let app = result2.data.data[0];
 
 	let price = undefined;
 	let name = undefined;
@@ -1199,8 +1197,8 @@ createAppTransaction = async (req, res) => {
 
 	} else {
 
-		price = String(result.data[req.body.option - 1]['appCategories.price']);
-		name = String(result.data[req.body.option - 1]['appCategories.name']) + ' account upgrade';
+		price = String(result.data.data[req.body.option - 1]['appCategories.price']);
+		name = String(result.data.data[req.body.option - 1]['appCategories.name']) + ' account upgrade';
 
 	}
 
@@ -1282,15 +1280,15 @@ captureAppTransaction = async (req, res) => {
 
 			let total = Number(capture.result.purchase_units[0].payments.captures[0].amount.value);
 
-			let result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/appCategories?where=appCategories.price=${total}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+			let result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/appCategories?where=appCategories.price=${total}`, {headers: {token: CONFIG.API_TOKEN}});
 
-			let newCategory = result.data[0]['appCategories.code'];
+			let newCategory = result.data.data[0]['appCategories.code'];
 
-			result = await REQUEST.patch({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'apps.categoryCode': newCategory}});
+			result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'apps.categoryCode': newCategory}});
 
-			if (result.status == 'ok' && user['users.code'] == req.params.userCode) {
+			if (result.data.status == 'ok' && user['users.code'] == req.params.userCode) {
 
-				result = await REQUEST.get({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+				result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, {headers: {token: CONFIG.API_TOKEN}});
 
 				res.status(200).json({status: 'ok', data: [], msg: 'Payment made successfully. Your app has been updated. Thank you'});
 
