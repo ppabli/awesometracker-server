@@ -1,10 +1,14 @@
 FROM node
 
-WORKDIR /awesometracker.ddns.net
+WORKDIR /awesometracker.ddns.net/
 
-COPY ./awesometracker.ddns.net/client/dist ./client
-COPY ./awesometracker.ddns.net/server ./server
+COPY ./awesometracker.ddns.net/client/dist/ ./client/
+COPY ./awesometracker.ddns.net/server/ ./server/
+
+WORKDIR /awesometracker.ddns.net/server/
 
 RUN npm install
 
-CMD ["node", "./MiBOT.js"
+WORKDIR /awesometracker.ddns.net/server/src
+
+CMD ["node", "./main.js"]
