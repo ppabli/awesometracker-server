@@ -6,7 +6,7 @@ import {FUNCTIONS} from './functions/functions.js';
 Vue.prototype.$functions = FUNCTIONS;
 
 import 'bootstrap/dist/js/bootstrap.min.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/light_bootstrap.css';
 
 import App from './App.vue';
 import Index from './Index.vue';
