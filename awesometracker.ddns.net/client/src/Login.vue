@@ -282,7 +282,7 @@
 
 				window.auth2 = window.gapi.auth2.init({
 
-					client_id: '79581400886-fld0pe7j7ohgqbkm8n75qimhikq6caoh.apps.googleusercontent.com',
+					client_id: '503137303929-ps45q8ac1g9mu1s9h5dco9bg97petskb.apps.googleusercontent.com',
 					fetch_basic_profile: true,
 					scope: 'profile email https://www.googleapis.com/auth/user.birthday.read',
 
