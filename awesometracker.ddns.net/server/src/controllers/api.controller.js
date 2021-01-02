@@ -1986,7 +1986,7 @@ getApiCalls = async (req, res) => {
 
 		} else {
 
-			res.status(200).json({status: 'error', data: [], msg: 'General error', doc: 'https://awesometracker.ddns.net/docs', doc: 'https://awesometracker.ddns.net/docs'});
+			res.status(200).json({status: 'error', data: [], msg: 'General error', doc: 'https://awesometracker.ddns.net/docs'});
 
 		}
 

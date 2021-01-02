@@ -440,6 +440,7 @@ forgotPassword = async (req, res) => {
 
 				} else {
 
+					console.log(error);
 					res.status(200).json({status: 'error', data: [], msg: 'Error sending the email'});
 
 				}
@@ -468,7 +469,7 @@ recoverUser = async (req, res) => {
 
 		if (result.data.data.length == 1) {
 
-			user = result.data.data[0];
+			let user = result.data.data[0];
 
 			result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, {'users.password': req.body.password, 'users.recoverURLCode': '', 'users.recoverCode': ''}, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
