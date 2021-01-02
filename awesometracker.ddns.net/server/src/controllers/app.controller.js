@@ -405,11 +405,11 @@ forgotPassword = async (req, res) => {
 		let recoverURLCode = PASSWORD.encryptPassword((new Date().getTime()).toString()).substring(10, 260);
 		let recoverCode = PASSWORD.encryptPassword((new Date().getTime()).toString()).substring(10, 25);
 
-		let result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.recoverURLCode': recoverURLCode, 'users.recoverCode': recoverCode}})
+		let result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, {'users.recoverURLCode': recoverURLCode, 'users.recoverCode': recoverCode}, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
 		if (result.data.status == 'ok') {
 
-			result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, {headers: {token: CONFIG.API_TOKEN}})
+			result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, {headers: {token: CONFIG.API_TOKEN}});
 
 			let transporter = NODEMAILER.createTransport({
 
@@ -470,7 +470,7 @@ recoverUser = async (req, res) => {
 
 			user = result.data.data[0];
 
-			result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'users.password': req.body.password, 'users.recoverURLCode': '', 'users.recoverCode': ''}});
+			result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${req.body.user}`, {'users.password': req.body.password, 'users.recoverURLCode': '', 'users.recoverCode': ''}, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
 			if (result.data.status == 'ok') {
 
