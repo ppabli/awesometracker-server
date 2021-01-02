@@ -426,7 +426,7 @@ forgotPassword = async (req, res) => {
 			let mailOptions = {
 
 				from: CONFIG.EMAIL,
-				to: result.data[0]['users.email'],
+				to: result.data.data[0]['users.email'],
 				subject: 'Recover your account',
 				html: `URL: <strong>https://awesometracker.ddns.net/recoverUser?recoverURLCode=${recoverURLCode}</strong> <br> Code: <strong>${recoverCode}</strong>`
 
