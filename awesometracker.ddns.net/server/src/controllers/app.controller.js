@@ -549,7 +549,7 @@ deleteLog = async (req, res) => {
 
 	try {
 
-		let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/trackerLogs/${req.body.logCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		let result = await AXIOS.delete(`https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/trackerLogs/${req.body.logCode}`, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
@@ -579,7 +579,7 @@ updateApplication = async (req, res) => {
 
 	try {
 
-		let result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'applications.category': req.body['applications.category'], 'applications.app': req.body['applications.app'], 'applications.userCode': req.body['applications.userCode'] || user['users.code']}});
+		let result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, {'applications.category': req.body['applications.category'], 'applications.app': req.body['applications.app'], 'applications.userCode': req.body['applications.userCode'] || user['users.code']}, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
@@ -594,7 +594,7 @@ deleteApplication = async (req, res) => {
 
 	try {
 
-		let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		let result = await AXIOS.delete(`https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/applications/${req.body.applicationCode}`, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 		res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 	} catch (e) {
@@ -737,7 +737,7 @@ updateUser= async (req, res) => {
 
 			if (ok) {
 
-				result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+				result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${fields['users.code'] || user['users.code']}`, data, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
 				if (result.data.status == 'ok' && user['users.code'] == fields['users.code']) {
 
@@ -773,7 +773,7 @@ deleteUser = async (req, res) => {
 
 	try {
 
-		let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+		let result = await AXIOS.delete(`https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}`, {headers: {token: CONFIG.API_TOKEN}});
 
 		if (result.data.status == 'ok' && ((req.body.userCode && req.body.userCode == user['users.code']) || !req.body.userCode)) {
 
@@ -846,7 +846,7 @@ updateApp = async (req, res) => {
 
 			if (ok) {
 
-				result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${fields['originalUserCode'] || user['users.code']}/apps/${fields['apps.code']}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: data});
+				result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${fields['originalUserCode'] || user['users.code']}/apps/${fields['apps.code']}`, data, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
 				if (result.status == 'ok' && user['users.code'] == fields['apps.useCode']) {
 
@@ -876,7 +876,7 @@ updateApp = async (req, res) => {
 
 deleteApp = async (req, res) => {
 
-	let result = await AXIOS.delete({url: `https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/apps/${req.body.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}});
+	let result = await AXIOS.delete(`https://awesometracker.ddns.net/api/v1/users/${req.body.userCode || user['users.code']}/apps/${req.body.appCode}`, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 	res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 }
@@ -1148,7 +1148,7 @@ captureUserTransaction = async (req, res) => {
 
 			let newCategory = result.data.data[0]['userCategories.code'];
 
-			result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}`, {headers: {token: CONFIG.API_TOKEN}, form: {'users.categoryCode': newCategory}});
+			result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}`, {'users.categoryCode': newCategory}, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
 			if (result.data.status == 'ok' && user['users.code'] == req.params.userCode) {
 
@@ -1284,7 +1284,7 @@ captureAppTransaction = async (req, res) => {
 
 			let newCategory = result.data.data[0]['appCategories.code'];
 
-			result = await AXIOS.patch({url: `https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, json: true, headers: {token: CONFIG.API_TOKEN}, form: {'apps.categoryCode': newCategory}});
+			result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, {'apps.categoryCode': newCategory}, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
 			if (result.data.status == 'ok' && user['users.code'] == req.params.userCode) {
 
