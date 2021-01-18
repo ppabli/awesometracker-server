@@ -2,7 +2,7 @@ redirect = (req, res, next) => {
 
 	if(!req.secure) {
 
-		res.redirect('https://' + req.headers.host + req.url);
+		res.redirect('https://' + req.headers.host + '/api/v1' + req.url);
 
 	} else {
 

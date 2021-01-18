@@ -849,15 +849,7 @@ updateApp = async (req, res) => {
 
 				result = await AXIOS.patch(`https://awesometracker.ddns.net/api/v1/users/${fields['originalUserCode'] || user['users.code']}/apps/${fields['apps.code']}`, data, {responseType: 'json', headers: {token: CONFIG.API_TOKEN}});
 
-				if (result.status == 'ok' && user['users.code'] == fields['apps.useCode']) {
-
-					res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
-
-				} else {
-
-					res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
-
-				}
+				res.status(200).json({status: result.data.status, data: result.data.data, msg: result.data.msg});
 
 			} else {
 
@@ -1289,7 +1281,7 @@ captureAppTransaction = async (req, res) => {
 
 			if (result.data.status == 'ok' && user['users.code'] == req.params.userCode) {
 
-				result = await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, {headers: {token: CONFIG.API_TOKEN}});
+				await AXIOS.get(`https://awesometracker.ddns.net/api/v1/users/${user['users.code']}/apps/${req.params.appCode}`, {headers: {token: CONFIG.API_TOKEN}});
 
 				res.status(200).json({status: 'ok', data: [], msg: 'Payment made successfully. Your app has been updated. Thank you'});
 

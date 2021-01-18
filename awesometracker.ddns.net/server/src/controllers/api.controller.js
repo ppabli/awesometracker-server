@@ -422,7 +422,6 @@ updateUser = async (req, res) => {
 
 					if (/appCode/.test(param)) {
 
-
 						if (result.length == 0 && res.locals.application['apps.token'] != CONFIG.API_TOKEN) {
 
 							ok = false;
